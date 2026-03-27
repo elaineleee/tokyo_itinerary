@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>東京・富士山 2026</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d1b2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="東京富士山">
+<link rel="apple-touch-icon" href="icon-192.png">
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+<!-- Google Maps：iframe embed，不需 API Key -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.21/vue.global.prod.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light only;
+  --ink:#0d1b2e;--ink2:#1a2f48;
+  --sky:#3a8fc9;--sky-light:#e8f4fb;--sky-mid:#b3d9f0;--sky-dark:#1e6494;
+  --gold:#b8870b;--gold-light:#fdf6e3;
+  --green:#1a7a40;--green-light:#e6f5ec;
+  --orange:#c05000;--orange-light:#fdf0e6;
+  --purple:#5b2d8e;--purple-light:#f0e8f8;
+  --gray-50:#f6f8fa;--gray-100:#eef1f5;--gray-200:#dde3eb;--gray-400:#8a96a4;--gray-600:#59687a;--gray-800:#2c3848;
+  --border:#d4dde8;--shadow:0 2px 12px rgba(13,27,46,0.10);--radius:10px;--max-w:520px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:#f6f8fa !important;color:#2c3848 !important;}
+body{font-family:'Noto Sans TC',sans-serif;background:#f6f8fa !important;color:#2c3848 !important;line-height:1.6;max-width:var(--max-w);margin:0 auto;min-height:100vh;-webkit-text-fill-color:initial;}
+@media(prefers-color-scheme:dark){
+:root{color-scheme:light only;--ink:#0d1b2e;--ink2:#1a2f48;--sky:#3a8fc9;--sky-light:#e8f4fb;--sky-mid:#b3d9f0;--sky-dark:#1e6494;--gold:#b8870b;--gold-light:#fdf6e3;--green:#1a7a40;--green-light:#e6f5ec;--orange:#c05000;--orange-light:#fdf0e6;--purple:#5b2d8e;--purple-light:#f0e8f8;--gray-50:#f6f8fa;--gray-100:#eef1f5;--gray-200:#dde3eb;--gray-400:#8a96a4;--gray-600:#59687a;--gray-800:#2c3848;--border:#d4dde8;--shadow:0 2px 12px rgba(13,27,46,0.10);}
+html,body{background:#f6f8fa !important;color:#2c3848 !important;-webkit-text-fill-color:#2c3848 !important;}
+*{-webkit-text-fill-color:inherit;}
+.header,.tab-bar,.hotel-card-header,.sc-head,.calc-display{-webkit-text-fill-color:#fff !important;}
+.header{background:#0d1b2e !important;color:#fff !important;}
+.tab-bar{background:#1a2f48 !important;}
+.tab-btn{color:rgba(255,255,255,.45) !important;-webkit-text-fill-color:rgba(255,255,255,.45) !important;background:transparent !important;}
+.tab-btn.active{color:#fff !important;-webkit-text-fill-color:#fff !important;border-bottom-color:#3a8fc9 !important;}
+.day-selector,.ea-bar,.map-day-selector{background:#f6f8fa !important;}
+.day-btn,.map-day-btn{background:#fff !important;color:#2c3848 !important;-webkit-text-fill-color:#2c3848 !important;border-color:#d4dde8 !important;}
+.day-btn.active,.map-day-btn.active{background:#0d1b2e !important;border-color:#0d1b2e !important;color:#fff !important;-webkit-text-fill-color:#fff !important;}
+.day-btn.active .db-d,.day-btn.active .db-num,.day-btn.active .db-city,.map-day-btn.active .mdb-top,.map-day-btn.active .mdb-date{color:#fff !important;-webkit-text-fill-color:#fff !important;}
+.tl-card,.hotel-card-body,.sc-body{background:#fff !important;border-color:#d4dde8 !important;}
+.tl-card>*,.hotel-card-body>*,.sc-body>*{-webkit-text-fill-color:inherit;}
+.food-item,.tr-box{background:#fff !important;border-color:#d4dde8 !important;}
+.tl-card-name,.fi-name,.food-label,.fi-detail,.tl-desc{color:#2c3848 !important;-webkit-text-fill-color:#2c3848 !important;}
+.fi-detail{color:#59687a !important;-webkit-text-fill-color:#59687a !important;}
+.ci-card,.weather-card{background:#e8f4fb !important;border-color:#b3d9f0 !important;}
+.hotel-info,.result-card{background:#fdf6e3 !important;border-color:#e0c060 !important;}
+.day-top-title{color:#0d1b2e !important;-webkit-text-fill-color:#0d1b2e !important;}
+.day-top-sub{color:#8a96a4 !important;-webkit-text-fill-color:#8a96a4 !important;}
+.day-top-extra{color:#1e6494 !important;-webkit-text-fill-color:#1e6494 !important;}
+.hi-label{color:#b8870b !important;-webkit-text-fill-color:#b8870b !important;}
+.hi-name{color:#0d1b2e !important;-webkit-text-fill-color:#0d1b2e !important;}
+.hi-note{color:#59687a !important;-webkit-text-fill-color:#59687a !important;}
+.tl-time-inline{color:#8a96a4 !important;-webkit-text-fill-color:#8a96a4 !important;}
+.tl-card-name{color:#2c3848 !important;-webkit-text-fill-color:#2c3848 !important;}
+.ea-label{color:#8a96a4 !important;-webkit-text-fill-color:#8a96a4 !important;}
+.ea-btn{color:#8a96a4 !important;-webkit-text-fill-color:#8a96a4 !important;}
+.hotel-name{color:#0d1b2e !important;-webkit-text-fill-color:#0d1b2e !important;}
+.hotel-location{color:#8a96a4 !important;-webkit-text-fill-color:#8a96a4 !important;}
+.ci-label{color:#1e6494 !important;-webkit-text-fill-color:#1e6494 !important;}
+.ci-time{color:#0d1b2e !important;-webkit-text-fill-color:#0d1b2e !important;}
+.result-label{color:#b8870b !important;-webkit-text-fill-color:#b8870b !important;}
+.result-val{color:#0d1b2e !important;-webkit-text-fill-color:#0d1b2e !important;}
+.map-topbar-title{color:#2c3848 !important;-webkit-text-fill-color:#2c3848 !important;}
+.map-badge{color:#1e6494 !important;-webkit-text-fill-color:#1e6494 !important;background:#e8f4fb !important;}
+.notice{background:#fffbec !important;border-color:#f0d060 !important;color:#6b4c00 !important;-webkit-text-fill-color:#6b4c00 !important;}
+.mp-btn{background:#fff !important;color:#59687a !important;-webkit-text-fill-color:#59687a !important;border-color:#d4dde8 !important;}
+.mp-btn.active{background:#0d1b2e !important;color:#fff !important;-webkit-text-fill-color:#fff !important;border-color:#0d1b2e !important;}
+.mp-btn.is-prev{color:#2a8c5a !important;-webkit-text-fill-color:#2a8c5a !important;border-color:#9fd4b5 !important;}
+.mp-btn.is-hotel{color:#b8870b !important;-webkit-text-fill-color:#b8870b !important;border-color:#e0c060 !important;}
+.tag-sight{background:#e8f4fb !important;color:#1e6494 !important;-webkit-text-fill-color:#1e6494 !important;}
+.tag-food{background:#fdf0e6 !important;color:#c05000 !important;-webkit-text-fill-color:#c05000 !important;}
+.tag-transport,.tag-flight{background:#eef1f5 !important;color:#59687a !important;-webkit-text-fill-color:#59687a !important;}
+.tag-hotel{background:#f0e8f8 !important;color:#5b2d8e !important;-webkit-text-fill-color:#5b2d8e !important;}
+.tag-shop{background:#e6f5ec !important;color:#1a7a40 !important;-webkit-text-fill-color:#1a7a40 !important;}
+.expand-btn{color:#3a8fc9 !important;-webkit-text-fill-color:#3a8fc9 !important;}
+.calc-btn{-webkit-text-fill-color:inherit !important;}
+.cb-num{background:#eef1f5 !important;color:#2c3848 !important;-webkit-text-fill-color:#2c3848 !important;}
+.cb-op{background:#e8f4fb !important;color:#1e6494 !important;-webkit-text-fill-color:#1e6494 !important;}
+.cb-eq{background:#3a8fc9 !important;color:#fff !important;-webkit-text-fill-color:#fff !important;}
+.cb-fn{background:#dde3eb !important;color:#59687a !important;-webkit-text-fill-color:#59687a !important;}
+.hotel-card-header{background:#0d1b2e !important;color:#fff !important;-webkit-text-fill-color:#fff !important;}
+.hotel-map-btn,.nights-badge{-webkit-text-fill-color:#fff !important;}
+.sc-head{background:#0d1b2e !important;color:#fff !important;-webkit-text-fill-color:#fff !important;}
+.calc-display{background:#0d1b2e !important;}
+.calc-expr{color:rgba(255,255,255,.35) !important;-webkit-text-fill-color:rgba(255,255,255,.35) !important;}
+.calc-val{color:#fff !important;-webkit-text-fill-color:#fff !important;}
+input,select{background:#fff !important;color:#2c3848 !important;-webkit-text-fill-color:#2c3848 !important;border-color:#d4dde8 !important;}
+.map-topbar,.map-places-scroll{background:#fff !important;}
+.chip.cc{background:#fde8e8 !important;color:#9b1c1c !important;-webkit-text-fill-color:#9b1c1c !important;}
+.chip.ct{background:#e8f4fb !important;color:#1e6494 !important;-webkit-text-fill-color:#1e6494 !important;}
+.chip.cw{background:#fef3c7 !important;color:#92400e !important;-webkit-text-fill-color:#92400e !important;}
+.chip.co2{background:#e6f5ec !important;color:#1a7a40 !important;-webkit-text-fill-color:#1a7a40 !important;}
+.chip.cf{background:#fdf6e3 !important;color:#b8870b !important;-webkit-text-fill-color:#b8870b !important;}
+.fi-name{color:#2c3848 !important;-webkit-text-fill-color:#2c3848 !important;}
+.fi-badge.badge-top{background:#fff3cd !important;color:#7a5600 !important;-webkit-text-fill-color:#7a5600 !important;}
+.fi-badge.badge-veg{background:#e6f5ec !important;color:#1a7a40 !important;-webkit-text-fill-color:#1a7a40 !important;}
+.food-label{color:#8a96a4 !important;-webkit-text-fill-color:#8a96a4 !important;}
+.notice{background:#fffbec !important;border-color:#f0d060 !important;color:#6b4c00 !important;-webkit-text-fill-color:#6b4c00 !important;}
+.tl-desc,.fi-detail,.hi-note,.hotel-note,.ha-row,.hil-val,.day-top-sub,.result-sub,.rate-sub{color:#59687a !important;-webkit-text-fill-color:#59687a !important;}
+.fi-price,.tr-cost{color:#b8870b !important;-webkit-text-fill-color:#b8870b !important;}
+}
+.header{background:var(--ink);color:#fff;padding:1.4rem 1.2rem 0;position:relative;overflow:hidden;}
+.header-deco{position:absolute;right:-10px;top:-10px;font-size:7rem;opacity:.08;line-height:1;pointer-events:none;user-select:none;}
+.header-top{position:relative;z-index:1;}
+.header-title{font-family:'Shippori Mincho',serif;font-size:1.5rem;font-weight:700;letter-spacing:.05em;}
+.header-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:2px;letter-spacing:.5px;}
+.flights{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:1rem;padding-bottom:1.1rem;}
+.flight-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:.75rem .9rem;}
+.fc-dir{font-size:9px;letter-spacing:1.5px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:.5rem;}
+.fc-num{font-size:11px;color:var(--sky-mid);font-weight:500;margin-bottom:.5rem;}
+.fc-route{display:flex;align-items:center;gap:0;margin:.3rem 0 .4rem;}
+.fc-iata-block{flex:1;text-align:center;}
+.fc-iata{font-family:'Shippori Mincho',serif;font-size:clamp(1.1rem,5vw,1.35rem);font-weight:700;color:#fff;line-height:1;}
+.fc-city{font-size:clamp(8px,2.2vw,9px);color:rgba(255,255,255,.4);margin-top:2px;}
+.fc-arrow-col{flex-shrink:0;padding:0 .3rem;display:flex;flex-direction:column;align-items:center;}
+.fc-arrow-line{width:24px;height:1px;background:rgba(255,255,255,.25);}
+.fc-arrow-tip{font-size:10px;color:rgba(255,255,255,.4);line-height:1;}
+.fc-duration{font-size:clamp(8px,2vw,9px);color:rgba(255,255,255,.5);margin-bottom:3px;white-space:nowrap;}
+.fc-time{font-size:clamp(11px,3vw,12px);color:rgba(255,255,255,.8);font-weight:500;text-align:center;margin-bottom:.2rem;}
+.fc-date{font-size:clamp(9px,2.5vw,10px);color:rgba(255,255,255,.35);text-align:center;}
+.tab-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--ink2);border-bottom:2px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:100;}
+.tab-btn{padding:.65rem .3rem;font-size:11.5px;color:rgba(255,255,255,.45);border:none;background:transparent;cursor:pointer;transition:all .18s;border-bottom:2px solid transparent;margin-bottom:-2px;letter-spacing:.3px;font-family:inherit;}
+.tab-btn.active{color:#fff;border-bottom-color:var(--sky);}
+.day-selector{display:flex;background:var(--gray-50);border-bottom:1px solid var(--border);position:sticky;top:44px;z-index:90;padding:8px 10px;gap:6px;}
+.day-btn{flex:1;padding:.4rem .05rem;text-align:center;border:1.5px solid var(--border);border-radius:10px;background:#fff;cursor:pointer;transition:all .15s;font-family:inherit;}
+.day-btn .db-d{font-size:8px;color:var(--gray-400);letter-spacing:.3px;font-family:'Shippori Mincho',serif;}
+.day-btn .db-num{font-size:.8rem;font-weight:700;color:var(--gray-800);line-height:1.15;font-family:'Shippori Mincho',serif;}
+.day-btn .db-city{font-size:8px;color:var(--gray-400);font-family:'Shippori Mincho',serif;}
+.day-btn.active{background:var(--ink);border-color:var(--ink);}
+.day-btn.active .db-d,.day-btn.active .db-num,.day-btn.active .db-city{color:#fff;}
+.day-content{padding:0 0 4rem;}
+.day-top{display:flex;align-items:flex-start;justify-content:space-between;padding:.9rem 1rem .6rem;gap:.5rem;}
+.day-top-title{font-family:'Shippori Mincho',serif;font-size:1rem;font-weight:600;color:var(--ink);}
+.day-top-sub{font-size:11px;color:var(--gray-400);margin-top:1px;}
+.day-top-extra{font-size:11px;color:var(--sky-dark);margin-top:4px;font-weight:500;}
+.weather-card{background:var(--sky-light);border:1px solid var(--sky-mid);border-radius:8px;padding:.4rem .65rem;text-align:center;flex-shrink:0;}
+.wc-icon{font-size:1.2rem;line-height:1;margin-bottom:2px;}
+.wc-range{display:flex;align-items:baseline;gap:1px;justify-content:center;}
+.wc-lo{font-size:10.5px;color:var(--sky-dark);font-weight:400;}
+.wc-sep{font-size:9px;color:var(--gray-400);margin:0 1px;}
+.wc-hi{font-size:11.5px;font-weight:700;color:var(--sky-dark);}
+.hotel-info{margin:0 1rem .8rem;background:var(--gold-light);border:1px solid #e0c060;border-radius:10px;padding:.6rem .9rem;display:flex;align-items:flex-start;gap:.6rem;}
+.hi-icon{font-size:1.4rem;line-height:1;flex-shrink:0;margin-top:.1rem;}
+.hi-body{flex:1;}
+.hi-label{font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:1px;}
+.hi-name{font-weight:700;color:var(--ink);display:block;font-size:13px;line-height:1.3;}
+.hi-note{font-size:11px;color:var(--gray-600);display:block;margin-top:1px;}
+.timeline{padding:0 1rem;position:relative;}
+.timeline::before{content:'';position:absolute;left:calc(1rem + 6px);top:0;bottom:0;width:2px;background:var(--gray-200);z-index:0;}
+.tl-item{display:flex;gap:.7rem;margin-bottom:.6rem;position:relative;}
+.tl-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:14px;z-index:1;}
+.tl-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;margin-top:.78rem;border:2.5px solid #fff;box-shadow:0 0 0 1.5px currentColor;position:relative;z-index:2;}
+.dot-sight{color:var(--sky-dark);background:var(--sky);}
+.dot-food{color:var(--orange);background:var(--orange);}
+.dot-transport{color:var(--gray-400);background:var(--gray-400);}
+.dot-hotel{color:var(--purple);background:var(--purple);}
+.dot-shop{color:var(--green);background:var(--green);}
+.tl-card{flex:1;background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:.7rem .9rem;box-shadow:var(--shadow);min-width:0;}
+.tl-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.4rem;margin-bottom:0;}
+.tl-card-name{font-size:13.5px;font-weight:500;color:var(--gray-800);flex:1;min-width:0;}
+.tl-time-inline{font-size:10.5px;color:var(--gray-400);font-weight:500;letter-spacing:.3px;margin-bottom:3px;}
+.map-btn{flex-shrink:0;width:22px;height:22px;border-radius:5px;background:var(--sky-light);border:1px solid var(--sky-mid);display:inline-flex;align-items:center;justify-content:center;font-size:11px;text-decoration:none;color:var(--sky-dark);}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:.35rem;}
+.tag{font-size:9px;padding:1px 7px;border-radius:8px;font-weight:500;}
+.tag-sight{background:var(--sky-light);color:var(--sky-dark);}
+.tag-food{background:var(--orange-light);color:var(--orange);}
+.tag-transport{background:var(--gray-100);color:var(--gray-600);}
+.tag-hotel{background:var(--purple-light);color:var(--purple);}
+.tag-shop{background:var(--green-light);color:var(--green);}
+.tag-flight{background:var(--gray-100);color:var(--gray-600);}
+.expand-btn{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--sky);background:none;border:none;cursor:pointer;padding:0;margin-top:.4rem;font-family:inherit;}
+.expand-icon{transition:transform .2s;display:inline-block;font-size:10px;}
+.expand-btn.open .expand-icon{transform:rotate(180deg);}
+.tl-desc{font-size:12px;color:var(--gray-600);line-height:1.55;}
+.tr-box{background:var(--gray-50);border:1px solid var(--border);border-radius:7px;padding:.45rem .7rem;margin-top:.4rem;}
+.tr-row{display:flex;align-items:flex-start;gap:.4rem;font-size:11.5px;color:var(--gray-600);margin-bottom:2px;}
+.tr-row:last-child{margin-bottom:0;}
+.tr-cost{margin-left:auto;color:var(--gold);font-weight:600;white-space:nowrap;font-size:11px;}
+.food-section{margin-top:.5rem;}
+.food-label{font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--gray-400);text-transform:uppercase;margin-bottom:.3rem;}
+.food-item{background:var(--gray-50);border:1px solid var(--border);border-radius:7px;padding:.4rem .65rem;margin-bottom:.3rem;font-size:12px;}
+.fi-head{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-bottom:1px;}
+.fi-name{font-weight:500;color:var(--gray-800);}
+.fi-badge{font-size:9px;padding:1px 6px;border-radius:6px;}
+.badge-top{background:#fff3cd;color:#7a5600;border:1px solid #ffc107;}
+.badge-veg{background:var(--green-light);color:var(--green);}
+.badge-budget{background:var(--gray-100);color:var(--gray-600);}
+.fi-detail{font-size:11px;color:var(--gray-600);}
+.fi-price{font-weight:600;color:var(--gold);}
+.notice{background:#fffbec;border:1px solid #f0d060;border-radius:8px;padding:8px 12px;margin-top:6px;font-size:12px;color:#6b4c00;line-height:1.6;}
+.correction{background:#fff0f0;border:1px solid #f0a0a0;border-radius:8px;padding:8px 12px;margin-top:6px;font-size:12px;color:#7a2020;line-height:1.6;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;}
+.chip{font-size:10.5px;padding:2px 9px;border-radius:20px;font-weight:500;}
+.cc{background:#fde8e8;color:#9b1c1c;}
+.ct{background:var(--sky-light);color:var(--sky-dark);}
+.cw{background:#fef3c7;color:#92400e;}
+.co2{background:var(--green-light);color:var(--green);}
+.cf{background:var(--gold-light);color:var(--gold);}
+.ea-bar{display:flex;align-items:center;gap:.35rem;padding:.25rem 1rem;margin:0 0 .45rem;background:var(--gray-50);}
+.ea-label{font-size:10.5px;color:var(--gray-400);flex:1;letter-spacing:.2px;opacity:.7;font-weight:300;}
+.ea-btn{font-size:10.5px;padding:.12rem .5rem;border:1px solid var(--gray-200);border-radius:5px;background:transparent;color:var(--gray-400);cursor:pointer;font-family:'Noto Sans TC',sans-serif;letter-spacing:.1px;opacity:.8;}
+.ea-btn:active{background:var(--gray-100);}
+.map-topbar{padding:.65rem 1rem;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.map-topbar-title{font-size:13px;font-weight:500;color:var(--gray-800);}
+.map-badge{font-size:10px;background:var(--sky-light);color:var(--sky-dark);padding:2px 8px;border-radius:10px;white-space:nowrap;}
+.map-day-selector{display:flex;gap:5px;padding:6px 10px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto;scrollbar-width:none;}
+.map-day-selector::-webkit-scrollbar{display:none;}
+.map-day-btn{flex:1;padding:.28rem .1rem;text-align:center;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;transition:all .15s;font-family:inherit;min-width:0;}
+.map-day-btn .mdb-top{font-size:10px;font-weight:700;color:var(--gray-800);font-family:'Shippori Mincho',serif;display:block;line-height:1.3;}
+.map-day-btn .mdb-date{font-size:8.5px;color:var(--gray-400);display:block;}
+.map-day-btn.active{background:var(--ink);border-color:var(--ink);}
+.map-day-btn.active .mdb-top,.map-day-btn.active .mdb-date{color:#fff;}
+.map-places-scroll{display:flex;gap:.45rem;padding:.5rem .9rem;overflow-x:auto;scrollbar-width:none;background:#fff;border-bottom:1px solid var(--border);}
+.map-places-scroll::-webkit-scrollbar{display:none;}
+.mp-btn{flex-shrink:0;font-size:11px;padding:.25rem .65rem;border:1px solid var(--border);border-radius:20px;background:#fff;cursor:pointer;white-space:nowrap;color:var(--gray-600);font-family:inherit;transition:all .15s;}
+.mp-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.mp-btn.is-prev{color:#2a8c5a;border-color:#9fd4b5;}
+.mp-btn.is-hotel{color:#b8870b;border-color:#e0c060;}
+#tab-map{display:none;flex-direction:column;}
+#tab-map.active-map{display:flex !important;flex-direction:column !important;height:calc(100vh - 44px);height:calc(100dvh - 44px);}
+#map-iframe-wrap{flex:1;position:relative;overflow:hidden;min-height:0;}
+#map-iframe-wrap iframe{width:100%;height:100%;border:0;display:block;}
+.hotels{padding:.8rem .9rem 4rem;}
+.hotel-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1rem;box-shadow:var(--shadow);}
+.hotel-card-header{background:var(--ink);color:#fff;padding:.8rem 1rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;}
+.hch-left{flex:1;}
+.hch-city{font-size:.95rem;font-weight:700;letter-spacing:.05em;color:#fff;}
+.hch-date{font-size:10.5px;color:rgba(255,255,255,.5);margin-top:2px;}
+.hch-right{display:flex;align-items:flex-start;gap:.4rem;}
+.nights-badge{background:var(--sky);color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap;}
+.hotel-map-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:3px 8px;font-size:10px;color:#fff;text-decoration:none;}
+.hotel-card-body{padding:.9rem 1rem;}
+.hotel-name{font-family:'Shippori Mincho',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.3rem;}
+.hotel-location{font-size:10.5px;color:var(--gray-400);margin-bottom:.4rem;}
+.hotel-note{font-size:12px;color:var(--gray-600);margin-bottom:.7rem;line-height:1.6;}
+.hotel-info-list{display:flex;flex-direction:column;gap:3px;margin-bottom:.65rem;}
+.hil-row{display:flex;align-items:baseline;gap:.4rem;font-size:11.5px;color:var(--gray-600);}
+.hil-icon{flex-shrink:0;font-size:11px;}
+.hil-val{flex:1;line-height:1.45;}
+.ci-latest{font-size:8px;color:var(--sky-dark);opacity:.7;margin-top:1px;display:block;letter-spacing:-.1px;}
+.ci-co{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.ci-card{background:var(--sky-light);border:1px solid var(--sky-mid);border-radius:7px;padding:.45rem .7rem;text-align:center;}
+.ci-label{font-size:9px;color:var(--sky-dark);letter-spacing:.5px;text-transform:uppercase;}
+.ci-time{font-size:1.05rem;font-weight:700;color:var(--ink);line-height:1.1;}
+.rate-panel{padding:.9rem .9rem 4rem;}
+.section-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1rem;box-shadow:var(--shadow);}
+.sc-head{background:var(--ink);color:#fff;padding:.6rem 1rem;font-size:12px;font-weight:600;letter-spacing:.5px;}
+.sc-body{padding:.9rem 1rem;}
+.rg-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;}
+.rg-label{font-size:12px;color:var(--gray-600);flex-shrink:0;width:52px;}
+.rg-inputs{display:flex;align-items:center;gap:.35rem;flex:1;min-width:0;}
+.rg-unit{font-size:11.5px;color:var(--gray-600);flex-shrink:0;}
+.rg-input{flex:1;min-width:0;padding:.45rem .6rem;border:1px solid var(--border);border-radius:7px;font-size:14px;font-family:'Noto Sans TC',sans-serif;background:#fff;color:var(--gray-800);text-align:right;}
+.rg-input:focus{outline:none;border-color:var(--sky);}
+.rg-amount{flex:2;}
+.rg-select{flex-shrink:0;width:90px;padding:.45rem .4rem;border:1px solid var(--border);border-radius:7px;font-size:13px;background:#fff;color:var(--gray-800);}
+.result-card{background:var(--gold-light);border:1.5px solid #e0c04a;border-radius:10px;padding:.9rem 1rem;text-align:center;margin-top:.7rem;}
+.result-label{font-size:11px;color:var(--gold);letter-spacing:.5px;margin-bottom:.2rem;}
+.result-val{font-family:'Shippori Mincho',serif;font-size:2rem;font-weight:700;color:var(--ink);}
+.result-sub{font-size:11px;color:var(--gray-400);margin-top:.2rem;}
+.calc-display{background:var(--ink);border-radius:10px;padding:.8rem 1rem;margin-bottom:.7rem;text-align:right;min-height:56px;}
+.calc-expr{font-size:11px;color:rgba(255,255,255,.35);min-height:16px;}
+.calc-val{font-size:1.6rem;font-weight:300;color:#fff;font-family:'Shippori Mincho',serif;}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;}
+.calc-btn{padding:.65rem .3rem;border-radius:8px;font-size:14px;border:none;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:opacity .15s;}
+.calc-btn:active{opacity:.7;}
+.cb-num{background:var(--gray-100);color:var(--gray-800);}
+.cb-op{background:var(--sky-light);color:var(--sky-dark);font-weight:600;}
+.cb-eq{background:var(--sky);color:#fff;font-weight:700;}
+.cb-fn{background:var(--gray-200);color:var(--gray-600);}
+.cb-zero{grid-column:span 2;}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-deco">🗻</div>
+  <div class="header-top">
+    <div class="header-title">東京・富士山 2026</div>
+    <div class="header-sub">4/30（四）— 5/4（一）・5 天 4 夜・新宿→富士山→芝櫻→秋葉原</div>
+  </div>
+  <div class="flights">
+    <div class="flight-card" v-for="f in flights" :key="f.num">
+      <div class="fc-dir">{{f.dir}}</div>
+      <div class="fc-num">{{f.num}} · {{f.airline}}</div>
+      <div class="fc-route">
+        <div class="fc-iata-block"><div class="fc-iata">{{f.from}}</div><div class="fc-city">{{f.fromCity}}</div></div>
+        <div class="fc-arrow-col"><div class="fc-duration">{{f.duration}}</div><div class="fc-arrow-line"></div><div class="fc-arrow-tip">→</div></div>
+        <div class="fc-iata-block"><div class="fc-iata">{{f.to}}</div><div class="fc-city">{{f.toCity}}</div></div>
+      </div>
+      <div class="fc-time">{{f.depart}} — {{f.arrive}}</div>
+      <div class="fc-date">{{f.date}}</div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn" :class="{active:tab==='schedule'}" @click="tab='schedule'">📅 行程</button>
+  <button class="tab-btn" :class="{active:tab==='map'}" @click="switchToMap()">🗺 地圖</button>
+  <button class="tab-btn" :class="{active:tab==='hotels'}" @click="tab='hotels'">🏨 住宿</button>
+  <button class="tab-btn" :class="{active:tab==='rate'}" @click="tab='rate'">💴 匯率</button>
+</div>
+
+<!-- TAB: SCHEDULE -->
+<div v-if="tab==='schedule'">
+  <div class="day-selector">
+    <button v-for="(d,i) in days" :key="i" class="day-btn" :class="{active:sel===i}" @click="sel=i">
+      <div class="db-d">D{{i+1}}</div>
+      <div class="db-num">{{d.date}}</div>
+      <div class="db-city">{{d.shortCity}}</div>
+    </button>
+  </div>
+  <div class="day-content" v-if="cur">
+    <div class="day-top">
+      <div>
+        <div class="day-top-title">{{cur.title}}</div>
+        <div class="day-top-sub">{{cur.summary}}</div>
+        <div class="day-top-extra" v-if="cur.extra">{{cur.extra}}</div>
+      </div>
+      <div class="weather-card">
+        <div class="wc-icon">{{cur.weather.icon}}</div>
+        <div class="wc-range"><span class="wc-lo">{{cur.weather.lo}}</span><span class="wc-sep">/</span><span class="wc-hi">{{cur.weather.hi}}</span></div>
+      </div>
+    </div>
+    <div class="hotel-info">
+      <div class="hi-icon">{{cur.hotel.icon||'🏨'}}</div>
+      <div class="hi-body">
+        <div class="hi-label">{{cur.hotel.label||'住宿'}}</div>
+        <span class="hi-name">{{cur.hotel.name}}</span>
+        <span class="hi-note">{{cur.hotel.note}}</span>
+      </div>
+    </div>
+    <div class="ea-bar">
+      <span class="ea-label">詳細說明</span>
+      <button class="ea-btn" @click="expandAllItems(true)">全展開 ▾</button>
+      <button class="ea-btn" @click="expandAllItems(false)">全收合 ▴</button>
+    </div>
+    <div class="timeline">
+      <div class="tl-item" v-for="item in cur.items" :key="item.id">
+        <div class="tl-left"><div class="tl-dot" :class="'dot-'+item.dot"></div></div>
+        <div class="tl-card">
+          <div class="tl-time-inline">{{item.time}}</div>
+          <div class="tl-card-head">
+            <div class="tl-card-name">{{item.place}}</div>
+
+          </div>
+          <div class="tags">
+            <span v-for="t in item.tags" :key="t.text" class="tag" :class="'tag-'+t.type">{{t.text}}</span>
+          </div>
+          <button v-if="item.expandLabel" class="expand-btn" :class="{open:item.expanded}" @click="item.expanded=!item.expanded">
+            <span class="expand-icon">▾</span> {{item.expandLabel}}
+          </button>
+          <div v-if="item.expanded && item.details" style="margin-top:.5rem">
+            <template v-for="(block,bi) in item.details" :key="bi">
+              <div v-if="block.type==='desc'" class="tl-desc" v-html="block.html"></div>
+              <div v-if="block.type==='transport'" class="tr-box" :style="block.style||''">
+                <div v-for="(r,ri) in block.rows" :key="ri" class="tr-row" :style="r.style||''" v-html="r.html"></div>
+              </div>
+              <div v-if="block.type==='notice'" class="notice" v-html="block.html"></div>
+              <div v-if="block.type==='correction'" class="correction" v-html="block.html"></div>
+              <div v-if="block.type==='chips'" class="chips">
+                <span v-for="(c,ci) in block.items" :key="ci" class="chip" :class="c.cls">{{c.text}}</span>
+              </div>
+              <div v-if="block.type==='foods'" class="food-section" :style="block.style||''">
+                <div class="food-label">{{block.label}}</div>
+                <div v-for="(f,fi) in block.items" :key="fi" class="food-item">
+                  <div class="fi-head">
+                    <span class="fi-name">{{f.name}}</span>
+                    <span v-for="(b,bbi) in (f.badges||[])" :key="bbi" class="fi-badge" :class="b.cls">{{b.text}}</span>
+                  </div>
+                  <div class="fi-detail" v-html="f.detail"></div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: MAP (Google My Maps embed) -->
+<div id="tab-map" :class="{'active-map':tab==='map'}">
+  <div id="map-iframe-wrap">
+    <iframe src="https://www.google.com/maps/d/u/4/embed?mid=1i0nkaPvDjf0QFkOPw7Lelz0aCXHnHJU&ehbc=2E312F" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</div>
+
+<!-- TAB: HOTELS -->
+<div v-if="tab==='hotels'">
+  <div class="hotels">
+    <div class="hotel-card" v-for="h in hotels" :key="h.name">
+      <div class="hotel-card-header">
+        <div class="hch-left">
+          <div class="hch-city">{{h.city}}</div>
+          <div class="hch-date">{{h.dates}}</div>
+        </div>
+        <div class="hch-right">
+          <span class="nights-badge">{{h.nights}}晚</span>
+          <a class="hotel-map-btn" :href="h.mapUrl" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+      <div class="hotel-card-body">
+        <div class="hotel-name">{{h.name}}</div>
+        <div class="hotel-location">{{h.location}}</div>
+        <div class="hotel-note">{{h.note}}</div>
+        <div class="hotel-info-list">
+          <div class="hil-row" v-for="(a,ai) in h.access" :key="ai">
+            <span class="hil-icon">{{a.icon}}</span>
+            <span class="hil-val">{{a.text}}</span>
+          </div>
+        </div>
+        <div class="ci-co">
+          <div class="ci-card">
+            <div class="ci-label">入住</div>
+            <div class="ci-time">{{h.checkin}}</div>
+            <div class="ci-latest" v-if="h.checkinLatest">最晚 {{h.checkinLatest}}</div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-label">退房</div>
+            <div class="ci-time">{{h.checkout}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: RATE -->
+<div v-if="tab==='rate'">
+  <div class="rate-panel">
+    <div class="section-card">
+      <div class="sc-head">💱 匯率換算器</div>
+      <div class="sc-body">
+        <div class="rg-row">
+          <span class="rg-label">匯率</span>
+          <div class="rg-inputs">
+            <span class="rg-unit">1 JPY =</span>
+            <input class="rg-input" type="number" v-model.number="rateVal" step="0.001" inputmode="decimal">
+            <span class="rg-unit">TWD</span>
+          </div>
+        </div>
+        <div class="rg-row">
+          <span class="rg-label">金額</span>
+          <div class="rg-inputs">
+            <input class="rg-input rg-amount" type="number" v-model.number="rateAmt" inputmode="numeric">
+            <select class="rg-select" v-model="rateFrom">
+              <option value="jpy">¥ JPY</option>
+              <option value="twd">NT$ TWD</option>
+            </select>
+          </div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">換算結果</div>
+          <div class="result-val">{{rateResult}}</div>
+          <div class="result-sub">{{rateSub}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="sc-head">🧮 計算機</div>
+      <div class="sc-body">
+        <div class="calc-display">
+          <div class="calc-expr">{{calcExpr}}</div>
+          <div class="calc-val">{{calcScreen}}</div>
+        </div>
+        <div class="calc-grid">
+          <button class="calc-btn cb-fn" @click="calcFn('clear')">C</button>
+          <button class="calc-btn cb-fn" @click="calcFn('back')">⌫</button>
+          <button class="calc-btn cb-op" @click="calcFn('%')">%</button>
+          <button class="calc-btn cb-op" @click="calcFn('÷')">÷</button>
+          <button class="calc-btn cb-num" @click="calcNum('7')">7</button>
+          <button class="calc-btn cb-num" @click="calcNum('8')">8</button>
+          <button class="calc-btn cb-num" @click="calcNum('9')">9</button>
+          <button class="calc-btn cb-op" @click="calcFn('×')">×</button>
+          <button class="calc-btn cb-num" @click="calcNum('4')">4</button>
+          <button class="calc-btn cb-num" @click="calcNum('5')">5</button>
+          <button class="calc-btn cb-num" @click="calcNum('6')">6</button>
+          <button class="calc-btn cb-op" @click="calcFn('−')">−</button>
+          <button class="calc-btn cb-num" @click="calcNum('1')">1</button>
+          <button class="calc-btn cb-num" @click="calcNum('2')">2</button>
+          <button class="calc-btn cb-num" @click="calcNum('3')">3</button>
+          <button class="calc-btn cb-op" @click="calcFn('+')">+</button>
+          <button class="calc-btn cb-num cb-zero" @click="calcNum('0')">0</button>
+          <button class="calc-btn cb-num" @click="calcNum('.')">.</button>
+          <button class="calc-btn cb-eq" @click="calcFn('=')">＝</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<script>
+const {createApp,ref,reactive,computed,watch,nextTick,onMounted} = Vue;
+
+createApp({
+setup(){
+const tab = ref('schedule')
+const sel = ref(0)
+const mapSel = ref(0)
+
+// ═══════════ FLIGHTS ═══════════
+const flights = ref([
+  {dir:'去程 Outbound',num:'CI 100',airline:'中華航空',from:'TPE',fromCity:'台灣桃園',to:'NRT',toCity:'東京成田',duration:'3h 25m',depart:'08:50',arrive:'13:15',date:'2026 年 4 月 30 日（四）'},
+  {dir:'回程 Return',num:'CI 109',airline:'中華航空',from:'NRT',fromCity:'東京成田',to:'TPE',toCity:'台灣桃園',duration:'3h 45m',depart:'20:00',arrive:'22:45',date:'2026 年 5 月 4 日（一）'},
+])
+
+// ═══════════ HOTELS ═══════════
+const hotels = ref([
+  {city:'東京・新宿',dates:'4/30（四）— 5/1（五）',nights:1,name:'WPÜ HOTEL',location:'東京都新宿区',note:'新宿西口站步行 2 分鐘。地處新宿核心，放下行李就能直接出發探索原宿與澀谷，回程也方便。',mapUrl:'https://maps.app.goo.gl/Jay14CeJM7JUsRHa9',checkin:'15:00',checkinLatest:'00:00',checkout:'11:00',access:[{icon:'🚇',text:'新宿西口站 步行 2 分・新宿站 步行 6 分・西武新宿站 步行 5 分'},{icon:'🏮',text:'思出橫丁 步行 1 分鐘'},{icon:'🌿',text:'新宿御苑 步行 18 分鐘'},{icon:'🗒',text:'5/1 退房後可考慮將行李寄存，輕裝出發'}]},
+  {city:'山梨・河口湖',dates:'5/1（五）— 5/2（六）',nights:1,name:'HAOSTAY Art Museum',location:'山梨県南都留郡富士河口湖町',note:'河口湖美術館正對面，窗外直接眺望富士山與湖景，是整趟旅程視野最壯闊的一晚。清晨可在房間欣賞富士山晨光，無需出門。',mapUrl:'https://maps.app.goo.gl/Co5j6MHZB5atRp7V6',checkin:'15:00',checkinLatest:'21:00',checkout:'10:00',access:[{icon:'🚇',text:'河口湖站 車程 5 分・步行 20 分'},{icon:'🎵',text:'河口湖森林音樂美術館 步行 5 分'},{icon:'🖼',text:'河口湖美術館 步行 7 分'},{icon:'🗒',text:'5/2 退房後將行李放入車內帶著出發'}]},
+  {city:'東京・秋葉原',dates:'5/2（六）— 5/4（一）',nights:2,name:'The Tourist Hotel & Cafe Akihabara',location:'東京都台東区',note:'連住兩晚，出入上野、淺草、秋葉原皆輕鬆。',mapUrl:'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7',checkin:'15:00',checkinLatest:'00:00',checkout:'10:00',access:[{icon:'🚇',text:'秋葉原站 步行 3 分・JR 秋葉原站 步行 5 分・御徒町站 步行 9 分・上野站 步行 17 分'},{icon:'🎮',text:'秋葉原電器街 步行 4 分鐘'},{icon:'🛍',text:'上野阿美橫商店街 步行 11 分鐘'},{icon:'🌿',text:'上野公園 步行 17 分鐘'},{icon:'🗒',text:'5/4 退房後可寄放行李，最後再取走'}]},
+])
+
+// ═══════════ HELPER: build detail blocks ═══════════
+function D(html){return{type:'desc',html}}
+function T(rows,style){return{type:'transport',rows,style}}
+function TR(html,cost,style){const r={html};if(cost)r.html=html+'<span class="tr-cost">'+cost+'</span>';if(style)r.style=style;return r}
+function N(html){return{type:'notice',html}}
+function C(items){return{type:'chips',items}}
+function CH(text,cls){return{text,cls}}
+function F(label,items,style){return{type:'foods',label,items,style}}
+function FI(name,detail,badges){return{name,detail,badges}}
+
+// ═══════════ DAYS ═══════════
+let _id=0
+function I(time,place,dot,tags,expandLabel,details,mapUrl){
+  return{id:++_id,time,place,dot,tags,expandLabel,details,mapUrl,expanded:false}
+}
+function TG(text,type){return{text,type}}
+
+const days = reactive([
+// ────────── DAY 1: 4/30 ──────────
+{date:'4/30',shortCity:'新宿',title:'4/30（四）抵達東京',summary:'成田機場・宅急便寄行李・新宿御苑・AFURI拉麵・藥妝',extra:null,
+ weather:{icon:'🌤',lo:'12°',hi:'21°'},
+ hotel:{name:'WPÜ HOTEL',note:'新宿西口站 步行 2 分・新宿站 步行 6 分'},
+ items:[
+  I('13:30','東京成田機場 抵達','transport',[TG('✈ 航班','flight')],'入境資訊 + 行李宅配',[
+    D('出關 → 領行李 → <b>購買 Suica IC 卡</b>（¥1,000） → JR 售票機購 <b>N\'EX 來回套票 ¥4,070/人</b>（去程到新宿＋回程到成田，5/4 用回程券）。'),
+    T([TR('🚆 <b>Narita Express（N\'EX）</b> 成田第2ビル 約 15:00 發 → 新宿 約 16:30（90 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,070（來回套票）</span> 比單程票省 ¥1,040')]),
+    D('<b>🧳 行李宅配到秋葉原飯店（強烈建議）：</b>在 T2 入境大廳的 <b>ヤマト宅急便</b>（黑貓宅急便）或 <b>郵便局</b> 辦理，填寫收件地址（The Tourist Hotel & Cafe Akihabara），隔天或後天可取。費用約 ¥2,000–2,500 / 件，黃金週可能稍貴。<b>效益極大</b>：整趟旅程免拖大行李坐電車，新宿和河口湖輕鬆遊。'),
+    N('<strong>⚠️ 宅配寄送截止：</strong>機場宅配通常 14:00–15:00 截止受理（各櫃台不同），建議出關後立刻辦理，再去購票。'),
+    C([CH('宅配費 ¥2,000–2,500/件','cc'),CH('💡 寄完就輕裝上路，全程無負擔','ct'),CH('💡 建議先購日本 SIM 卡或開啟漫遊','ct')]),
+  ]),
+  I('15:00','WPÜ HOTEL 新宿 Check-in','hotel',[TG('住宿','hotel')],'備註',[
+    D('新宿西口站步行約 2 分鐘。辦理入住、整理隨身行李、換裝。大件行李已寄宅配，輕裝出發。'),
+  ],'https://maps.app.goo.gl/Jay14CeJM7JUsRHa9'),
+  I('16:30','新宿御苑','sight',[TG('景點','sight')],'詳情',[
+    D('<b>新宿御苑</b>是東京都心最大的國民公園，58 公頃綠地融合日式・英式・法式三種庭園風格。5 月初草木最蒼翠，牡丹花壇盛開，是最美的季節之一。<b>新海誠《言葉之庭》電影取景地</b>，片中的涼亭和水池如今仍在。從飯店步行約 15 分鐘至新宿門（或搭地鐵 1 站至新宿御苑前站）。從<b>新宿門</b>進入，入口旁有服務中心、藝廊及咖啡廳。約 60–80 分鐘。'),
+    T([TR('🚶 飯店步行 約 15 分→ 新宿門'),{html:'或 🚃 東京Metro 丸の内線 新宿→新宿御苑前（2分），1 號出口步行 5 分',style:'color:var(--gray-400)'}]),
+    N('<strong>⚠️ 入園截止 16:00，閉園 16:30：</strong>請於 15:50 前通過入口閘門。建議從飯店 15:30 出發，抓緊時間入場，可在黃昏柔光中漫步日本庭園約 60 分鐘，不需趕景點、純放鬆。'),
+    C([CH('入園費 ¥500/人（Suica 可刷）','cc'),CH('週一休園（5/4 週一為節假日，5/5 補休）','cw'),CH('全程平坦，長椅多','co2')]),
+  ],'https://maps.app.goo.gl/Kmjk8EfBGmQBtPjv8'),
+  I('18:30','晚餐・AFURI 拉麵','food',[TG('餐飲','food')],'詳情',[
+    D('<b>AFURI（阿夫利）</b>是東京最具代表性的清爽系拉麵品牌，以神奈川縣阿夫利山山泉水熬製高湯，柚子清香貫穿整碗，與一般濃厚豚骨截然不同。招牌<b>柚子塩拉麵</b>——淡金色雞骨柴魚高湯，浮現柚子果皮與清爽鮮味，北海道小麥手打細直麵，入口既有雞肉鮮味又有柚子回甘。<b>全素拉麵（Vegan Ramen）</b>採 100% 植物性高湯，以蓮藕粉取代雞蛋製麵，豐富時蔬，素食者也可盡情享用。亦推薦<b>柚子沾麵（Tsukemen）</b>，冷麵蘸濃醬吃法夏天風味絕佳。自動販賣機點餐，提交票券後 5 分鐘上桌。'),
+    F('推薦品項',[FI('柚子塩拉麵（Yuzu Shio Ramen）','招牌，淡金色清湯，炭烤叉燒、水菜、竹筍、海苔，柚子香氣怡人。<span class="fi-price"> ¥1,100–1,300</span>'),FI('全素拉麵（Vegan Ramen）','100% 植物性，當季蔬菜豐富，蓮藕麵條，完全純素。<span class="fi-price"> ¥1,200–1,400</span>',[{text:'全素',cls:'badge-veg'}]),FI('柚子沾麵（冷 Tsukemen）','濃郁醬汁配冷麵，柚子酸香提味，越吃越順口。<span class="fi-price"> ¥1,200–1,500</span>')]),
+    T([TR('📍 AFURI 新宿 Lumine I 店：新宿西口 Lumine I B2F，距飯店步行 5 分鐘'),{html:'📍 AFURI 原宿店（千駄ヶ谷）：距離略遠，但環境更寬敞',style:'color:var(--gray-400)'}]),
+    C([CH('⚠️ 黃金週假日可能排隊 20–30 分，17:30 前去可減少等候','cw'),CH('素食、全素選項完整','co2')]),
+  ],'https://maps.app.goo.gl/vwQ4G64e4SFr7fgp9'),
+  I('20:00','新宿 藥妝採購','shop',[TG('購物','shop')],'推薦店家',[
+    D('飯店周邊是新宿核心區，藥妝戰場密集。購買保養品、退燒貼、整腸藥、藥妝伴手禮的最佳時機，重物可先放回飯店或等最後宅急便寄回。'),
+    F('周邊主力藥妝',[FI('松本清 新宿西口本店','日本最大藥妝連鎖，新宿西口旁，品項最齊全，可退稅，22:00 前。<span class="fi-price">退稅需 ¥5,000 以上</span>'),FI('ドン・キホーテ 新宿東口','"唐吉訶德"24H 超市，藥妝＋食品＋零食全齊，黃金週不打烊，晚上人較少。<span class="fi-price">部分商品更便宜</span>',[{text:'24H',cls:'badge-top'}]),FI('AINZ & TULPE 新宿','高品質美妝選品店，SK-II、資生堂、POLA 等日系品牌，環境整潔，適合精挑細選。')]),
+  ]),
+]},
+
+// ────────── DAY 2: 5/1 ──────────
+{date:'5/1',shortCity:'富士山',title:'5/1（五）富士山',summary:'河口湖取車・餺飥午餐・大石公園・御殿場 Outlets',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
+ weather:{icon:'⛅',lo:'8°',hi:'17°'},
+ hotel:{name:'HAOSTAY Art Museum',note:'河口湖美術館前・富士山景觀'},
+ items:[
+  I('07:45','早餐・出發前・新宿站周邊','food',[TG('餐飲','food')],'2 個選擇',[
+    F('早餐選擇',[FI('GOOD MORNING CAFE NOWADAYS','西式早餐，新宿御苑附近，07:00 開門，英文菜單。素食可選。<span class="fi-price"> ¥800–1,200</span>'),FI('7-11 / FamilyMart（快速方案）','飯糰＋熱咖啡，快速出發的好選擇。24H。<span class="fi-price"> ¥400–700</span>')]),
+  ]),
+  I('08:00','前往新宿站','transport',[TG('交通','transport')],'交通詳情',[
+    D('大件行李昨日已宅配至秋葉原飯店，今天輕裝出發！前往 16/17 番線，富士回遊 08:30 發車，全車指定席，未購票者無法上車。'),
+  ],'https://maps.app.goo.gl/HcuekJrahSZnerjM6'),
+  I('08:30','搭乘富士回遊 7 號 新宿 → 河口湖','transport',[TG('交通','transport')],'交通詳情',[
+    D('車廂從東京市區漸入山梨縣田園風光，接近河口湖時富士山巨大出現在右側（A 席），震撼無比。全程 1 小時 56 分，可在車上吃早餐。'),
+    T([TR('🚆 <b>富士回遊 7 號</b> 新宿 08:30 → 河口湖 10:26'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,130/人</span>（指定席）')]),
+    C([CH('⚠️ 全車指定席，未提前購票無法上車','cw')]),
+  ]),
+  I('10:30','河口湖站 取車','transport',[TG('交通','transport')],'交通詳情',[
+    D('步行 5 分鐘至 <b>Toyota Rent a Car 河口湖站前</b>辦理取車。準備：<b>台灣駕照正本＋日文譯本＋護照</b>。取車後先在旁邊加油站加滿油，再出發。'),
+    C([CH('租車 ¥15,000–20,000/2天（含保險）','cc'),CH('⚠️ 需監理所核發日文譯本，國際駕照不適用','cw')]),
+  ],'https://maps.app.goo.gl/rbmwBjcDRSERDwZ7A'),
+  I('11:15','午餐・餺飥（ほうとう）','food',[TG('餐飲','food')],'3 個選擇',[
+    D('<b>餺飥（ほうとう）</b>是山梨縣最具代表性的鄉土料理，相傳自戰國武將武田信玄時代流傳至今。寬扁的小麥麵條與南瓜、根莖野菜在鐵鍋中以自家製味噌慢煮，麵條軟糯、湯頭濃郁鮮甜，暖胃又暖心，是來山梨最不可錯過的一碗。<b>純素版本</b>通常可要求去掉豬肉、以野菜湯底製作，建議點餐時告知。'),
+    F('推薦店家',[FI('ほうとう不動 河口湖北本店','河口湖最具代表性的餺飥專門店，自家製麵條口感紮實，不動招牌餺飥（¥1,320）南瓜大塊綿密。11:00 開門，黃金週排隊常見，盡量早到。<span class="fi-price"> ¥1,300–1,700</span>'),FI('甲州ほうとう 小作 河口湖店','老字號餺飥名店，かぼちゃほうとう（南瓜餺飥，¥1,400）最受歡迎，麵條更Q，湯頭偏甜，河口湖站附近，停車場大。素食版可詢問。<span class="fi-price"> ¥1,400–1,700</span>',[{text:'老字號','cls':'badge-top'}]),FI('ほうとう蔵 歩成 河口湖店','黃金餺飥（¥1,650）以完熟南瓜製作，湯色偏金黃，更鮮甜，河口湖IC附近，自駕最方便。素食詢問。<span class="fi-price"> ¥1,650–1,900</span>')]),
+    C([CH('💡 11:00 開門，11:15 到通常不需等位','ct'),CH('可素，點餐時請說「野菜のみで」','co2')]),
+  ],'https://maps.app.goo.gl/xAE3LJQM4XXbpzqr9'),
+  I('12:45','大石公園（Oishi Park）','sight',[TG('景點','sight')],'詳情',[
+    D('<b>大石公園</b>是河口湖北岸最佳富士山拍攝點，也是全日本最著名的風景明信片取景地。5 月初芝櫻（石竹花）連片盛開，粉紅花毯與富士山構成夢幻畫面。清晨人少光線美，午後人潮稍多但景色依舊壯觀。免費入場，停車免費。約 45–60 分鐘。'),
+    T([TR('🚗 自駕 餺飥店 → 大石公園（約 15 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">免費入場</span>（停車免費）')]),
+    C([CH('免費','cc'),CH('5 月芝櫻盛期，最美明信片場景','co2'),CH('💡 停車場在公園旁，早中午均有車位','ct')]),
+  ],'https://maps.app.goo.gl/gZ6ERWknuf7etDiq6'),
+  I('14:15','前往御殿場','transport',[TG('交通','transport')],'交通詳情',[
+    D('大石公園結束後，沿國道 138 號往東南方向前進，約 1 小時可達御殿場 Premium Outlets。沿途可在車上欣賞富士山不同角度的姿態。'),
+    T([TR('🚗 自駕 大石公園 → 御殿場 Premium Outlets（約 55–65 分）')]),
+    N('<strong>💡 路況提醒：</strong>黃金週期間富士五湖道路可能壅塞，建議 14:00–14:15 準時出發，確保 15:30 前抵達 Outlets 購物時段。'),
+  ]),
+  I('15:30','御殿場 Premium Outlets','shop',[TG('購物','shop')],'詳情',[
+    D('日本最大 Premium Outlets，共 <b>210 家品牌</b>：Nike、Coach、Ralph Lauren、Burberry、Tory Burch、Kate Spade、Polo 等，背後就是富士山，拍照超美。黃金週直奔最想購買的品牌，避免耗時在不熟悉的店家。退稅需各店滿 ¥5,000。約 2 小時 30 分。'),
+    C([CH('園內有接駁 Shuttle，不需步行全場','co2'),CH('退稅需單店 ¥5,000 以上，出示護照','ct')]),
+  ],'https://maps.app.goo.gl/ZM883cTE63susJ1EA'),
+  I('18:00','晚餐・御殿場 Outlets 或附近','food',[TG('餐飲','food')],'2 個選擇',[
+    F('晚餐選擇',[FI('御殿場 Outlets 美食廣場','拉麵、炸豬排、蕎麥麵等，露天座可看富士山，一邊吃飯一邊看景是絕妙體驗。多素食選項。<span class="fi-price"> ¥1,000–1,800</span>'),FI('とんかつ 新宿さぼてん（Outlets 內）','全日本知名炸豬排連鎖，鬆軟多汁，套餐附白飯味噌湯。<span class="fi-price"> ¥1,200–2,000</span>')]),
+  ]),
+  I('19:45','返回河口湖・HAOSTAY Check-in','hotel',[TG('住宿','hotel')],'備註',[
+    D('從御殿場 Outlets 開車約 40–50 分鐘返回河口湖，辦理 Check-in（最晚 21:00），整理行李，稍作休息。窗外即是富士山與河口湖美術館。'),
+    T([TR('🚗 自駕 御殿場 Outlets → HAOSTAY（約 45 分）')]),
+  ],'https://maps.app.goo.gl/Co5j6MHZB5atRp7V6'),
+]},
+
+// ────────── DAY 3: 5/2 ──────────
+{date:'5/2',shortCity:'富士芝櫻',title:'5/2（六）富士芝櫻・淺間公園',summary:'富士芝櫻祭・他手合濱・新倉山淺間公園・返回東京',extra:'🚄 富士回遊 17:41 河口湖→19:48 新宿',
+ weather:{icon:'⛅',lo:'9°',hi:'19°'},
+ hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'秋葉原站 步行 3 分・JR 秋葉原站 步行 5 分'},
+ items:[
+  I('07:45','出發・HAOSTAY','transport',[TG('交通','transport')],'出發備注',[
+    D('退房前確認行李全數放入車中。今日所有景點皆在河口湖站以西或以北方向，行程動線順暢。<b>先到加油站把油加到超過半箱</b>，確保今日行程充裕。'),
+    T([TR('🚗 HAOSTAY → 富士本栖湖リゾート（約 30 分，沿本栖みち往西）')]),
+  ]),
+  I('08:30','富士芝櫻祭','sight',[TG('景點','sight')],'詳情',[
+    D('<b>富士芝櫻祭</b>是日本最壯觀的芝櫻（石竹）花展，每年 4 月中至 5 月下旬在富士本栖湖畔舉辦，2026 年確認 <b>4/11（六）～5/24（日）</b>開催。約 50 萬株的粉紅、白、深紅、紫色芝櫻鋪成花毯，遠方富士山殘雪遙遙相對，是 CNN Travel 評選「日本最美 36 景」之一。5 月 2 日正值盛開高峰，是此行視覺震撼最強的景點。清早 08:30 抵達人潮較少，光線最美。約 90–120 分鐘。'),
+    T([TR('🚗 自駕 HAOSTAY → 富士本栖湖リゾート（約 30 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">大人 ¥1,000–1,300</span>（5/1–5/10 為 B 區間，¥1,300）'),TR('🕐 開園 8:00，入園截止 16:00')]),
+    C([CH('⚠️ 黃金週可能停車排隊，建議 08:30 前抵達','cw'),CH('💡 5 月初花況最佳，帶防曬','ct'),CH('園內有飲食攤販和廁所','co2')]),
+  ],'https://maps.app.goo.gl/VhCAaTNzLHwfCjRZ9'),
+  I('10:40','精進湖 他手合濱（天氣好才去）','sight',[TG('景點','sight')],'詳情',[
+    D('<b>他手合濱（精進湖）</b>是富士五湖中最安靜的一座，擁有「子抱き富士」的獨特視角：前景的小丸山丘陵遮擋了部分山腳，使富士山看起來像抱著孩子的親子構圖，是五湖中最特殊的角度。湖面倒影清晰，適合拍攝風景照。距芝櫻祭會場車程約 5 分鐘，天氣好才值得停留，陰天可跳過直奔下一站。約 30–40 分鐘。'),
+    T([TR('🚗 自駕 富士本栖湖リゾート → 他手合濱（約 5 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">免費</span>（路邊停車免費）')]),
+    C([CH('天氣晴朗才去，陰天可跳過','ct'),CH('免費','cc')]),
+  ],'https://maps.app.goo.gl/wvAcwxFdd1KrUX5aA'),
+  I('11:45','午餐・河口湖周邊','food',[TG('餐飲','food')],'3 個選擇',[
+    D('從精進湖開車返回河口湖方向約 20–25 分鐘，在河口湖周邊找午餐，吃完後出發前往新倉山。'),
+    F('午餐選擇',[FI('CAFETINO MT. FUJI','評分 4.8/5！手作鬆餅，窗外直望富士山，環境舒適，適合放鬆。素食可選。<span class="fi-price"> ¥1,000–1,500</span>',[{text:'高評分',cls:'badge-top'}]),FI('吉田のうどん（吉田烏龍麵）','山梨限定粗硬烏龍麵，銅板美食 CP 值極高，地方名物，多間店家在富士吉田市區。<span class="fi-price"> ¥500–700</span>'),FI('便利商店 or 車內','若時間緊湊，7-11 飯糰＋熱食也是選項，邊趕路邊吃。<span class="fi-price"> ¥400–700</span>')]),
+  ]),
+  I('13:30','新倉山淺間公園 忠靈塔','sight',[TG('景點','sight')],'詳情',[
+    D('<b>新倉山淺間公園</b>是全日本最著名的「富士山＋五重塔」明信片場景發源地，忠靈塔（五重塔）與富士山構成無與倫比的構圖，是整趟行程最震撼的富士山照片聖地。5 月有杜鵑花盛開，春色更濃。需爬 398 級石階至觀景台（約 15–20 分），<b>走到舒服即可，不需強行爬頂</b>——山腰的淺間神社境內也有相當好的富士山視角。約 60–90 分鐘。'),
+    T([TR('🚗 自駕 河口湖周邊 → 新倉山淺間公園（約 20 分，往富士吉田市）'),TR('💰 <span style="color:var(--gold);font-weight:600">入場免費</span>（停車場 ¥1,000–1,500）')]),
+    N('<strong>⚠️ 時間控制：</strong>15:00 前需出發還車，請於 14:45 前下山並步行回停車場。走到舒服為止，不必勉強爬到最高觀景台。'),
+    C([CH('⚠️ 14:45 前務必開始下山','cw'),CH('💡 下午光線打在塔和富士山上很漂亮','ct'),CH('入場免費','cc')]),
+  ],'https://maps.app.goo.gl/eoExM36FpkwE5vtH6'),
+  I('15:00','河口湖 還車','transport',[TG('交通','transport')],'還車注意事項',[
+    D('從新倉山淺間公園開車約 10–15 分鐘至 Toyota Rent a Car 河口湖站前。<b>還車前務必加滿油</b>（附近有昭和 Shell 或 ENEOS 加油站），否則租車公司按市價 1.5 倍收取加油費。確認車內無遺留物品，交還鑰匙並確認費用明細。'),
+    T([TR('🚗 新倉山淺間公園 → 加油站 → Toyota Rent a Car（約 15 分）')]),
+    N('<strong>⚠️ 時間提醒：</strong>還車手續約需 10–15 分鐘，17:41 搭乘富士回遊，建議 15:15 到加油站、15:30 到租車公司，17:20 步行至河口湖站月台。'),
+  ],'https://maps.app.goo.gl/rbmwBjcDRSERDwZ7A'),
+  I('17:20','前往河口湖站','transport',[TG('交通','transport')],'交通詳情',[
+    T([TR('🚶 步行 Toyota Rent a Car → 河口湖站（約 10 分）')]),
+    N('<strong>⚠️ 請提前至月台確認指定席車廂位置，富士回遊全車指定席。</strong>'),
+  ]),
+    I('17:41','搭乘富士回遊 河口湖 → 新宿','transport',[TG('交通','transport')],'交通詳情',[
+    D('車廂回程可欣賞夕陽中的富士山輪廓，美得令人難忘。建議坐 B 席（左側），傍晚光線從西方照射富士山，輪廓更清晰。'),
+    T([TR('🚆 <b>富士回遊 48 號</b> 河口湖 17:41 → 新宿 19:48（約 2h07m）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,130/人</span>（已提前購票，指定席）')]),
+    C([CH('⚠️ 確認回程票的指定時刻，準時上車','cw')]),
+  ]),
+  I('19:00','抵達東京・前往秋葉原飯店','transport',[TG('交通','transport')],'交通詳情',[
+    D('新宿站抵達後辦理 Check-in，確認宅急便行李已抵達。整理行李、換裝，再出門覓食。'),
+    T([TR('🚃 JR 中央線（快速） 新宿 → 秋葉原（約 22 分）','¥220')]),
+  ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
+  I('19:30','晚餐・秋葉原周邊','food',[TG('餐飲','food')],'3 個選擇',[
+    F('晚餐選擇',[FI('牛カツ もと村 秋葉原店','外脆內嫩炸牛排配石板自烤，白飯免費續，秋葉原這間較大，等候時間短。<span class="fi-price"> ¥2,100–2,800</span>'),FI('Roast Beef Ohno 秋葉原店','嫩滑和牛切片配特製醬汁，牛尾湯免費續，飯店附近步行可達。<span class="fi-price"> ¥1,500–2,500</span>'),FI('T\'s Tantan 上野站','100% 植物性拉麵，JR 上野站內，搭 JR 2 分鐘可到，素食者必來。<span class="fi-price"> ¥1,100–1,400</span>',[{text:'100% 全素',cls:'badge-veg'}])]),
+  ]),
+  I('21:00','The Tourist Hotel & Cafe 秋葉原 Check-in','hotel',[TG('住宿','hotel')],'備註',[D('辦理入住，確認宅急便大行李已到，整理，稍作休息。')],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
+]},
+
+// ────────── DAY 4: 5/3 ──────────
+{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・銀座・澀谷',summary:'秋葉原購物・叙々苑銀座燒肉・明治神宮・Shibuya Sky・澀谷居酒屋',extra:null,
+ weather:{icon:'☀️',lo:'12°',hi:'22°'},
+ hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'連住第 2 晚'},
+ items:[
+  I('09:30','秋葉原 電器街 + UNIQLO 購物','shop',[TG('購物','shop')],'推薦店家',[
+    D('黃金週早上逛秋葉原效率最高——開門人潮尚未湧入，退稅通道也不必排太久。主攻電器、相機、玩具、扭蛋，以及 UNIQLO 秋葉原店選購服飾。'),
+    F('必逛店家',[FI('Yodobashi Akiba（ヨドバシ秋葉原）','地上 9 層超大電器城，電器、相機、電玩、玩具，退稅需單店 ¥5,000 以上，出示護照。10:00 開門。<span class="fi-price">退稅 10%</span>'),FI('UNIQLO 秋葉原','輕機能服飾，日本限定款，價格比台灣便宜。建議比較 UNIQLO 全尺寸再購買。<span class="fi-price"> ¥800–5,000</span>'),FI('扭蛋機超市（ガチャポン会館）','全日本最大扭蛋機集中地，寶可夢、吉卜力、一番賞，每台 ¥300–500。')]),
+    T([TR('📍 秋葉原電気街：秋葉原站東口步行 2 分鐘'),{html:'📍 UNIQLO 秋葉原：ヨドバシ Akiba 旁，步行 1 分鐘',style:'color:var(--gray-400)'}]),
+    C([CH('💡 10:00–11:30 人少效率最高','ct'),CH('退稅需單店 ¥5,000 以上','cf')]),
+  ],'https://maps.app.goo.gl/DfdUP8kCWLk5CC3Y9'),
+  I('12:00','戰利品放回飯店','hotel',[TG('住宿','hotel')],'備注',[
+    D('採購完後回飯店放戰利品，整理購物袋，換裝準備出發前往銀座。也可趁此時寄放大件紙袋，銀座吃飯後繼續出行輕鬆不少。'),
+  ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
+  I('12:20','前往銀座','transport',[TG('交通','transport')],'交通詳情',[
+    T([TR('🚃 東京Metro 日比谷線 秋葉原→銀座（10分）','¥200'),{html:'或 JR 山手線 秋葉原→有楽町，步行 5 分至銀座（約 15 分）',style:'color:var(--gray-400)'}]),
+  ]),
+  I('13:00','午餐・敘敘苑 銀座Miyuki大道店（燒肉）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>叙々苑（JOJOEN）</b>是日本最具代表性的高級燒肉品牌，以「良質吟味」為信念嚴選和牛食材，炭火烤出的肉質軟嫩多汁，每一口都是純粹牛肉的鮮甜。<b>銀座みゆき通り店</b>座落在銀座歷史最悠久的商業街道，環境典雅沉穩，56 席寬敞明亮，是整趟行程格調最高的一餐。<b>ランチセット（午餐套餐）</b>含燒肉主角、沙拉、泡菜、白飯、味噌湯、飲料及甜點，性價比遠高於晚餐。強烈建議提前訂位。'),
+    F('午餐套餐推薦',[FI('ランチコース A（和牛燒肉套餐）','焼物：赤身ロース・カルビ・エビ，附沙拉、ナムル、漬物、白飯、スープ、デザート、飲料。<span class="fi-price"> ¥3,500–5,000/人</span>'),FI('ランチコース C（特選牛燒肉套餐）','焼物：特選サーロイン・上カルビ・タン塩，附全套副食，頂級享受。<span class="fi-price"> ¥7,000–9,000/人</span>',[{text:'頂級',cls:'badge-top'}])]),
+    T([TR('📍 叙々苑 銀座みゆき通り店：銀座 2-3-2、銀座一丁目站步行 5 分、銀座站步行 7 分'),TR('🕐 ランチ 11:30–15:00，需訂位（電話或一休.com）')]),
+    
+    C([CH('✅ 已訂位','co2'),CH('午餐 CP 值最高','cf')]),
+  ],'https://maps.app.goo.gl/bEqd4K3g2vktXDiLA'),
+  I('15:00','明治神宮','sight',[TG('景點','sight')],'詳情',[
+    D('吃完銀座燒肉，搭地鐵前往明治神宮，穿越百年原生森林大參道（約 15 分鐘步行至本殿）。5 月初森林最蒼翠，陽光穿透樹葉灑落大道，氛圍神聖寧靜。本殿祈願、許願繪馬，參拜後可在本殿旁的「明治神宮御苑」漫步（¥500）。約 60 分鐘。'),
+    T([TR('🚃 東京Metro 丸の内線/銀座線 銀座→表参道，換 千代田線→明治神宮前（10分）','¥240'),{html:'或 東京Metro 銀座線 銀座→表参道，換 千代田線→代々木公園，步行 5 分',style:'color:var(--gray-400)'}]),
+    N('<strong>⚠️ 關門時間：</strong>5 月明治神宮約 18:00 關閉，表參道口須 17:50 前通過。'),
+    C([CH('免費入場','cc'),CH('💡 大參道 800m，原生森林，5 月最綠','ct')]),
+  ],'https://maps.app.goo.gl/DpzHGByGZTz3YPk37'),
+  I('17:00','Shibuya Sky 夜景','sight',[TG('景點','sight')],'詳情',[
+    D('<b>Shibuya Sky</b> 在澀谷 Scramble Square 46 樓（230m），是東京最壯觀的完全戶外 360° 觀景台，無玻璃阻擋、腳下是澀谷繁華的夜景，遠方可見富士山輪廓。17:00–19:00 是日落黃昏轉夜景的最美時段，強烈推薦。'),
+    T([TR('🚶 明治神宮表參道 → 澀谷 步行約 15 分，或 🚃 JR 山手線 原宿→澀谷（2分）','¥150')]),
+    N('<strong>⚠️ 黃金週訂票：</strong>Shibuya Sky 黃金週所有時段可能售罄，務必提前至 shibuyasky.jp 線上購票，建議選 17:30–18:00 入場。現場幾乎無票。'),
+    C([CH('票價 ¥2,000/人','cc'),CH('⚠️ 提前官網訂票，黃金週必備','cw'),CH('💡 日落轉夜景是最美時段','ct')]),
+  ],'https://maps.app.goo.gl/b5kLg9F8psfDJ3Gd9'),
+  I('18:30','晚餐・澀谷居酒屋','food',[TG('餐飲','food')],'3 個選擇',[
+    D('Shibuya Sky 下來後，在澀谷附近找一間氣氛好的居酒屋，享受東京夜晚最道地的用餐體驗。'),
+    F('推薦居酒屋',[FI('渋谷 一串 IPPON','澀谷站附近，串燒種類豐富，雞肉系列尤其出名，氣氛熱鬧，適合聚餐。<span class="fi-price"> ¥2,500–4,000</span>'),FI('うまいもん屋 五郎','澀谷站步行 5 分，和牛串燒配日本酒，環境溫馨，不需訂位也可候位。<span class="fi-price"> ¥2,000–3,500</span>'),FI('KURAND SAKE MARKET','日本酒喝到飽，100+ 種全國清酒，¥3,000 固定費用，啤酒、燒酎、梅酒等齊全，非酒精飲料也有。<span class="fi-price"> ¥3,000/人（飲料無限）</span>',[{text:'清酒無限',cls:'badge-top'}])]),
+  ]),
+  I('21:30','返回秋葉原飯店','transport',[TG('交通','transport')],'交通詳情',[
+    T([TR('🚃 JR 山手線 澀谷→秋葉原（約 20 分）','¥220')]),
+  ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
+]},
+
+// ────────── DAY 5: 5/4 ──────────
+{date:'5/4',shortCity:'返台',title:'5/4（一）淺草・晴空塔・返台',summary:'淺草寺・晴空塔トリトン迴轉壽司・秋葉原取行李・成田返程',extra:null,
+ weather:{icon:'🌤',lo:'15°',hi:'22°'},
+ hotel:{icon:'✈️',label:'航班',name:'CI 109 NRT 20:00 起飛',note:'建議 16:00 前抵達機場'},
+ items:[
+  I('09:00','淺草寺','sight',[TG('景點','sight')],'詳情',[
+    T([TR('🚃 東京Metro 日比谷線 秋葉原→仲御徒町，換銀座線→淺草（約 15 分）','¥220')],'margin-bottom:.5rem'),
+    D('雷門大紅燈籠打卡 → <b>仲見世通</b>（250 公尺商店街，約 100 間老店）→ 本殿參拜 → 抽籤（おみくじ）。人形燒（¥150/個）、雷おこし（¥800/袋）必買，還有人力車、手拭、和紙工藝品。早上 09:00 到人潮雖然有但尚可接受，10:00 後人潮爆炸性增加。約 90–100 分鐘。'),
+    C([CH('免費入場','cc'),CH('仲見世通 250m 全平坦','co2'),CH('💡 09:00 抵達是最佳時段','ct')]),
+  ],'https://maps.app.goo.gl/bn9zZcNX4NoYA3kx6'),
+  I('11:00','前往晴空塔・先拿整理券','transport',[TG('交通','transport')],'整理券策略',[
+    D('從淺草寺步行至晴空塔約 15 分鐘（沿隅田川散步），或搭都營淺草線一站至押上。<b>抵達後第一件事：立刻至 SOLAMACHI 6F「回転寿しトリトン」店前的平板取整理券</b>——黃金週土日可能等待 1–2 小時，取到券後可先逛商場再返回用餐，不需站在店前乾等。'),
+    T([TR('🚶 淺草寺 → 晴空塔 步行約 15 分 或 🚃 都營浅草線 浅草→押上（2分）','¥180')]),
+    N('<strong>⚠️ 整理券策略：</strong>トリトン 11:00 開始取券，當日整理券可能於下午即告罄。<strong>11:00–11:15 到店取券</strong>是關鍵，越晚等待時間越長。取得券後系統可連結 LINE 通知，無需在店前等候。'),
+    C([CH('⚠️ 11:00 準時取整理券是重點','cw'),CH('取到券後可自由逛 SOLAMACHI','co2')]),
+  ],'https://maps.app.goo.gl/sdCEoKyYu1QU8K4w9'),
+  I('12:00','午餐・Toriton・晴空塔 6F（迴轉壽司）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>回転寿し トリトン</b>是北海道發源的超人氣迴轉壽司，東京只有三間店，ソラマチ店是人氣最旺的一間。使用北海道直送的新鮮食材，鮮度和分量都遠超一般東京迴轉壽司。<b>北海道えんがわ</b>（比目魚鰭邊肉，柚子鹽版本）、<b>北海道産うに</b>（海膽）、<b>鮭魚系列</b>是招牌。坐位制 80 分鐘，觸控螢幕點餐，不提供預約，只能現場取整理券。平均消費每人 ¥3,000–4,500。'),
+    F('必點推薦',[FI('えんがわ（柚子塩）','比目魚鰭邊肉，脂肪豐厚，柚子鹽提鮮，北海道特色，售完為止。<span class="fi-price"> ¥220–330/盤</span>'),FI('北海道産うに（海膽）','北海道直送馬糞海膽，甜味濃，東京市區罕見的新鮮度。<span class="fi-price"> ¥440–660/盤</span>',[{text:'必吃',cls:'badge-top'}]),FI('炙りサーモン（炙燒鮭魚）','表面炙燒，油脂更香，是最多人點的定番品項。<span class="fi-price"> ¥220/盤</span>'),FI('イモモチ（芋餅・甜點）','北海道家庭傳統點心，外皮炸得酥脆，內餡軟糯，配甜醬，非常特別。<span class="fi-price"> ¥110–165</span>')]),
+    N('<strong>⚠️ 整理券說明：</strong>本店不接受預約，只接受現場取整理券（店前平板機器）。黃金週可能候位 1–2 小時以上，11:00 開店前到場取券效率最高。坐位時間限 80 分鐘。'),
+    C([CH('不接受預約，現場取整理券','cw'),CH('每人約 ¥3,000–4,500','cc'),CH('80 分鐘用餐時限','ct')]),
+  ],'https://maps.app.goo.gl/sdCEoKyYu1QU8K4w9'),
+  I('14:00','SOLAMACHI 商場 伴手禮採購','shop',[TG('購物','shop')],'推薦店家',[
+    D('用完午餐在 SOLAMACHI 做最後一輪伴手禮採購，此時距離出發機場還有充裕時間。'),
+    F('必逛區域',[FI('B2 超市（まいばすけっと・東武ストア）','日本限定零食、東京限定點心、北海道食品，超市現場很多試吃，也可購買機場沒有的在地品項。'),FI('1–4F 晴空塔限定商品','東京スカイツリー限定伴手禮、主題商品，從玩具、點心到雜貨都有。'),FI('どんぐり共和國（吉卜力官方店）','吉卜力全系列商品，龍貓、魔女宅急便、天空之城，SOLAMACHI 這間是東京最齊全的一家。')]),
+    C([CH('💡 結帳後立刻把購物袋整理好，等下直接帶去機場','ct')]),
+  ],'https://maps.app.goo.gl/sdCEoKyYu1QU8K4w9'),
+  I('15:30','秋葉原飯店 取行李','hotel',[TG('住宿','hotel')],'備注',[
+    D('返回飯店取回大行李（包含宅急便的大行李箱）。確認護照、電子機票（CI 109）、購物收據（退稅用）。Suica 可在 JR 服務台退卡（餘額＋¥500 押金），或保留下次使用。'),
+    T([TR('🚃 東京Metro 半蔵門線 押上→錦糸町，換 JR 総武線→秋葉原（約 18 分）','¥220')]),
+  ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
+  I('16:00','前往成田機場','transport',[TG('✈ 航班','flight')],'2 個方案',[
+    D('確認行李、護照、電子機票一切就緒後，從秋葉原出發前往成田機場。'),
+    F('方案 A：N\'EX（已含在來回套票，免費）',[FI('Narita Express 回程','🚃 JR 総武線 秋葉原→新宿（22分・¥220）<br>🚆 N\'EX 新宿 約 16:30 → 成田第2航廈 約 17:57<br>💰 <span class="fi-price">已含在 ¥4,070 來回套票，免費</span><br>⚠️ 秋葉原無 N\'EX 停靠，需先搭至新宿轉乘')]),
+    F('方案 B：Skyliner（從秋葉原更順路）',[FI('京成 Skyliner','🚃 JR 山手線 秋葉原→日暮里（10分・¥170）<br>🚅 Skyliner 日暮里 → 成田機場第2航廈（36分）<br>💰 <span class="fi-price">¥2,570/人（單程）</span><br>✅ 無需繞到新宿，省時 30 分鐘，附大件行李箱也方便')]),
+    N('<strong>⚠️ 提醒：</strong>黃金週最後一天機場人潮多，建議 <strong>16:00 出發</strong>，<b>17:30 前抵達成田第2航廈</b>，預留充裕時間辦理報到、退稅及出境。'),
+  ]),
+
+  I('20:00','成田機場 返程','transport',[TG('✈ 航班','flight')],'詳情',[
+    D('20:00 成田第2航廈起飛 → 22:45 抵達桃園機場第2航廈。飛行約 3 小時 45 分，平安返家！'),
+  ]),
+]},
+])
+
+const cur = computed(()=>days[sel.value])
+
+function expandAllItems(open){
+  if(!cur.value)return
+  cur.value.items.forEach(item=>{item.expanded=open})
+}
+
+// ═══════════ MAP DATA (with Google Maps Embed API q= search query) ═══════════
+const mapDays = ref([
+  {title:'4/30 抵達東京',places:[
+    {type:'prev', label:'✈️',name:'成田機場（抵達）',    lat:35.77085,lng:140.38465,q:'Narita+Airport+Terminal+2'},
+    {type:'sight',label:'1', name:'新宿御苑',           lat:35.68533,lng:139.71017,q:'Shinjuku+Gyoen+National+Garden'},
+    {type:'sight',label:'2', name:'AFURI 新宿 Lumine',  lat:35.68946,lng:139.69892,q:'AFURI+Shinjuku+Lumine'},
+    {type:'hotel',label:'🏨',name:'WPÜ HOTEL 新宿',     lat:35.69411,lng:139.69829,q:'WPU+HOTEL+Shinjuku'},
+  ]},
+  {title:'5/1 富士山',places:[
+    {type:'sight',label:'1', name:'河口湖站',           lat:35.49839,lng:138.76886,q:'Kawaguchiko+Station'},
+    {type:'sight',label:'2', name:'ほうとう不動',       lat:35.52106,lng:138.75342,q:'Houtou+Fudou+Kawaguchiko'},
+    {type:'sight',label:'3', name:'大石公園',           lat:35.52311,lng:138.74590,q:'Oishi+Park+Kawaguchiko'},
+    {type:'sight',label:'4', name:'御殿場 Outlets',     lat:35.30753,lng:138.96612,q:'Gotemba+Premium+Outlets'},
+    {type:'hotel',label:'🏨',name:'HAOSTAY Art Museum', lat:35.52251,lng:138.77240,q:'HAOSTAY+Art+Museum+Kawaguchiko'},
+  ]},
+  {title:'5/2 富士芝櫻',places:[
+    {type:'sight',label:'1', name:'富士芝櫻祭',         lat:35.45694,lng:138.58512,q:'Fuji+Shibazakura+Festival'},
+    {type:'sight',label:'2', name:'他手合濱（精進湖）', lat:35.49104,lng:138.60558,q:'Shojiko+Lake+Fujinomiya'},
+    {type:'sight',label:'3', name:'新倉山淺間公園',     lat:35.50151,lng:138.80216,q:'Arakurayama+Sengen+Park'},
+    {type:'hotel',label:'🏨',name:'The Tourist Hotel 秋葉原',lat:35.70104,lng:139.77704,q:'The+Tourist+Hotel+Cafe+Akihabara'},
+  ]},
+  {title:'5/3 秋葉原・銀座・澀谷',places:[
+    {type:'sight',label:'1', name:'秋葉原電器街',       lat:35.69988,lng:139.77187,q:'Akihabara+Electric+Town+Tokyo'},
+    {type:'sight',label:'2', name:'叙々苑 銀座みゆき通り',lat:35.67185,lng:139.76576,q:'Jojoen+Ginza+Miyukidori'},
+    {type:'sight',label:'3', name:'明治神宮',           lat:35.67663,lng:139.69934,q:'Meiji+Jingu+Shrine+Tokyo'},
+    {type:'sight',label:'4', name:'Shibuya Sky',        lat:35.65962,lng:139.70051,q:'Shibuya+Sky+Observation+Deck'},
+    {type:'hotel',label:'🏨',name:'The Tourist Hotel（連住）',lat:35.70104,lng:139.77704,q:'The+Tourist+Hotel+Cafe+Akihabara'},
+  ]},
+  {title:'5/4 淺草・返台',places:[
+    {type:'sight',label:'1', name:'淺草寺',             lat:35.71128,lng:139.79662,q:'Sensoji+Temple+Asakusa'},
+    {type:'sight',label:'2', name:'晴空塔・トリトン',   lat:35.71021,lng:139.81093,q:'Tokyo+Skytree+Solamachi'},
+    {type:'hotel',label:'✈️',name:'成田機場（返程）',   lat:35.77085,lng:140.38465,q:'Narita+Airport+Terminal+2'},
+  ]},
+])
+
+const mapActiveName = ref('')
+
+// ═══════════ GOOGLE MAPS EMBED ENGINE ═══════════
+const GMKEY = 'AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8'
+
+const mapIframeSrc = computed(()=>{
+  const d = mapDays.value[mapSel.value]
+  if(!d) return ''
+  const sights = d.places.filter(p => p.type === 'sight')
+
+  // ── Active place: show full place card (navigate / reviews / street view) ──
+  const active = d.places.find(p => p.name === mapActiveName.value)
+  if(active){
+    return `https://www.google.com/maps/embed/v1/place?key=${GMKEY}&q=${active.q}&zoom=16&language=zh-TW`
+  }
+
+  // ── Default overview: directions mode shows all markers on the map ──
+  if(!sights.length) return ''
+  if(sights.length === 1){
+    // Single sight — use place mode so marker appears
+    return `https://www.google.com/maps/embed/v1/place?key=${GMKEY}&q=${sights[0].q}&zoom=14&language=zh-TW`
+  }
+  // Multiple sights — directions mode: origin → (waypoints) → destination
+  // This renders each stop as a labelled map marker (A, B, C…)
+  const origin      = `${sights[0].lat},${sights[0].lng}`
+  const destination = `${sights[sights.length-1].lat},${sights[sights.length-1].lng}`
+  const mid         = sights.slice(1, -1)
+  const waypointsParam = mid.length
+    ? `&waypoints=${mid.map(p=>`${p.lat},${p.lng}`).join('|')}`
+    : ''
+  return `https://www.google.com/maps/embed/v1/directions?key=${GMKEY}&origin=${origin}&destination=${destination}${waypointsParam}&mode=driving&language=zh-TW`
+})
+
+// Route URL — opens multi-stop directions in Google Maps app
+const gmapRouteUrl = computed(()=>{
+  const d = mapDays.value[mapSel.value]
+  if(!d) return 'https://maps.google.com'
+  const sights = d.places.filter(p => p.type === 'sight')
+  if(!sights.length) return 'https://maps.google.com'
+  if(sights.length === 1) return `https://www.google.com/maps/search/?api=1&query=${sights[0].lat},${sights[0].lng}`
+  const stops = sights.map(p => `${p.lat},${p.lng}`).join('/')
+  return `https://www.google.com/maps/dir/${stops}`
+})
+
+const mapPlaceButtons = computed(()=>{
+  const d = mapDays.value[mapSel.value]
+  if(!d) return []
+  return d.places.map(p => ({
+    name:  p.name,
+    label: (p.type==='sight' ? p.label+'. ' : p.label+' ') + p.name,
+    cls:   p.type==='prev' ? 'is-prev' : p.type==='hotel' ? 'is-hotel' : '',
+    q:     p.q,
+    lat:   p.lat,
+    lng:   p.lng,
+    type:  p.type
+  }))
+})
+
+const mapTitle = computed(()=>{
+  const d = mapDays.value[mapSel.value]; return d ? d.title : ''
+})
+const mapCount = computed(()=>{
+  const d = mapDays.value[mapSel.value]
+  return d ? d.places.filter(p=>p.type==='sight').length : 0
+})
+
+function switchToMap(){ tab.value = 'map' }
+function switchMapDay(i){ mapSel.value = i; mapActiveName.value = '' }
+function focusPlace(p){ mapActiveName.value = mapActiveName.value === p.name ? '' : p.name }
+
+// ═══════════ PWA BANNER ═══════════
+const showPwaBanner = ref(false)  // disabled
+const showPwaHelp   = ref(false)
+
+// ═══════════ RATE ═══════════
+const rateVal=ref(0.218),rateAmt=ref(1000),rateFrom=ref('jpy')
+const rateResult=computed(()=>{const r=rateVal.value||0.218,a=rateAmt.value||0;if(rateFrom.value==='jpy')return'NT$ '+Math.round(a*r).toLocaleString();return'¥ '+Math.round(a/r).toLocaleString()})
+const rateSub=computed(()=>{const r=rateVal.value||0.218,a=rateAmt.value||0;if(rateFrom.value==='jpy')return'¥'+a.toLocaleString()+' × '+r+' = NT$'+(a*r).toFixed(2);return'NT$'+a.toLocaleString()+' ÷ '+r+' = ¥'+(a/r).toFixed(2)})
+
+// ═══════════ CALCULATOR ═══════════
+const calcExpr=ref(''),calcScreen=ref('0')
+let cc='0',cop=null,cprev=null,cfresh=false
+function syncCalc(){const v=parseFloat(cc);if(!isNaN(v))rateAmt.value=Math.round(v*100)/100}
+function calcDisplay(){const v=parseFloat(cc);if(isNaN(v)){calcScreen.value='錯誤';return}const rounded=Math.round(v*100)/100;calcScreen.value=rounded.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:2});syncCalc()}
+function calcNum(n){if(cfresh){cc='';cfresh=false}if(n==='.'&&cc.includes('.'))return;if(cc==='0'&&n!=='.')cc='';cc+=n;calcDisplay()}
+function calcFn(fn){const v=parseFloat(cc);if(fn==='clear'){cc='0';calcExpr.value='';cop=null;cfresh=false;calcDisplay();return}if(fn==='back'){cc=cc.slice(0,-1)||'0';calcDisplay();return}if(fn==='%'){cc=String(Math.round(v/100*100)/100);calcDisplay();return}if(fn==='='){if(cop&&!cfresh){let res=v;if(cop==='÷')res=cprev/v;else if(cop==='×')res=cprev*v;else if(cop==='−')res=cprev-v;else res=cprev+v;res=Math.round(res*100)/100;calcExpr.value=cprev+' '+cop+' '+v+' =';cc=String(res);cop=null;cfresh=true;calcDisplay()}return}cprev=v;cop=fn;calcExpr.value=v+' '+fn;cfresh=true;calcDisplay()}
+
+return{tab,sel,cur,flights,hotels,days,mapDays,mapSel,mapTitle,mapCount,mapIframeSrc,gmapRouteUrl,mapPlaceButtons,mapActiveName,expandAllItems,switchToMap,switchMapDay,focusPlace,showPwaBanner,showPwaHelp,rateVal,rateAmt,rateFrom,rateResult,rateSub,calcExpr,calcScreen,calcNum,calcFn}
+}
+}).mount('#app')
+</script>
+</body>
+</html>
