@@ -529,7 +529,7 @@ const flights = ref([
 // ═══════════ HOTELS ═══════════
 const hotels = ref([
   {city:'東京・新宿',dates:'4/30（四）— 5/1（五）',nights:1,name:'WPÜ HOTEL',location:'東京都新宿区',note:'新宿西口站步行 2 分鐘。地處新宿核心，放下行李就能直接出發探索原宿與澀谷，回程也方便。',mapUrl:'https://maps.app.goo.gl/Jay14CeJM7JUsRHa9',checkin:'15:00',checkinLatest:'00:00',checkout:'11:00',access:[{icon:'🚇',text:'新宿西口站 步行 2 分・新宿站 步行 6 分・西武新宿站 步行 5 分'},{icon:'🏮',text:'思出橫丁 步行 1 分鐘'},{icon:'🌿',text:'新宿御苑 步行 18 分鐘'},{icon:'🗒',text:'5/1 退房後可考慮將行李寄存，輕裝出發'}]},
-  {city:'山梨・河口湖',dates:'5/1（五）— 5/2（六）',nights:1,name:'HAOSTAY Art Museum',location:'山梨県南都留郡富士河口湖町',note:'河口湖美術館正對面，窗外直接眺望富士山與湖景，是整趟旅程視野最壯闊的一晚。清晨可在房間欣賞富士山晨光，無需出門。',mapUrl:'https://maps.app.goo.gl/Co5j6MHZB5atRp7V6',checkin:'15:00',checkinLatest:'21:00',checkout:'10:00',access:[{icon:'🚇',text:'河口湖站 車程 5 分・步行 20 分'},{icon:'🎵',text:'河口湖森林音樂美術館 步行 5 分'},{icon:'🖼',text:'河口湖美術館 步行 7 分'},{icon:'🗒',text:'5/2 退房後將行李放入車內帶著出發'}]},
+  {city:'静岡・御殿場',dates:'5/1（五）— 5/2（六）',nights:1,name:'edit x seven 富士御殿場',location:'静岡県御殿場市',note:'御殿場 Premium Outlets 車程 5 分・步行 25 分，購物後直接入住超方便。提供免費自助停車（露天停車場）。',mapUrl:'https://maps.app.goo.gl/YQfA3S7wP48kJpCp6',checkin:'15:00',checkinLatest:'20:00',checkout:'11:00',access:[{icon:'🛒',text:'御殿場 Premium Outlets 車程 5 分・步行 25 分'},{icon:'🅿️',text:'免費自助停車（露天停車場）'},{icon:'🗒',text:'5/2 退房後將行李放入車內帶著出發'}]},
   {city:'東京・秋葉原',dates:'5/2（六）— 5/4（一）',nights:2,name:'The Tourist Hotel & Cafe Akihabara',location:'東京都台東区',note:'連住兩晚，出入上野、淺草、秋葉原皆輕鬆。',mapUrl:'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7',checkin:'15:00',checkinLatest:'00:00',checkout:'10:00',access:[{icon:'🚇',text:'秋葉原站 步行 3 分・JR 秋葉原站 步行 5 分・御徒町站 步行 9 分・上野站 步行 17 分'},{icon:'🎮',text:'秋葉原電器街 步行 4 分鐘'},{icon:'🛍',text:'上野阿美橫商店街 步行 11 分鐘'},{icon:'🌿',text:'上野公園 步行 17 分鐘'},{icon:'🗒',text:'5/4 退房後可寄放行李，最後再取走'}]},
 ])
 
@@ -587,7 +587,7 @@ const days = reactive([
 // ────────── DAY 2: 5/1 ──────────
 {date:'5/1',shortCity:'富士山',title:'5/1（五）富士山',summary:'河口湖取車・餺飥午餐・大石公園・御殿場 Outlets',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
  weather:{icon:'⛅',lo:'8°',hi:'17°'},
- hotel:{name:'HAOSTAY Art Museum',note:'河口湖美術館前・富士山景觀'},
+ hotel:{name:'edit x seven 富士御殿場',note:'御殿場 Premium Outlets 車程 5 分・免費停車'},
  items:[
   I('07:45','早餐・出發前・新宿站周邊','food',[TG('餐飲','food')],'2 個選擇',[
     F('早餐選擇',[FI('GOOD MORNING CAFE NOWADAYS','西式早餐，新宿御苑附近，07:00 開門，英文菜單。素食可選。<span class="fi-price"> ¥800–1,200</span>'),FI('7-11 / FamilyMart（快速方案）','飯糰＋熱咖啡，快速出發的好選擇。24H。<span class="fi-price"> ¥400–700</span>')]),
@@ -598,8 +598,7 @@ const days = reactive([
   I('08:30','搭乘富士回遊 7 號 新宿 → 河口湖','transport',[TG('交通','transport')],'交通詳情',[
     D('車廂從東京市區漸入山梨縣田園風光，接近河口湖時富士山巨大出現在右側（A 席），震撼無比。全程 1 小時 56 分，可在車上吃早餐。'),
     T([TR('🚆 <b>富士回遊 7 號</b> 新宿 08:30 → 河口湖 10:26（1h56m）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,200/人</span>（指定席）')]),
-    N('<strong>🎫 取票提醒：</strong>需提前在<b>新宿站</b>みどりの窓口或指定席券賣機取票，當天直接上車無法補票，全車指定席。'),
-    C([CH('⚠️ 全車指定席，未提前取票無法上車','cw')]),
+    C([CH('⚠️ 全車指定席，未提前購票無法上車','cw')]),
   ]),
   I('10:30','河口湖站 取車','transport',[TG('交通','transport')],'交通詳情',[
     D('步行 5 分鐘至 <b>Toyota Rent a Car 河口湖站前</b>辦理取車。準備：<b>台灣駕照正本＋日文譯本＋護照</b>。取車後先在旁邊加油站加滿油，再出發。'),
@@ -627,10 +626,11 @@ const days = reactive([
   I('18:00','晚餐・御殿場 Outlets 或附近','food',[TG('餐飲','food')],'2 個選擇',[
     F('晚餐選擇',[FI('御殿場 Outlets 美食廣場','拉麵、炸豬排、蕎麥麵等，露天座可看富士山，一邊吃飯一邊看景是絕妙體驗。多素食選項。<span class="fi-price"> ¥1,000–1,800</span>'),FI('とんかつ 新宿さぼてん（Outlets 內）','全日本知名炸豬排連鎖，鬆軟多汁，套餐附白飯味噌湯。<span class="fi-price"> ¥1,200–2,000</span>')]),
   ]),
-  I('19:45','返回河口湖・HAOSTAY Check-in','hotel',[TG('住宿','hotel')],'備註',[
-    D('從御殿場 Outlets 開車約 40–50 分鐘返回河口湖，辦理 Check-in（最晚 21:00），整理行李，稍作休息。窗外即是富士山與河口湖美術館。'),
-    T([TR('🚗 自駕 御殿場 Outlets → HAOSTAY（約 45 分）')]),
-  ],'https://maps.app.goo.gl/Co5j6MHZB5atRp7V6'),
+  I('19:45','edit x seven 富士御殿場 Check-in','hotel',[TG('住宿','hotel')],'備註',[
+    D('從御殿場 Outlets 開車約 5 分鐘即可抵達，辦理 Check-in（最晚 20:00），整理行李，稍作休息。住宿提供<b>免費自助停車</b>（露天停車場），直接開進去停好即可。'),
+    T([TR('🚗 自駕 御殿場 Outlets → edit x seven 富士御殿場（約 5 分）')]),
+    C([CH('🅿️ 免費自助停車（露天）','co2'),CH('⚠️ Check-in 最晚 20:00，請準時入住','cw')]),
+  ],'https://maps.app.goo.gl/YQfA3S7wP48kJpCp6'),
 ]},
 
 // ────────── DAY 3: 5/2 ──────────
@@ -638,13 +638,13 @@ const days = reactive([
  weather:{icon:'⛅',lo:'9°',hi:'19°'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'秋葉原站 步行 3 分・JR 秋葉原站 步行 5 分'},
  items:[
-  I('07:45','出發・HAOSTAY','transport',[TG('交通','transport')],'出發備注',[
-    D('退房前確認行李全數放入車中。今日所有景點皆在河口湖站以西或以北方向，行程動線順暢。<b>先到加油站把油加到超過半箱</b>，確保今日行程充裕。'),
-    T([TR('🚗 HAOSTAY → 富士本栖湖リゾート（約 30 分，沿本栖みち往西）')]),
+  I('07:30','出發・edit x seven 富士御殿場','transport',[TG('交通','transport')],'出發備注',[
+    D('退房前確認行李全數放入車中。御殿場出發前往富士本栖湖，沿國道 138 號往北接本栖みち，約 60 分鐘可達。<b>先到加油站把油加到超過半箱</b>，確保今日行程充裕。'),
+    T([TR('🚗 edit x seven → 富士本栖湖リゾート（約 60 分，國道 138 號往北）')]),
   ]),
   I('08:30','富士芝櫻祭','sight',[TG('景點','sight')],'詳情',[
     D('<b>富士芝櫻祭</b>是日本最壯觀的芝櫻（石竹）花展，每年 4 月中至 5 月下旬在富士本栖湖畔舉辦，2026 年確認 <b>4/11（六）～5/24（日）</b>開催。約 50 萬株的粉紅、白、深紅、紫色芝櫻鋪成花毯，遠方富士山殘雪遙遙相對，是 CNN Travel 評選「日本最美 36 景」之一。5 月 2 日正值盛開高峰，是此行視覺震撼最強的景點。清早 08:30 抵達人潮較少，光線最美。約 90–120 分鐘。'),
-    T([TR('🚗 自駕 HAOSTAY → 富士本栖湖リゾート（約 30 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">大人 ¥1,000–1,300</span>（5/1–5/10 為 B 區間，¥1,300）'),TR('🕐 開園 8:00，入園截止 16:00')]),
+    T([TR('💰 <span style="color:var(--gold);font-weight:600">大人 ¥1,000–1,300</span>（5/1–5/10 為 B 區間，¥1,300）'),TR('🕐 開園 8:00，入園截止 16:00')]),
     C([CH('⚠️ 黃金週可能停車排隊，建議 08:30 前抵達','cw'),CH('💡 5 月初花況最佳，帶防曬','ct'),CH('園內有飲食攤販和廁所','co2')]),
   ],'https://maps.app.goo.gl/VhCAaTNzLHwfCjRZ9'),
   I('10:40','精進湖 他手合濱（天氣好才去）','sight',[TG('景點','sight')],'詳情',[
@@ -673,17 +673,17 @@ const days = reactive([
   ]),
     I('17:41','搭乘富士回遊 河口湖 → 新宿','transport',[TG('交通','transport')],'交通詳情',[
     D('車廂回程可欣賞夕陽中的富士山輪廓，美得令人難忘。建議坐 B 席（左側），傍晚光線從西方照射富士山，輪廓更清晰。'),
-    T([TR('🚆 <b>富士回遊 48 號</b> 河口湖 17:41 → 新宿 19:40（約 1h59m）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,200/人</span>（已提前取票，指定席）')]),
+    T([TR('🚆 <b>富士回遊 48 號</b> 河口湖 17:41 → 新宿 19:40（約 1h59m）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,200/人</span>（已提前購票，指定席）')]),
     C([CH('⚠️ 確認回程票的指定時刻，準時上車','cw')]),
   ]),
-  I('19:00','抵達東京・前往秋葉原飯店','transport',[TG('交通','transport')],'交通詳情',[
-    D('新宿站抵達後辦理 Check-in，確認宅急便行李已抵達。整理行李、換裝，再出門覓食。'),
+  I('19:40','抵達新宿・前往秋葉原飯店','transport',[TG('交通','transport')],'交通詳情',[
+    D('新宿站 19:40 抵達後，搭 JR 前往秋葉原辦理 Check-in，確認宅急便行李已到。整理行李、換裝，再出門覓食。'),
     T([TR('🚃 JR 中央線（快速） 新宿 → 秋葉原（約 22 分）','¥220')]),
   ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
-  I('19:30','晚餐・秋葉原周邊','food',[TG('餐飲','food')],'3 個選擇',[
+  I('20:10','晚餐・秋葉原周邊','food',[TG('餐飲','food')],'3 個選擇',[
     F('晚餐選擇',[FI('牛カツ もと村 秋葉原店','外脆內嫩炸牛排配石板自烤，白飯免費續，秋葉原這間較大，等候時間短。<span class="fi-price"> ¥2,100–2,800</span>'),FI('Roast Beef Ohno 秋葉原店','嫩滑和牛切片配特製醬汁，牛尾湯免費續，飯店附近步行可達。<span class="fi-price"> ¥1,500–2,500</span>'),FI('T\'s Tantan 上野站','100% 植物性拉麵，JR 上野站內，搭 JR 2 分鐘可到，素食者必來。<span class="fi-price"> ¥1,100–1,400</span>',[{text:'100% 全素',cls:'badge-veg'}])]),
   ]),
-  I('21:00','The Tourist Hotel & Cafe 秋葉原 Check-in','hotel',[TG('住宿','hotel')],'備註',[D('辦理入住，確認宅急便大行李已到，整理，稍作休息。')],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
+  I('21:30','The Tourist Hotel & Cafe 秋葉原 Check-in','hotel',[TG('住宿','hotel')],'備註',[D('辦理入住，確認宅急便大行李已到，整理，稍作休息。')],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
 ]},
 
 // ────────── DAY 4: 5/3 ──────────
@@ -795,7 +795,7 @@ const mapDays = ref([
     {type:'sight',label:'2', name:'ほうとう不動',       lat:35.52106,lng:138.75342,q:'Houtou+Fudou+Kawaguchiko'},
     {type:'sight',label:'3', name:'大石公園',           lat:35.52311,lng:138.74590,q:'Oishi+Park+Kawaguchiko'},
     {type:'sight',label:'4', name:'御殿場 Outlets',     lat:35.30753,lng:138.96612,q:'Gotemba+Premium+Outlets'},
-    {type:'hotel',label:'🏨',name:'HAOSTAY Art Museum', lat:35.52251,lng:138.77240,q:'HAOSTAY+Art+Museum+Kawaguchiko'},
+    {type:'hotel',label:'🏨',name:'edit x seven 富士御殿場',lat:35.30500,lng:138.94500,q:'edit+x+seven+Fuji+Gotemba'},
   ]},
   {title:'5/2 富士芝櫻',places:[
     {type:'sight',label:'1', name:'富士芝櫻祭',         lat:35.45694,lng:138.58512,q:'Fuji+Shibazakura+Festival'},
@@ -892,9 +892,9 @@ const showPwaBanner = ref(false)  // disabled
 const showPwaHelp   = ref(false)
 
 // ═══════════ RATE ═══════════
-const rateVal=ref(0.218),rateAmt=ref(1000),rateFrom=ref('jpy')
-const rateResult=computed(()=>{const r=rateVal.value||0.218,a=rateAmt.value||0;if(rateFrom.value==='jpy')return'NT$ '+Math.round(a*r).toLocaleString();return'¥ '+Math.round(a/r).toLocaleString()})
-const rateSub=computed(()=>{const r=rateVal.value||0.218,a=rateAmt.value||0;if(rateFrom.value==='jpy')return'¥'+a.toLocaleString()+' × '+r+' = NT$'+(a*r).toFixed(2);return'NT$'+a.toLocaleString()+' ÷ '+r+' = ¥'+(a/r).toFixed(2)})
+const rateVal=ref(0.21),rateAmt=ref(1000),rateFrom=ref('jpy')
+const rateResult=computed(()=>{const r=rateVal.value||0.21,a=rateAmt.value||0;if(rateFrom.value==='jpy')return'NT$ '+Math.round(a*r).toLocaleString();return'¥ '+Math.round(a/r).toLocaleString()})
+const rateSub=computed(()=>{const r=rateVal.value||0.21,a=rateAmt.value||0;if(rateFrom.value==='jpy')return'¥'+a.toLocaleString()+' × '+r+' = NT$'+(a*r).toFixed(2);return'NT$'+a.toLocaleString()+' ÷ '+r+' = ¥'+(a/r).toFixed(2)})
 
 // ═══════════ CALCULATOR ═══════════
 const calcExpr=ref(''),calcScreen=ref('0')
