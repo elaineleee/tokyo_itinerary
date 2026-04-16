@@ -295,7 +295,7 @@ input,select{background:#fff !important;color:#2c3848 !important;-webkit-text-fi
   <div class="header-deco">🗻</div>
   <div class="header-top">
     <div class="header-title">東京・富士山 2026</div>
-    <div class="header-sub">4/30（四）— 5/4（一）・5 天 4 夜・新宿→富士山→御殿場→秋葉原</div>
+    <div class="header-sub">4/30（四）— 5/4（一）・5 天 4 夜・新宿→御殿場→秋葉原</div>
   </div>
   <div class="flights">
     <div class="flight-card" v-for="f in flights" :key="f.num">
@@ -585,7 +585,7 @@ const days = reactive([
 ]},
 
 // ────────── DAY 2: 5/1 ──────────
-{date:'5/1',shortCity:'河口湖',title:'5/1（五）富士山・御殿場',summary:'大石公園・河口湖・みずの風蕎麥・御殿場 Outlets・Shake Shack',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
+{date:'5/1',shortCity:'河口湖',title:'5/1（五）富士山・御殿場',summary:'大石公園・河口湖・Mizunokaze蕎麥麵・Outlets・Shake Shack',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
  weather:{icon:'⛅',lo:'8°',hi:'17°'},
  hotel:{name:'edit x seven 富士御殿場',note:'御殿場 Premium Outlets 車程 5 分・免費停車'},
  items:[
@@ -610,13 +610,13 @@ const days = reactive([
     D('<b>河口湖自然生活館</b>就在大石公園旁，融合在地農產與富士山景的觀光設施。內設喫茶區可在窗邊欣賞富士山與河口湖全景，也有售店販售山梨特產藍莓果醬、拉菲草商品等伴手禮。適合短暫休憩，吃個霜淇淋再準備出發。停留約 25–35 分鐘。'),
     C([CH('入館免費','cc'),CH('💡 富士山景觀咖啡，鄰接大石公園步行即達','ct')]),
   ],'https://maps.app.goo.gl/gZ6ERWknuf7etDiq6'),
-  I('13:00','午餐・みずの風 MIZUNOKAZE（蕎麥麵）','food',[TG('餐飲','food')],'詳情',[
+  I('13:00','午餐・みずの風 Mizunokaze（蕎麥麵）','food',[TG('餐飲','food')],'詳情',[
     D('<b>みずの風</b>就在大石公園旁，以 100% 純蕎麥粉製成的手打十割蕎麥聞名，完全不加小麥粉，蕎麥香氣濃郁、口感清爽，搭配時蔬天婦羅，是縣外客專程造訪的人氣蕎麥店。停留約 60–75 分鐘。'),
     F('推薦品項',[FI('天ざる（天婦羅蕎麥套餐）','十割蕎麥＋大蝦天婦羅＋季節蔬菜，最受歡迎的定番套餐。<span class="fi-price"> ¥1,500–1,800</span>'),FI('もりそば（純蕎麥冷麵）','蕎麥香氣最直接的吃法，附蕎麥湯。<span class="fi-price"> ¥900–1,100</span>'),FI('そばアイスクリーム（蕎麥冰淇淋）','蕎麥粉製的獨特冰淇淋，不吃白不吃。<span class="fi-price"> ¥400–500</span>')]),
     N('<strong>⚠️ 注意：</strong>蕎麥售完即止，黃金週假日建議早點到場，13:00 仍有機率買到。'),
     C([CH('⚠️ 蕎麥售完即止','cw'),CH('十割蕎麥，無小麥粉','co2')]),
   ],'https://maps.app.goo.gl/gZ6ERWknuf7etDiq6'),
-  I('14:30','前往御殿場・edit x seven 飯店 Check-in','hotel',[TG('住宿','hotel')],'備註',[
+  I('15:00','前往御殿場・edit x seven 飯店 Check-in','hotel',[TG('住宿','hotel')],'備註',[
     D('午餐結束後出發前往御殿場。抵達後辦理 Check-in，把行李放入房間再輕裝逛 Outlets，不必拖著購物袋到處走。住宿提供<b>免費自助停車</b>（露天停車場）。Check-in 時記得告知 Front 希望高樓層，15:00–16:00 入住通常選擇最多，富士山景視野最佳。'),
     T([TR('🚗 大石公園周邊 → edit x seven 富士御殿場（國道 138 號往東南，約 55–65 分）')]),
     C([CH('🅿️ 免費自助停車（露天）','co2'),CH('💡 早到搶高樓層，富士山景最佳','ct'),CH('⚠️ Check-in 最晚 20:00','cw')]),
@@ -638,7 +638,7 @@ const days = reactive([
 ]},
 
 // ────────── DAY 3: 5/2 ──────────
-{date:'5/2',shortCity:'山中湖',title:'5/2（六）山中湖・富士吉田',summary:'長池親水公園・新倉山淺間公園・富士吉田本町通・Kosaku餺飥',extra:'🚄 富士回遊 17:41 河口湖→19:40 新宿',
+{date:'5/2',shortCity:'山中湖',title:'5/2（六）山中湖・富士吉田',summary:'長池親水公園・平野之濱・新倉山淺間公園・本町通・Kosaku餺飥',extra:'🚄 富士回遊 17:41 河口湖→19:40 新宿',
  weather:{icon:'⛅',lo:'9°',hi:'19°'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'秋葉原站 步行 3 分・JR 秋葉原站 步行 5 分'},
  items:[
@@ -671,14 +671,14 @@ const days = reactive([
     T([TR('🚗 新倉山淺間公園 → 本町通（步行 10 分 或 開車 3 分）')]),
     C([CH('免費','cc'),CH('💡 街道盡頭正對富士山，構圖絕美','ct'),CH('⚠️ 請在人行道拍攝','cw')]),
   ],'https://maps.app.goo.gl/TLxsj3rjxMqU3wr77'),
-  I('14:00','午餐・Kosaku Kawaguchiko（甲州ほうとう 小作）','food',[TG('餐飲','food')],'詳情',[
+  I('14:00','午餐・甲州ほうとう小作 Kosaku Kawaguchiko（餺飥）','food',[TG('餐飲','food')],'詳情',[
     D('<b>甲州ほうとう 小作（Kosaku）河口湖店</b>是山梨縣老字號餺飥名店，古民家風格店舖，環境舒適典雅。招牌<b>かぼちゃほうとう（¥1,400）</b>以大塊軟糯南瓜加自家製味噌慢煮，麵條 Q 彈，湯頭偏甜，暖胃暖心。河口湖站附近，停車場寬敞，自駕方便。停留約 60–75 分鐘。'),
     T([TR('🚗 本町通 → Kosaku 河口湖店（約 10–15 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥1,400–1,700/人</span>')]),
     F('推薦品項',[FI('かぼちゃほうとう（南瓜餺飥）','招牌，大塊軟糯南瓜＋自家製味噌，麵條 Q 彈，最經典的選擇。<span class="fi-price"> ¥1,400</span>'),FI('きのこほうとう（菇類餺飥）','多種野菇鮮味，湯頭更有深度，素食友善（可詢問是否有動物性食材）。<span class="fi-price"> ¥1,500</span>',[{text:'素食可詢問',cls:'badge-veg'}])]),
     C([CH('💡 老字號古民家風，河口湖站附近','ct'),CH('可素，點餐時詢問確認','co2')]),
   ],'https://maps.app.goo.gl/xAE3LJQM4XXbpzqr9'),
   I('15:30','前往河口湖還車','transport',[TG('交通','transport')],'還車注意事項',[
-    D('從 Kosaku 開車約 5 分鐘至 Toyota Rent a Car 河口湖站前。早上已加滿油，無需再加油。確認車內無遺留物品，交還鑰匙並確認費用明細。還車手續約 15–20 分鐘，16:00 前可完成。'),
+    D('從 Kosaku 開車約 5 分鐘至 Toyota Rent a Car 河口湖站前。確認車內無遺留物品，交還鑰匙並確認費用明細。還車手續約 15–20 分鐘，16:00 前可完成。'),
     T([TR('🚗 Kosaku 河口湖店 → Toyota Rent a Car 河口湖站前（約 5 分）')]),
   ],'https://maps.app.goo.gl/rbmwBjcDRSERDwZ7A'),
   I('16:00','河口湖站周邊 自由時間','sight',[TG('景點','sight')],'選擇',[
@@ -694,17 +694,17 @@ const days = reactive([
     T([TR('🚆 <b>富士回遊 48 號</b> 河口湖 17:41 → 新宿 19:40（約 1h59m）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,200/人</span>（已提前取票，指定席）')]),
     C([CH('⚠️ 確認回程票的指定時刻，準時上車','cw')]),
   ]),
-  I('19:40','抵達新宿・The Tourist Hotel & Cafe 秋葉原 Check-in','hotel',[TG('住宿','hotel')],'交通詳情',[
+  I('20:00','抵達新宿・The Tourist Hotel & Cafe 秋葉原 Check-in','hotel',[TG('住宿','hotel')],'交通詳情',[
     D('新宿站 19:40 抵達後，搭 JR 前往秋葉原辦理 Check-in，確認宅急便行李已到。整理行李、換裝，再出門覓食。'),
     T([TR('🚃 JR 中央線（快速） 新宿 → 秋葉原（約 22 分）','¥220')]),
   ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
-  I('20:10','晚餐・秋葉原周邊','food',[TG('餐飲','food')],'3 個選擇',[
+  I('20:30','晚餐・秋葉原周邊','food',[TG('餐飲','food')],'3 個選擇',[
     F('晚餐選擇',[FI('牛カツ もと村 秋葉原店','外脆內嫩炸牛排配石板自烤，白飯免費續，等候時間短。<span class="fi-price"> ¥2,100–2,800</span>'),FI('Roast Beef Ohno 秋葉原店','嫩滑和牛切片配特製醬汁，牛尾湯免費續，飯店附近步行可達。<span class="fi-price"> ¥1,500–2,500</span>'),FI("T's Tantan 上野站",'100% 植物性拉麵，JR 上野站內，搭 JR 2 分鐘可到，素食者必來。<span class="fi-price"> ¥1,100–1,400</span>',[{text:'100% 全素',cls:'badge-veg'}])]),
   ]),
 ]},
 
 // ────────── DAY 4: 5/3 ──────────
-{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・銀座・澀谷',summary:'秋葉原購物・叙々苑燒肉・明治神宮・Shibuya Sky・澀谷居酒屋',extra:null,
+{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・銀座・澀谷',summary:'購物・敘敘苑燒肉・明治神宮・Shibuya Sky・居酒屋',extra:null,
  weather:{icon:'☀️',lo:'12°',hi:'22°'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'連住第 2 晚'},
  items:[
@@ -721,7 +721,7 @@ const days = reactive([
     T([TR('🚃 東京Metro 日比谷線 秋葉原→銀座（10分）','¥200'),{html:'或 JR 山手線 秋葉原→有楽町，步行 5 分至銀座（約 15 分）',style:'color:var(--gray-400)'}]),
     D('12:00 提早到銀座，敘敘苑 13:00 開始，中間有約 1 小時可以在銀座周邊漫步逛街——GINZA SIX、晴海通り、或只是欣賞高端精品街景。'),
   ]),
-  I('13:00','午餐・敘敘苑 銀座Miyuki大道店（燒肉）','food',[TG('餐飲','food')],'詳情',[
+  I('13:00','午餐・叙々苑 Jojoen 銀座Miyuki大道店（燒肉）','food',[TG('餐飲','food')],'詳情',[
     D('<b>叙々苑（JOJOEN）</b>是日本最具代表性的高級燒肉品牌，以「良質吟味」為信念嚴選和牛食材，炭火烤出的肉質軟嫩多汁，每一口都是純粹牛肉的鮮甜。<b>銀座みゆき通り店</b>座落在銀座歷史最悠久的商業街道，環境典雅沉穩，56 席寬敞明亮，是整趟行程格調最高的一餐。<b>ランチセット（午餐套餐）</b>含燒肉主角、沙拉、泡菜、白飯、味噌湯、飲料及甜點，性價比遠高於晚餐。強烈建議提前訂位。'),
     F('午餐套餐推薦',[FI('ランチコース A（和牛燒肉套餐）','焼物：赤身ロース・カルビ・エビ，附沙拉、ナムル、漬物、白飯、スープ、デザート、飲料。<span class="fi-price"> ¥3,500–5,000/人</span>'),FI('ランチコース C（特選牛燒肉套餐）','焼物：特選サーロイン・上カルビ・タン塩，附全套副食，頂級享受。<span class="fi-price"> ¥7,000–9,000/人</span>',[{text:'頂級',cls:'badge-top'}])]),
     T([TR('📍 叙々苑 銀座みゆき通り店：銀座 2-3-2、銀座一丁目站步行 5 分、銀座站步行 7 分'),TR('🕐 ランチ 11:30–15:00，需訂位（電話或一休.com）')]),
@@ -740,7 +740,7 @@ const days = reactive([
     N('<strong>⚠️ 黃金週訂票：</strong>Shibuya Sky 黃金週所有時段可能售罄，務必提前至 shibuyasky.jp 線上購票，建議選 17:30–18:00 入場。現場幾乎無票。'),
     C([CH('票價 ¥2,000/人','cc'),CH('⚠️ 提前官網訂票，黃金週必備','cw'),CH('💡 日落轉夜景是最美時段','ct')]),
   ],'https://maps.app.goo.gl/b5kLg9F8psfDJ3Gd9'),
-  I('18:30','晚餐・澀谷居酒屋','food',[TG('餐飲','food')],'3 個選擇',[
+  I('19:00','晚餐・澀谷居酒屋','food',[TG('餐飲','food')],'3 個選擇',[
     D('Shibuya Sky 下來後，在澀谷附近找一間氣氛好的居酒屋，享受東京夜晚最道地的用餐體驗。'),
     F('推薦居酒屋',[FI('渋谷 一串 IPPON','澀谷站附近，串燒種類豐富，雞肉系列尤其出名，氣氛熱鬧，適合聚餐。<span class="fi-price"> ¥2,500–4,000</span>'),FI('うまいもん屋 五郎','澀谷站步行 5 分，和牛串燒配日本酒，環境溫馨，不需訂位也可候位。<span class="fi-price"> ¥2,000–3,500</span>'),FI('KURAND SAKE MARKET','日本酒喝到飽，100+ 種全國清酒，¥3,000 固定費用，啤酒、燒酎、梅酒等齊全，非酒精飲料也有。<span class="fi-price"> ¥3,000/人（飲料無限）</span>',[{text:'清酒無限',cls:'badge-top'}])]),
   ]),
