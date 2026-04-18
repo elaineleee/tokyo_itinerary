@@ -715,7 +715,7 @@ const days = reactive([
 ]},
 
 // ────────── DAY 4: 5/3 ──────────
-{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・澀谷',summary:'購物・明治神宮・Shibuya Sky・大衆酒場居酒屋',extra:null,
+{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・明治神宮・澀谷',summary:'購物・午餐・明治神宮・Shibuya Sky・また会いにゆきます居酒屋',extra:null,
  weather:{icon:'☀️',lo:'12°',hi:'22°'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'連住第 2 晚'},
  items:[
@@ -726,28 +726,27 @@ const days = reactive([
     C([CH('💡 10:00–11:30 人少效率最高','ct'),CH('退稅需單店 ¥5,000 以上','cf')]),
   ],'https://maps.app.goo.gl/DfdUP8kCWLk5CC3Y9','秋葉原電氣街'),
   I('11:30','戰利品放回飯店','hotel',[TG('住宿','hotel')],'備注',[
-    D('採購完後回飯店放戰利品，整理購物袋，換裝準備出發。'),
+    D('採購完後回飯店放戰利品，整理購物袋，換裝準備出發前往明治神宮方向。'),
   ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7','秋葉原觀光酒店&咖啡（連住）'),
-  I('12:00','午餐・待決定','food',[TG('餐飲','food')],'選擇',[
-    D('秋葉原周邊或前往明治神宮途中，視體力與心情決定。銀座方向也可納入考慮，體力允許再說。'),
-    F('方向參考',[FI('秋葉原周邊','牛かつもと村、Roast Beef Ohno 等，步行即達，省時。'),FI('銀座（視體力）','敘敘苑等高端選項，需額外搭車 10 分，視當天狀況決定。')]),
+  I('12:00','午餐・待決定','food',[TG('餐飲','food')],'備注',[
+    D('秋葉原或前往明治神宮途中用餐，地點待確定。'),
   ],null,false),
   I('13:30','明治神宮','sight',[TG('景點','sight')],'詳情',[
-    D('從秋葉原出發前往明治神宮，穿越百年原生森林大參道（約 15 分鐘步行至本殿）。5 月初森林最蒼翠，陽光穿透樹葉灑落大道，氛圍神聖寧靜。本殿祈願、許願繪馬。停留約 60–75 分鐘。'),
-    T([TR('🚃 JR 山手線 秋葉原→原宿（約 25 分）','¥220'),{html:'出站後步行 5 分鐘至南参道入口',style:'color:var(--gray-400)'}]),
-    N('<strong>⚠️ 關門時間：</strong>5 月明治神宮約 18:00 關閉，須 17:50 前通過入口。'),
+    D('穿越百年原生森林大參道（約 15 分鐘步行至本殿）。5 月初森林最蒼翠，陽光穿透樹葉灑落大道，氛圍神聖寧靜。本殿祈願、許願繪馬，參拜後可在本殿旁的「明治神宮御苑」漫步（¥500）。停留約 90 分鐘，15:30 前後出發前往澀谷。'),
+    T([TR('🚃 JR 山手線 秋葉原→原宿（約 25 分）','¥220'),{html:'📍 原宿站下車，步行約 1 分至明治神宮表參道口',style:'color:var(--gray-400)'}]),
+    N('<strong>⚠️ 關門時間：</strong>5 月明治神宮約 18:00 關閉，表參道口須 17:50 前通過。'),
     C([CH('免費入場','cc'),CH('💡 大參道 800m，原生森林，5 月最綠','ct')]),
-  ],'https://maps.app.goo.gl/DpzHGByGZTz3YPk37'),
+  ],'https://maps.app.goo.gl/DpzHGByGZTz3YPk37','明治神宮'),
   I('16:00','Shibuya Sky 夜景','sight',[TG('景點','sight')],'詳情',[
-    D('<b>Shibuya Sky</b> 在澀谷 Scramble Square 46 樓（230m），是東京最壯觀的完全戶外 360° 觀景台，無玻璃阻擋、腳下是澀谷繁華的夜景，遠方可見富士山輪廓。入場時段 <b>16:00–16:19</b>，5 人票已購。'),
+    D('<b>Shibuya Sky</b> 在澀谷 Scramble Square 46 樓（230m），是東京最壯觀的完全戶外 360° 觀景台，無玻璃阻擋、腳下是澀谷繁華的夜景，遠方可見富士山輪廓。入場時段 16:00–16:19，日落前後光線轉換最美。'),
     T([TR('🚶 明治神宮表參道 → 澀谷 步行約 15 分，或 🚃 JR 山手線 原宿→澀谷（2分）','¥150')]),
-    C([CH('✅ 已購票・入場 16:00–16:19','co2'),CH('¥3,400/人（5張）','cc'),CH('💡 黃昏轉夜景最美時段','ct')]),
+    C([CH('✅ 已購票・入場 16:00–16:19','co2'),CH('票價 ¥3,400/人 × 5張','cc'),CH('💡 日落轉夜景，無玻璃阻擋','ct')]),
   ],'https://maps.app.goo.gl/b5kLg9F8psfDJ3Gd9','Shibuya Sky'),
-  I('19:30','晚餐・大衆酒場 また会いにゆきます 澀谷店（居酒屋）','food',[TG('餐飲','food')],'詳情',[
-    D('Shibuya Sky 下來後，步行前往澀谷站附近的居酒屋。居酒屋、鐵板燒、天ぷら，料理種類豐富，氣氛熱鬧，非常適合一群人聚餐慶祝！澀谷駅から 405m。'),
-    T([TR('📍 渋谷駅から 405m（步行約 5 分）'),TR('🕐 預約時間：19:30・5名・訂位番號：46NRVQFHFL')]),
-    C([CH('✅ 已訂位・19:30・5名','co2'),CH('訂位番號 46NRVQFHFL','ct'),CH('居酒屋・鐵板焼・天ぷら','cf')]),
-  ],'https://maps.app.goo.gl/b5kLg9F8psfDJ3Gd9'),
+  I('19:30','晚餐・大衆酒場 また会いにゆきます 渋谷店（居酒屋）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>大衆酒場 また会いにゆきます 渋谷店</b>是澀谷站附近的人氣居酒屋，鐵板燒・天ぷら・串燒多樣料理，氣氛熱鬧適合聚餐，距澀谷站步行約 5 分鐘。已完成網路預約，入座後出示訂位番號即可。'),
+    T([TR('📍 渋谷駅から 405m，步行約 5 分'),TR('🕐 預約時間 19:30，人數 5名')]),
+    C([CH('✅ 已訂位・19:30・5名','co2'),CH('訂位番號 46NRVQFHFL','ct'),CH('居酒屋・鉄板焼き・天ぷら','cf')]),
+  ],null,'大衆酒場 また会いにゆきます 澀谷店'),
   I('21:30','返回秋葉原飯店・打包行李','transport',[TG('交通','transport')],'交通詳情',[
     T([TR('🚃 JR 山手線 澀谷→秋葉原（約 20 分）','¥220')]),
   ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7','秋葉原觀光酒店&咖啡（連住）'),
@@ -833,11 +832,11 @@ const mapDays = ref([
     {type:'sight',label:'5', name:'Kosaku Kawaguchiko (houtou)',lat:35.49574,lng:138.75686,q:'Kosaku+Kawaguchiko+Houtou'},
     {type:'hotel',label:'🏨',name:'秋葉原觀光酒店&咖啡',lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
   ]},
-  {title:'5/3 秋葉原・澀谷',places:[
-    {type:'sight',label:'1', name:'秋葉原電氣街',         lat:35.69971,lng:139.77137,q:'Akihabara+Electric+Town'},
-    {type:'sight',label:'2', name:'明治神宮',             lat:35.67663,lng:139.69934,q:'Meiji+Jingu+Shrine+Tokyo'},
-    {type:'sight',label:'3', name:'Shibuya Sky',          lat:35.65962,lng:139.70051,q:'Shibuya+Sky+Observation+Deck'},
-    {type:'sight',label:'4', name:'大衆酒場 また会いにゆきます 澀谷店',lat:35.65904,lng:139.69875,q:'Mata+Ai+ni+Yukimasu+Shibuya'},
+  {title:'5/3 秋葉原・明治神宮・澀谷',places:[
+    {type:'sight',label:'1', name:'秋葉原電氣街',              lat:35.69971,lng:139.77137,q:'Akihabara+Electric+Town'},
+    {type:'sight',label:'2', name:'明治神宮',                  lat:35.67663,lng:139.69934,q:'Meiji+Jingu+Shrine+Tokyo'},
+    {type:'sight',label:'3', name:'Shibuya Sky',               lat:35.65962,lng:139.70051,q:'Shibuya+Sky+Observation+Deck'},
+    {type:'sight',label:'4', name:'大衆酒場 また会いにゆきます 澀谷店',lat:35.65892,lng:139.70194,q:'Mataainiyukimasu+Shibuya'},
     {type:'hotel',label:'🏨',name:'秋葉原觀光酒店&咖啡（連住）',lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
   ]},
   {title:'5/4 晴空塔・淺草',places:[
