@@ -563,94 +563,110 @@ function TG(text,type){return{text,type}}
 
 const days = reactive([
 // ────────── DAY 1: 4/30 ──────────
-{date:'4/30',shortCity:'新宿',title:'4/30（四）抵達東京・新宿',summary:'成田機場・新宿御苑・AFURI拉麵・藥妝',extra:null,
- weather:{icon:'🌤',lo:'12°',hi:'21°'},
+{date:'4/30',shortCity:'新宿',title:'4/30（四）抵達東京・新宿',summary:'成田機場・新宿御苑・壽喜燒・逛街採購',extra:null,
+ weather:{icon:'🌤',lo:'13°',hi:'23°'},
  hotel:{name:'WPÜ HOTEL',note:'新宿西口站 步行 2 分・新宿站 步行 6 分'},
  items:[
-  I('13:30','東京成田機場 抵達','transport',[TG('✈ 航班','flight')],'入境資訊 + 行李宅配',[
-    D('出關 → 領行李 → <b>開啟 iPhone Suica（Apple Wallet 交通卡，直接感應搭車，不需另購 IC 卡）</b> → 選擇進市區方式（見下方）。'),
-    T([TR('🚆 <b>Narita Express（N\'EX）</b> 成田第2ビル 約 15:00 發 → 新宿 約 16:30（90 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,070（來回套票）</span>（去程到新宿＋回程到成田，5/4 用回程券）'),TR('🚗 <b>機場接送專車</b> 成田機場直送飯店，約 60–90 分，費用依業者（建議提前預約）。若行李多、不想轉車可選此方案。')]),
-    D('<b>🧳 行李宅配到秋葉原飯店（強烈建議）：</b>在 T2 入境大廳的 <b>ヤマト宅急便</b>（黑貓宅急便）或 <b>郵便局</b> 辦理，填寫收件地址（The Tourist Hotel & Cafe Akihabara），隔天或後天可取。費用約 ¥2,000–2,500 / 件，黃金週可能稍貴。<b>效益極大</b>：整趟旅程免拖大行李坐電車，新宿和河口湖輕鬆遊。'),
-    N('<strong>⚠️ 宅配寄送截止：</strong>機場宅配通常 14:00–15:00 截止受理（各櫃台不同），建議出關後立刻辦理，再處理交通。'),
-    C([CH('宅配費 ¥2,000–2,500/件','cc'),CH('💡 iPhone Suica 直接感應，不需買實體 IC 卡','ct'),CH('💡 建議先開啟漫遊或日本 SIM 卡','ct')]),
+  I('13:15','抵達成田機場・前往新宿','transport',[TG('✈ 航班','flight')],'入境資訊',[
+    D('出關 → 領行李 → <b>開啟 iPhone Suica（Apple Wallet 交通卡，直接感應搭車，不需另購 IC 卡）</b> → 至 JR 售票機或官網購 <b>N\'EX 單程票（成田機場→新宿）</b>，全車指定席，需指定座位。'),
+    T([TR('🚆 <b>Narita Express（N\'EX）</b> 成田機場 → 新宿（約 80–90 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥3,330/人（單程・通年同額・普通車指定席）</span>'),TR('🚗 <b>備案：機場接送專車</b> 成田機場直送飯店，約 60–90 分，費用依業者，適合行李多時。')]),
+    C([CH('N\'EX 單程 ¥3,330/人（通年同額）','cc'),CH('💡 iPhone Suica 直接感應，不需買實體 IC 卡','ct'),CH('💡 建議先開啟漫遊或日本 SIM 卡','ct')]),
   ],null,'成田國際機場'),
   I('15:00','WPÜ HOTEL 新宿 Check-in','hotel',[TG('住宿','hotel')],'備註',[
-    D('新宿西口站步行約 2 分鐘。辦理入住、整理隨身行李、換裝。大件行李已寄宅配，輕裝出發。'),
+    D('新宿西口站步行約 2 分鐘。辦理入住、整理隨身行李、換裝。'),
   ],'https://maps.app.goo.gl/Jay14CeJM7JUsRHa9'),
   I('15:30','新宿御苑','sight',[TG('景點','sight')],'詳情',[
     D('<b>新宿御苑</b>是東京都心最大的國民公園，58 公頃綠地融合日式・英式・法式三種庭園風格。5 月初草木最蒼翠，牡丹花壇盛開，是最美的季節之一。<b>新海誠《言葉之庭》電影取景地</b>，片中的涼亭和水池如今仍在。從飯店步行約 15 分鐘至新宿門（或搭地鐵 1 站至新宿御苑前站）。停留約 60–80 分鐘。'),
-    T([TR('🚶 飯店步行 約 15 分→ 新宿門'),{html:'或 🚃 東京Metro 丸の内線 新宿→新宿御苑前（2分），1 號出口步行 5 分',style:'color:var(--gray-400)'}]),
-    N('<strong>⚠️ 入園截止 16:00，閉園 16:30：</strong>請於 15:50 前通過入口閘門。15:30 從飯店出發，步行 15 分可在 15:45 入場，在黃昏柔光中漫步日本庭園約 45 分鐘。'),
-    C([CH('入園費 ¥500/人（可 IC 卡感應）','cc'),CH('週一休園（5/4 週一為節假日，5/5 補休）','cw'),CH('全程平坦，長椅多','co2')]),
+    T([TR('🚶 飯店步行 約 15 分→ 新宿門'),{html:'或 🚃 東京 Metro 丸之內線 新宿→新宿御苑前（2 分），1 號出口步行 5 分',style:'color:var(--gray-400)'}]),
+    N('<strong>⚠️ 入園截止 17:30，閉園 18:00：</strong>3/15〜6/30 的開放時間。15:30 出發步行 15 分約 15:45 入場，可悠閒遊覽約 2 小時。'),
+    C([CH('入園費 ¥500/人（可 IC 卡感應）','cc'),CH('週一休園（月曜為祝日則翌平日休園；5/4 為祝日正常開園）','cw'),CH('全程平坦，長椅多','co2')]),
   ],'https://maps.app.goo.gl/Kmjk8EfBGmQBtPjv8'),
-  I('18:30','晚餐・AFURI 拉麵','food',[TG('餐飲','food')],'詳情',[
-    D('<b>AFURI（阿夫利）</b>是東京最具代表性的清爽系拉麵品牌，以神奈川縣阿夫利山山泉水熬製高湯，柚子清香貫穿整碗，與一般濃厚豚骨截然不同。招牌<b>柚子塩拉麵</b>——淡金色雞骨柴魚高湯，浮現柚子果皮與清爽鮮味，北海道小麥手打細直麵，入口既有雞肉鮮味又有柚子回甘。<b>全素拉麵（Vegan Ramen）</b>採 100% 植物性高湯，以蓮藕粉取代雞蛋製麵，豐富時蔬，素食者也可盡情享用。亦推薦<b>柚子沾麵（Tsukemen）</b>，冷麵蘸濃醬吃法夏天風味絕佳。自動販賣機點餐，提交票券後 5 分鐘上桌。'),
-    F('推薦品項',[FI('柚子塩拉麵（Yuzu Shio Ramen）','招牌，淡金色清湯，炭烤叉燒、水菜、竹筍、海苔，柚子香氣怡人。<span class="fi-price"> ¥1,100–1,300</span>'),FI('全素拉麵（Vegan Ramen）','100% 植物性，當季蔬菜豐富，蓮藕麵條，完全純素。<span class="fi-price"> ¥1,200–1,400</span>',[{text:'全素',cls:'badge-veg'}]),FI('柚子沾麵（冷 Tsukemen）','濃郁醬汁配冷麵，柚子酸香提味，越吃越順口。<span class="fi-price"> ¥1,200–1,500</span>')]),
-    T([TR('📍 AFURI 新宿 Lumine I 店：新宿西口 Lumine I B2F，距飯店步行 5 分鐘'),{html:'📍 AFURI 原宿店（千駄ヶ谷）：距離略遠，但環境更寬敞',style:'color:var(--gray-400)'}]),
-    C([CH('⚠️ 黃金週假日可能排隊 20–30 分，17:30 前去可減少等候','cw'),CH('素食、全素選項完整','co2')]),
-  ],'https://maps.app.goo.gl/vwQ4G64e4SFr7fgp9','AFURI 新宿'),
-  I('20:00','新宿 藥妝採購','shop',[TG('購物','shop')],'推薦店家',[
-    D('飯店周邊是新宿核心區，藥妝戰場密集。購買保養品、退燒貼、整腸藥、藥妝伴手禮的最佳時機，重物可先放回飯店或等最後宅急便寄回。'),
-    F('周邊主力藥妝',[FI('松本清 新宿西口本店','日本最大藥妝連鎖，新宿西口旁，品項最齊全，可退稅，22:00 前。<span class="fi-price">退稅需 ¥5,000 以上</span>'),FI('ドン・キホーテ 新宿東口','"唐吉訶德"24H 超市，藥妝＋食品＋零食全齊，黃金週不打烊，晚上人較少。<span class="fi-price">部分商品更便宜</span>',[{text:'24H',cls:'badge-top'}]),FI('AINZ & TULPE 新宿','高品質美妝選品店，SK-II、資生堂、POLA 等日系品牌，環境整潔，適合精挑細選。')]),
+  I('18:30','晚餐・Shabushabu Niimura（壽喜燒）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>しゃぶしゃぶ ステーキ にいむら本店</b>（Shabushabu Niimura）是新宿老牌壽喜燒・shabu-shabu 名店，新宿歌舞伎町老字號名店，鄰近西武新宿站南出口步行 2 分・JR 新宿東口步行 4 分。以嚴選黑毛和牛與季節蔬菜為主角，湯底濃郁鮮甜，沾蛋液涮肉入口即化，東京在地人熟知的老鋪。設有多人包廂，適合 5 人同行，環境舒適。'),
+    F('推薦套餐',[
+      FI('しゃぶしゃぶ 定食（涮涮鍋套餐）','黑毛和牛薄切肉片、季節蔬菜、豆腐，附白飯・香物・デザート。<span class="fi-price"> ¥3,500–5,000/人</span>',[{text:'招牌',cls:'badge-b'}]),
+      FI('すき焼き（壽喜燒套餐）','關東風甜辛醬汁，牛肉、春菊、白菜、麩，沾生蛋液享用，風味濃郁。<span class="fi-price"> ¥3,500–5,000/人</span>',[{text:'推薦',cls:'badge-g'}]),
+      FI('ステーキ（鐵板牛排）','黑毛和牛鐵板燒，按熟度點餐，附蒜片・醬汁・沙拉。<span class="fi-price"> ¥4,000–6,000/人</span>')
+    ]),
+    T([TR('📍 西武新宿站 南口 步行 2 分・新宿東口 步行 5 分・歌舞伎町 1-14-3 川新大樓 1F／B1F'),TR('🕐 11:00–翌 2:00'),TR('📞 建議事先電話或網路訂位（黃金週必要）')]),
+    C([CH('✅ 已訂位','co2'),CH('包廂可供 5 人','co2'),CH('黃金週建議提前確認','cw')]),
+  ],null,'Shabushabu Niimura'),
+  I('20:00','新宿逛街・藥妝採購','shop',[TG('購物','shop')],'推薦店家',[
+    D('晚餐後在新宿西口周邊逛街採購，藥妝、體育用品、百貨一條龍。重物可先放回飯店或等最後宅急便寄回。'),
+    F('藥妝',[
+      FI('松本清 新宿西口本店','日本最大藥妝連鎖，新宿西口旁，品項最齊全，可退稅。<span class="fi-price">退稅需 ¥5,000 以上・～23:00</span>'),
+      FI('ドン・キホーテ 新宿東口','唐吉訶德 24H 超市，藥妝＋食品＋零食全齊，黃金週不打烊，晚上人較少。<span class="fi-price">24H 營業</span>',[{text:'24H',cls:'badge-top'}]),
+      FI('AINZ & TULPE 新宿東口店','高品質美妝選品店，SK-II、資生堂、POLA 等日系品牌，環境整潔，新宿駅中央東口 徒步 1 分。<span class="fi-price">10:00～22:00</span>')
+    ]),
+    F('體育用品',[
+      FI('Alpen Tokyo 新宿（アルペン）','日本最大戶外＋運動品牌複合店（MIZUNO・YONEX・Salomon 等），新宿東口 5F–8F，規模龐大。<span class="fi-price">～22:00</span>'),
+      FI('Victoria 新宿店','Old-school all-sport store，登山、跑步、球類用品齊全，可退稅，新宿南口・Southern Terrace 口步行 4 分。<span class="fi-price">平日・Sat 11:00–20:30 / Sun・Hol 10:30–20:00</span>')
+    ]),
+    F('百貨・商場',[
+      FI('OdakyuMAAch（小田急）','新宿西口直結，精品、服飾、生活雜貨，B1 超市食品採購方便。<span class="fi-price">10:00～20:30（日祝 20:00）</span>'),
+      FI('ルミネ新宿（LUMINE）','年輕品牌、輕奢服飾，新宿站直結，設有餐廳，燈光明亮好逛。<span class="fi-price">購物 11:00～21:00／餐廳 ～22:30</span>')
+    ]),
   ],null,false),
-]},
+ ]},
 
 // ────────── DAY 2: 5/1 ──────────
-{date:'5/1',shortCity:'河口湖',title:'5/1（五）富士山・御殿場',summary:'大石公園・河口湖・Mizunokaze蕎麥麵・Outlets・Shake Shack',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
- weather:{icon:'⛅',lo:'8°',hi:'17°'},
+{date:'5/1',shortCity:'河口湖',title:'5/1（五）富士山・御殿場',summary:'大石公園・河口湖・蕎麥麵・Outlets・漢堡',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
+ weather:{icon:'🌤',lo:'7°',hi:'20°'},
  hotel:{name:'edit x seven 富士御殿場',note:'御殿場 Premium Outlets 車程 5 分・免費停車'},
  items:[
-  I('08:00','前往新宿站・等車','transport',[TG('交通','transport')],'交通詳情',[
-    D('大件行李昨日已宅配至秋葉原飯店，今天輕裝出發！前往 16/17 番線，富士回遊 08:30 發車，全車指定席，未提前取票者無法上車。'),
+  I('08:00','退房・前往新宿站','transport',[TG('交通','transport')],'交通詳情',[
+    D('飯店退房後出發。<b>🧳 行李宅配（強烈建議）：</b>在飯店 Front 辦理 <b>ヤマト宅急便</b>，將大行李寄送至秋葉原 <b>The Tourist Hotel & Cafe Akihabara</b>，隔日或後天可取，費用約 ¥2,000–2,500 / 件。宅配辦理截止通常 10:00–11:00，請退房後立即辦理。'),
   ],'https://maps.app.goo.gl/HcuekJrahSZnerjM6','新宿'),
   I('08:30','搭乘富士回遊 7 號 新宿 → 河口湖','transport',[TG('交通','transport')],'交通詳情',[
     D('車廂從東京市區漸入山梨縣田園風光，接近河口湖時富士山巨大出現在右側（A 席），震撼無比。全程 1 小時 56 分，可在車上吃早餐。'),
     T([TR('🚆 <b>富士回遊 7 號</b> 新宿 08:30 → 河口湖 10:26（1h56m）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,200/人</span>（指定席）')]),
-    N('<strong>🎫 取票提醒：</strong>需提前在<b>新宿站</b>みどりの窓口或指定席券賣機取票，當天直接上車無法補票，全車指定席。'),
+    N('<strong>🎫 取票提醒：</strong>需提前在<b>新宿站</b> JR 售票窗口或指定席券賣機取票，當天直接上車無法補票，全車指定席。'),
   ],null,false),
-  I('10:30','河口湖站 取車','transport',[TG('交通','transport')],'交通詳情',[
-    D('步行 5 分鐘至 <b>Toyota Rent a Car 河口湖站前</b>辦理取車。準備：<b>台灣駕照正本＋日文譯本＋護照</b>。取車後先在旁邊加油站加滿油，再出發。'),
+  I('10:30','河口湖站・取車','transport',[TG('交通','transport')],'交通詳情',[
+    D('步行 5 分鐘至 <b>Toyota Rent a Car 河口湖站前</b>辦理取車。準備：<b>台灣駕照正本＋日文譯本＋護照</b>。先到租車公司附近加油站將油箱加滿，確保今日行程充裕，再出發。'),
     C([CH('租車 ¥15,000–20,000/2天（含保險）','cc'),CH('⚠️ 需監理所核發日文譯本，國際駕照不適用','cw')]),
-  ],null,false),
-  I('11:00','大石公園（Oishi Park）','sight',[TG('景點','sight')],'詳情',[
+  ],null,'河口湖站・取車'),
+  I('11:00','大石公園','sight',[TG('景點','sight')],'詳情',[
     D('<b>大石公園</b>是河口湖北岸最著名的富士山拍攝點，5 月初芝櫻（石竹花）連片盛開，粉紅花毯與富士山構成明信片般的夢幻畫面。湖畔遊步道無遮蔽，視野開闊，停車場免費。停留約 45–60 分鐘。'),
     T([TR('🚗 河口湖站（租車公司）→ 大石公園（約 15 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">免費入場</span>（停車免費）')]),
     C([CH('免費','cc'),CH('5 月芝櫻盛開，最美明信片場景','co2')]),
   ],'https://maps.app.goo.gl/gZ6ERWknuf7etDiq6'),
   I('12:00','河口湖自然生活館','sight',[TG('景點','sight')],'詳情',[
     D('<b>河口湖自然生活館</b>就在大石公園旁，融合在地農產與富士山景的觀光設施。內設喫茶區可在窗邊欣賞富士山與河口湖全景，也有售店販售山梨特產藍莓果醬、拉菲草商品等伴手禮。適合短暫休憩，吃個霜淇淋再準備出發。停留約 25–35 分鐘。'),
+    T([TR('🚶 大石公園 → 河口湖自然生活館（步行約 2 分，緊鄰大石公園）')]),
     C([CH('入館免費','cc'),CH('💡 富士山景觀咖啡，鄰接大石公園步行即達','ct')]),
   ],'https://maps.app.goo.gl/gZ6ERWknuf7etDiq6','河口湖自然生活館'),
-  I('13:00','午餐・みずの風 Mizunokaze（蕎麥麵）','food',[TG('餐飲','food')],'詳情',[
-    D('<b>みずの風</b>就在大石公園旁，以 100% 純蕎麥粉製成的手打十割蕎麥聞名，完全不加小麥粉，蕎麥香氣濃郁、口感清爽，搭配時蔬天婦羅，是縣外客專程造訪的人氣蕎麥店。停留約 60–75 分鐘。'),
+  I('13:00','午餐・Mizunokaze（蕎麥麵）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>みずの風 Mizunokaze</b>・大石公園旁手打十割蕎麥名店，100% 純蕎麥粉製成，不加小麥粉，蕎麥香氣濃郁清爽，搭配時蔬天婦羅，縣外客專程造訪。停留約 60–75 分鐘。'),
+    T([TR('🚶 河口湖自然生活館 → Mizunokaze（步行約 1 分，緊鄰同區）')]),
     F('推薦品項',[FI('天ざる（天婦羅蕎麥套餐）','十割蕎麥＋大蝦天婦羅＋季節蔬菜，最受歡迎的定番套餐。<span class="fi-price"> ¥1,500–1,800</span>'),FI('もりそば（純蕎麥冷麵）','蕎麥香氣最直接的吃法，附蕎麥湯。<span class="fi-price"> ¥900–1,100</span>'),FI('そばアイスクリーム（蕎麥冰淇淋）','蕎麥粉製的獨特冰淇淋，不吃白不吃。<span class="fi-price"> ¥400–500</span>')]),
     N('<strong>⚠️ 注意：</strong>蕎麥售完即止，黃金週假日建議早點到場，13:00 仍有機率買到。'),
     C([CH('⚠️ 蕎麥售完即止','cw'),CH('十割蕎麥，無小麥粉','co2')]),
-  ],'https://maps.app.goo.gl/gZ6ERWknuf7etDiq6','みずの風 MIZUNOKAZE'),
+  ],'https://maps.app.goo.gl/gZ6ERWknuf7etDiq6','Mizunokaze'),
   I('15:00','前往御殿場・edit x seven 飯店 Check-in','hotel',[TG('住宿','hotel')],'備註',[
     D('午餐結束後出發前往御殿場。抵達後辦理 Check-in，把行李放入房間再輕裝逛 Outlets，不必拖著購物袋到處走。住宿提供<b>免費自助停車</b>（露天停車場）。Check-in 時記得告知 Front 希望高樓層，15:00–16:00 入住通常選擇最多，富士山景視野最佳。'),
     T([TR('🚗 大石公園周邊 → edit x seven 富士御殿場（國道 138 號往東南，約 55–65 分）')]),
     C([CH('🅿️ 免費自助停車（露天）','co2'),CH('💡 早到搶高樓層，富士山景最佳','ct'),CH('⚠️ Check-in 最晚 20:00','cw')]),
   ],'https://maps.app.goo.gl/YQfA3S7wP48kJpCp6','edit x seven 富士御殿場'),
   I('16:00','御殿場 Premium Outlets','shop',[TG('購物','shop')],'詳情',[
-    D('放完行李輕裝出發。日本最大 Premium Outlets，共 <b>210 家品牌</b>：Nike、Coach、Ralph Lauren、Burberry、Tory Burch 等，背後就是富士山，拍照超美。黃金週直奔最想購買的品牌。退稅需各店滿 ¥5,000，出示護照。5 月開放至 20:00，今晚購物時間充裕。'),
+    D('放完行李輕裝出發。日本最大 Premium Outlets，共 <b>約 290 家品牌</b>：Nike、Coach、Ralph Lauren、Burberry、Tory Burch 等，背後就是富士山，拍照超美。黃金週直奔最想購買的品牌。退稅需各店滿 ¥5,000，出示護照。5 月開放至 20:00，今晚購物時間充裕。'),
     T([TR('🚗 飯店 → 御殿場 Premium Outlets（約 5 分）或步行 25 分')]),
     C([CH('園內有接駁 Shuttle，不需步行全場','co2'),CH('退稅需單店 ¥5,000 以上，出示護照','ct'),CH('5 月關門 20:00','cf')]),
   ],'https://maps.app.goo.gl/ZM883cTE63susJ1EA','御殿場 PREMIUM OUTLETS'),
-  I('18:30','晚餐・Shake Shack 御殿場Outlets店（漢堡）','food',[TG('餐飲','food')],'詳情',[
+  I('18:00','晚餐・Shake Shack 御殿場店（漢堡）','food',[TG('餐飲','food')],'詳情',[
     D('<b>Shake Shack 御殿場店</b>是全日本唯一的 Outlets 據點，店內 176 席＋露天 42 席，附富士山景色。招牌 ShackBurger 使用荷爾蒙劑免疫的 Angus 牛肉，肉質紮實多汁。御殿場限定甜點 <b>フジサンクリート</b>（富士山造型冰淇淋，柚子味噌焦糖＋黃豆粉），是來這裡一定要嚐的在地限定。'),
     F('推薦品項',[FI('ShackBurger','Angus 牛肉漢堡，番茄、生菜、ShackSauce，經典美味。<span class="fi-price"> ¥1,100–1,300</span>'),FI('Smoke Shack','培根＋Cherry Pepper，辣度適中，層次更豐富。<span class="fi-price"> ¥1,400–1,600</span>'),FI('フジサンクリート（御殿場限定）','富士山造型霜淇淋，柚子味噌焦糖＋黃豆粉，必嚐限定品項。<span class="fi-price"> ¥700–800</span>',[{text:'御殿場限定',cls:'badge-top'}])]),
-    C([CH('⚠️ 店内 L.O. 18:45，務必 18:30 前入座','cw'),CH('フジサンクリート御殿場限定必嚐','cf')]),
+    C([CH('⚠️ 店内 L.O. 18:45，務必 18:00 前入座','cw'),CH('フジサンクリート御殿場限定必嚐','cf')]),
   ],'https://maps.app.goo.gl/ZM883cTE63susJ1EA','御殿場PREMIUM OUTLETS店'),
-  I('20:00','返回御殿場飯店','hotel',[TG('住宿','hotel')],'備註',[
+  I('20:00','返回御殿場飯店','transport',[TG('交通','transport')],'備註',[
     D('購物結束，步行或開車 5 分鐘返回飯店休息，整理行李、準備明天出發。'),
     T([TR('🚗 御殿場 Outlets → 飯店（約 5 分）或步行')]),
   ],'https://maps.app.goo.gl/YQfA3S7wP48kJpCp6','edit x seven 富士御殿場'),
 ]},
 
 // ────────── DAY 3: 5/2 ──────────
-{date:'5/2',shortCity:'山中湖',title:'5/2（六）山中湖・富士吉田',summary:'長池親水公園・平野之濱・新倉山淺間公園・本町通・Kosaku餺飥',extra:'🚄 富士回遊 17:41 河口湖→19:40 新宿',
- weather:{icon:'⛅',lo:'9°',hi:'19°'},
+{date:'5/2',shortCity:'山中湖',title:'5/2（六）山中湖・富士吉田',summary:'長池親水公園・平野之濱・新倉山淺間公園・本町通・餺飥',extra:'🚄 富士回遊 17:41 河口湖→19:40 新宿',
+ weather:{icon:'⛅',lo:'7°',hi:'20°'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'秋葉原站 步行 3 分・JR 秋葉原站 步行 5 分'},
  items:[
   I('07:30','退房・出發','transport',[TG('交通','transport')],'出發備注',[
@@ -672,31 +688,31 @@ const days = reactive([
     T([TR('🚗 平野之濱 → 咖啡館（往富士吉田方向，約 10–20 分）')]),
     F('二選一',[FI('Jura Noire','低調質感日式咖啡館，手沖咖啡出色，環境沉穩，富士吉田市區，適合靜靜喝一杯。<span class="fi-price"> ¥600–1,000</span>'),FI('AMAAMA BAR & CAFE LOUNGE','甜點咖啡複合型，選品精緻，環境舒適，提供甜點套餐，適合喜歡下午茶氛圍的選擇。<span class="fi-price"> ¥800–1,400</span>')]),
   ]),
-  I('11:45','新倉山淺間公園 忠靈塔','sight',[TG('景點','sight')],'詳情',[
+  I('12:00','新倉山淺間公園 忠靈塔','sight',[TG('景點','sight')],'詳情',[
     D('<b>新倉山淺間公園</b>是全日本最著名的「富士山＋五重塔」明信片場景發源地，忠靈塔（五重塔）與富士山構成的構圖舉世聞名。5 月有杜鵑花盛開，色彩更豐富。需爬 398 級石階至觀景台（約 15–20 分），<b>走到舒服即可</b>，山腰淺間神社境內也有絕佳富士山視角。停留約 60–80 分鐘。'),
     T([TR('🚗 咖啡館 → 新倉山淺間公園（富士吉田市區，約 5–15 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">入場免費</span>（停車場 ¥1,000–1,500）')]),
     C([CH('入場免費','cc'),CH('💡 午前光線打在五重塔側面，有立體感','ct'),CH('⚠️ 398 階石階，走到舒服即可','cw')]),
   ],'https://maps.app.goo.gl/eoExM36FpkwE5vtH6'),
-  I('13:15','富士吉田懷舊商店街（本町通）','sight',[TG('景點','sight')],'詳情',[
+  I('13:20','富士吉田懷舊商店街 本町通','sight',[TG('景點','sight')],'詳情',[
     D('<b>富士吉田本町通</b>是近年在 Instagram 爆紅的昭和復古老街，筆直的街道盡頭正對著富士山，老商店建築與雄偉富士山交疊成獨一無二的構圖。路口有交通指揮員管理，請在人行道拍攝，勿站至馬路上。停留約 40–50 分鐘。'),
     T([TR('🚗 新倉山淺間公園 → 本町通（步行 10 分 或 開車 3 分）')]),
     C([CH('免費','cc'),CH('💡 街道盡頭正對富士山，構圖絕美','ct'),CH('⚠️ 請在人行道拍攝','cw')]),
-  ],'https://maps.app.goo.gl/TLxsj3rjxMqU3wr77'),
-  I('14:00','午餐・甲州ほうとう小作 Kosaku Kawaguchiko（餺飥）','food',[TG('餐飲','food')],'詳情',[
-    D('<b>甲州ほうとう 小作（Kosaku）河口湖店</b>是山梨縣老字號餺飥名店，古民家風格店舖，環境舒適典雅。招牌<b>かぼちゃほうとう（¥1,400）</b>以大塊軟糯南瓜加自家製味噌慢煮，麵條 Q 彈，湯頭偏甜，暖胃暖心。河口湖站附近，停車場寬敞，自駕方便。停留約 60–75 分鐘。'),
+  ],null,'富士吉田懷舊商店街'),
+  I('14:00','午餐・Kosaku Kawaguchiko（餺飥）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>甲州ほうとう小作</b>（Kosaku Kawaguchiko）是山梨縣老字號餺飥名店，古民家風格店舖，環境舒適典雅。招牌<b>かぼちゃほうとう（¥1,400）</b>以大塊軟糯南瓜加自家製味噌慢煮，麵條 Q 彈，湯頭偏甜，暖胃暖心。河口湖站附近，停車場寬敞，自駕方便。停留約 60–75 分鐘。'),
     T([TR('🚗 本町通 → Kosaku 河口湖店（約 10–15 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥1,400–1,700/人</span>')]),
     F('推薦品項',[FI('かぼちゃほうとう（南瓜餺飥）','招牌，大塊軟糯南瓜＋自家製味噌，麵條 Q 彈，最經典的選擇。<span class="fi-price"> ¥1,400</span>'),FI('きのこほうとう（菇類餺飥）','多種野菇鮮味，湯頭更有深度，素食友善（可詢問是否有動物性食材）。<span class="fi-price"> ¥1,500</span>',[{text:'素食可詢問',cls:'badge-veg'}])]),
     C([CH('💡 老字號古民家風，河口湖站附近','ct'),CH('可素，點餐時詢問確認','co2')]),
-  ],'https://maps.app.goo.gl/xAE3LJQM4XXbpzqr9','Kosaku Kawaguchiko (houtou)'),
-  I('15:30','前往河口湖還車','transport',[TG('交通','transport')],'還車注意事項',[
+  ],'https://maps.app.goo.gl/xAE3LJQM4XXbpzqr9','Kosaku Kawaguchiko'),
+  I('15:30','前往河口湖站・還車','transport',[TG('交通','transport')],'還車注意事項',[
     D('從 Kosaku 開車約 5 分鐘至 Toyota Rent a Car 河口湖站前。確認車內無遺留物品，交還鑰匙並確認費用明細。還車手續約 15–20 分鐘，16:00 前可完成。'),
     T([TR('🚗 Kosaku 河口湖店 → Toyota Rent a Car 河口湖站前（約 5 分）')]),
-  ],'https://maps.app.goo.gl/rbmwBjcDRSERDwZ7A'),
-  I('16:00','河口湖站周邊 自由時間','sight',[TG('景點','sight')],'選擇',[
+  ],null,'前往河口湖站・還車'),
+  I('16:00','河口湖站周邊・自由時間','sight',[TG('景點','sight')],'選擇',[
     D('還車後到 17:41 出發，有充裕的 1 小時 40 分可以輕鬆逛逛，悠閒結束富士山之旅。'),
     F('自由活動選擇',[FI('河口湖站前商店街','紀念品店、桔梗屋信玄餅、甲州葡萄酒，採買伴手禮最後機會。'),FI('あさま茶房（河口湖站前）','富士山景色的咖啡館，手沖咖啡、鬆餅，靜靜坐著看富士山。<span class="fi-price"> ¥600–1,200</span>'),FI('湖畔散步','步行至河口湖湖岸走走，最後再看一眼富士山。')]),
   ],null,false),
-  I('17:30','前往月台・等車','transport',[TG('交通','transport')],'出發備注',[
+  I('17:30','前往月台','transport',[TG('交通','transport')],'出發備注',[
     D('步行約 10 分鐘至河口湖站，提前至月台確認指定席車廂位置。'),
     N('<strong>⚠️ 富士回遊全車指定席，請確認票上的車廂號碼再上車。</strong>'),
   ],null,'河口湖站'),
@@ -715,8 +731,8 @@ const days = reactive([
 ]},
 
 // ────────── DAY 4: 5/3 ──────────
-{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・明治神宮・澀谷',summary:'購物・午餐・明治神宮・Shibuya Sky・また会いにゆきます居酒屋',extra:null,
- weather:{icon:'☀️',lo:'12°',hi:'22°'},
+{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・明治神宮・澀谷',summary:'購物・拉麵・明治神宮・Shibuya Sky・居酒屋',extra:null,
+ weather:{icon:'⛅',lo:'14°',hi:'20°'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'連住第 2 晚'},
  items:[
   I('09:30','秋葉原 電器街 + UNIQLO 購物','shop',[TG('購物','shop')],'推薦店家',[
@@ -725,36 +741,39 @@ const days = reactive([
     T([TR('📍 秋葉原電気街：秋葉原站東口步行 2 分鐘'),{html:'📍 UNIQLO 秋葉原：ヨドバシ Akiba 旁，步行 1 分鐘',style:'color:var(--gray-400)'}]),
     C([CH('💡 10:00–11:30 人少效率最高','ct'),CH('退稅需單店 ¥5,000 以上','cf')]),
   ],'https://maps.app.goo.gl/DfdUP8kCWLk5CC3Y9','秋葉原電氣街'),
-  I('11:30','戰利品放回飯店','hotel',[TG('住宿','hotel')],'備注',[
+  I('11:30','戰利品放回飯店','transport',[TG('交通','transport')],'備注',[
     D('採購完後回飯店放戰利品，整理購物袋，換裝準備出發前往明治神宮方向。'),
   ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7','秋葉原觀光酒店&咖啡（連住）'),
-  I('12:00','午餐・待決定','food',[TG('餐飲','food')],'備注',[
-    D('秋葉原或前往明治神宮途中用餐，地點待確定。'),
-  ],null,false),
+  I('12:00','午餐・AFURI 原宿店（拉麵）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>AFURI Harajuku</b>（阿夫利 原宿旗艦店）以神奈川阿夫利山山泉水熬製清爽柚子高湯，是東京代表性的柚子鹽拉麵品牌。原宿店空間寬敞，適合 5 人同行。'),
+    T([TR('🚃 JR 山手線 秋葉原→原宿（約 21 分）','¥220'),TR('📍 原宿站步行 5 分・千駄谷 3-63-1 Grande Foresta 1F'),TR('🕐 10:00–23:00（湯售完即打烊）')]),
+    F('推薦品項',[FI('柚子塩拉麵','清爽雞骨高湯，柚子果皮香氣，招牌人氣 No.1。<span class="fi-price"> ¥1,400 前後</span>',[{text:'招牌',cls:'badge-b'}]),FI('柚子醤油拉麵','醤油底帶清爽柚子香，口感稍濃。<span class="fi-price"> ¥1,400 前後</span>',[{text:'推薦',cls:'badge-g'}]),FI('VEGAN 柚子塩拉麵','純植物性高湯，素食友善。<span class="fi-price"> ¥1,600</span>',[{text:'素食',cls:'badge-b'}])]),
+    C([CH('原宿旗艦店，環境寬敞','co2'),CH('素食選項完整','ct')]),
+  ],null,'AFURI 原宿店'),
   I('13:30','明治神宮','sight',[TG('景點','sight')],'詳情',[
-    D('穿越百年原生森林大參道（約 15 分鐘步行至本殿）。5 月初森林最蒼翠，陽光穿透樹葉灑落大道，氛圍神聖寧靜。本殿祈願、許願繪馬，參拜後可在本殿旁的「明治神宮御苑」漫步（¥500）。停留約 90 分鐘，15:30 前後出發前往澀谷。'),
-    T([TR('🚃 JR 中央・總武線 秋葉原→代々木（約 17 分・8 站）','¥220'),{html:'📍 代々木 西口下車，步行約 10 分至北参道口→本殿。全程約 27 分，比山手線原宿路線省 17 分',style:'color:var(--gray-400)'}]),
-    N('<strong>⚠️ 關門時間：</strong>5 月明治神宮約 18:00 關閉，表參道口須 17:50 前通過。'),
+    D('穿越百年原生森林大參道（約 800m 步行至本殿）。5 月初森林最蒼翠，陽光穿透樹葉灑落大道，氛圍神聖寧靜。本殿祈願、許願繪馬，參拜後可在本殿旁的明治神宮御苑漫步（¥500）。停留約 90 分鐘，15:30 前後出發前往澀谷。'),
+    T([TR('🚶 AFURI 原宿店 → 往南步行約 8 分 → 明治神宮 北參道口入園'),{html:'從餐廳往南走至神宮前十字路口，向右轉即可看到入口',style:'color:var(--gray-400)'}]),
+    N('<strong>⚠️ 關門時間：</strong>5 月明治神宮 18:10 閉門，南參道口建議 17:50 前通過。'),
     C([CH('免費入場','cc'),CH('💡 大參道 800m，原生森林，5 月最綠','ct')]),
   ],'https://maps.app.goo.gl/DpzHGByGZTz3YPk37','明治神宮'),
   I('16:00','Shibuya Sky 夜景','sight',[TG('景點','sight')],'詳情',[
-    D('<b>Shibuya Sky</b> 在澀谷 Scramble Square 46 樓（230m），是東京最壯觀的完全戶外 360° 觀景台，無玻璃阻擋、腳下是澀谷繁華的夜景，遠方可見富士山輪廓。入場時段 16:00–16:19，日落前後光線轉換最美。'),
+    D('<b>Shibuya Sky</b> 位於澀谷 Scramble Square 屋上 SKY STAGE（地上 229m），日本最大級戶外 360° 展望空間。<b>SKY EDGE</b> 角落玻璃圍欄最低，可直接俯瞰澀谷十字路口；<b>GEO COMPASS</b> 是最高點，全景拍攝最佳位置。入場時段 16:00–16:19，日落前後光線轉換最美。'),
     T([TR('🚶 明治神宮表參道 → 澀谷 步行約 15 分，或 🚃 JR 山手線 原宿→澀谷（2分）','¥150')]),
-    C([CH('✅ 已購票・入場 16:00–16:19','co2'),CH('票價 ¥3,400/人 × 5張','cc'),CH('💡 日落轉夜景，無玻璃阻擋','ct')]),
+    C([CH('✅ 已購票・入場 16:00–16:19','co2'),CH('票價 ¥3,400/人 × 5張','cc'),CH('💡 戶外 360° 觀景台，無玻璃阻擋','ct')]),
   ],'https://maps.app.goo.gl/b5kLg9F8psfDJ3Gd9','Shibuya Sky'),
-  I('19:30','晚餐・大衆酒場 また会いにゆきます 澀谷店（居酒屋）','food',[TG('餐飲','food')],'詳情',[
-    D('<b>大衆酒場 また会いにゆきます 渋谷店</b>是澀谷站附近的人氣居酒屋，鐵板燒・天ぷら・串燒多樣料理，氣氛熱鬧適合聚餐，距澀谷站步行約 5 分鐘。已完成網路預約，入座後出示訂位番號即可。'),
-    T([TR('📍 渋谷駅から 405m，步行約 5 分'),TR('🕐 預約時間 19:30，人數 5名')]),
-    C([CH('✅ 已訂位・19:30・5名','co2'),CH('訂位番號 46NRVQFHFL','ct'),CH('居酒屋・鉄板焼き・天ぷら','cf')]),
-  ],null,'大衆酒場 また会いにゆきます 澀谷店'),
-  I('21:30','返回秋葉原飯店・打包行李','transport',[TG('交通','transport')],'交通詳情',[
+  I('19:30','晚餐・Mata Ai ni Yukimasu 澀谷店（居酒屋）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>大衆酒場 また会いにゆきます 渋谷店</b>（Mata Ai ni Yukimasu）是澀谷站附近的人氣居酒屋，鐵板燒・天婦羅・串燒多樣料理，氣氛熱鬧適合聚餐，距澀谷站步行約 5 分鐘。已完成網路預約，入座後出示訂位番號即可。'),
+    T([TR('📍 澀谷站步行約 5 分')]),
+    C([CH('✅ 已訂位・19:30・5名','co2'),CH('訂位番號 46NRVQFHFL','ct'),CH('居酒屋・鐵板燒・天婦羅','cf')]),
+  ],null,'Mata Ai ni Yukimasu 澀谷店'),
+  I('21:30','返回秋葉原飯店','transport',[TG('交通','transport')],'交通詳情',[
     T([TR('🚃 JR 山手線 澀谷→秋葉原（約 20 分）','¥220')]),
   ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7','秋葉原觀光酒店&咖啡（連住）'),
 ]},
 
 // ────────── DAY 5: 5/4 ──────────
-{date:'5/4',shortCity:'返台',title:'5/4（一）晴空塔・淺草・返台',summary:'晴空塔・Toriton迴轉壽司・淺草寺雷門・成田機場返程',extra:null,
- weather:{icon:'🌤',lo:'15°',hi:'22°'},
+{date:'5/4',shortCity:'返台',title:'5/4（一）晴空塔・淺草・返台',summary:'晴空塔・迴轉壽司・淺草寺雷門・成田機場返程',extra:null,
+ weather:{icon:'🌧',lo:'15°',hi:'21°'},
  hotel:{icon:'✈️',label:'航班',name:'CI 109 NRT 20:00 起飛',note:'建議 18:00 前抵達成田第2航廈'},
  items:[
   I('08:30','早餐・秋葉原周邊','food',[TG('餐飲','food')],'選擇',[
@@ -763,34 +782,34 @@ const days = reactive([
   ]),
   I('09:30','前往晴空塔','transport',[TG('交通','transport')],'整理券策略',[
     D('出發前往晴空塔。SOLAMACHI 商場 <b>10:00 才開始營業</b>，先抵達等待開門，再立刻前往 6F 取「回転寿しトリトン」整理券。トリトン <b>11:00 開始發券</b>，黃金週當日券可能迅速被取完，請在 11:00 準時取。'),
-    T([TR('🚃 東京Metro 日比谷線 秋葉原→仲御徒町，換銀座線→押上（約 20 分）','¥220')]),
+    T([TR('🚃 東京Metro 日比谷線 秋葉原→人形町（約 3 分），換都營浅草線→押上（約 20 分）','¥220')]),
     N('<strong>⚠️ 整理券策略：</strong>10:00 進場逛商場，<b>11:00 準時</b>至 6F「トリトン」店前平板取整理券，取到券後 LINE 通知叫號，可繼續自由逛 SOLAMACHI，不需在店前乾等。'),
     C([CH('SOLAMACHI 10:00 開門','ct'),CH('⚠️ Toriton 整理券 11:00 起才可取','cw'),CH('取券後可自由逛商場','co2')]),
   ],'https://maps.app.goo.gl/sdCEoKyYu1QU8K4w9','東京晴空塔'),
   I('10:00','SOLAMACHI 伴手禮採購・等叫號','shop',[TG('購物','shop')],'推薦',[
-    D('商場 10:00 開門，先在各層採買伴手禮，11:00 準時取 Toriton 整理券後繼續逛，等 LINE 通知叫號後前往用餐。'),
+    D('商場 10:00 開門，在各層採買伴手禮，等 LINE 通知叫號後前往用餐。'),
     F('必逛區域',[FI('1–4F 晴空塔限定商品','東京スカイツリー限定伴手禮、主題商品，玩具、點心到雜貨，這裡才有的紀念品。'),FI('どんぐり共和國（吉卜力官方店）','吉卜力全系列商品，龍貓、魔女宅急便，SOLAMACHI 這間是東京最齊全的一家。'),FI('B2 超市（東武ストア）','日本限定零食、東京限定點心、北海道食品，採買最後機會，現場試吃多。')]),
     C([CH('💡 結帳後整理好購物袋，等下直接帶去機場','ct')]),
-  ],'https://maps.app.goo.gl/sdCEoKyYu1QU8K4w9'),
-  I('11:00','午餐・Toriton・晴空塔 6F（迴轉壽司）','food',[TG('餐飲','food')],'詳情',[
-    D('<b>回転寿し トリトン</b>是北海道發源的超人氣迴轉壽司，東京只有三間店，ソラマチ店是人氣最旺的一間。使用北海道直送的新鮮食材，鮮度和分量都遠超一般東京迴轉壽司。坐位制 80 分鐘，觸控螢幕點餐。平均每人 ¥3,000–4,500。'),
+  ],null,false),
+  I('11:00','午餐・Toriton 晴空塔店（迴轉壽司）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>回転寿し トリトン</b>（Toriton）是北海道發源的超人氣迴轉壽司，東京只有三間店，ソラマチ店是人氣最旺的一間。使用北海道直送的新鮮食材，鮮度和分量都遠超一般東京迴轉壽司。坐位制 80 分鐘，觸控螢幕點餐。平均每人 ¥3,000–4,500。'),
     F('必點推薦',[FI('えんがわ（柚子塩）','比目魚鰭邊肉，脂肪豐厚，柚子鹽提鮮，北海道特色，售完為止。<span class="fi-price"> ¥220–330/盤</span>'),FI('北海道産うに（海膽）','北海道直送馬糞海膽，甜味濃，東京市區罕見的新鮮度。<span class="fi-price"> ¥440–660/盤</span>',[{text:'必吃',cls:'badge-top'}]),FI('炙りサーモン（炙燒鮭魚）','表面炙燒，油脂更香，是最多人點的定番品項。<span class="fi-price"> ¥220/盤</span>'),FI('イモモチ（芋餅・甜點）','北海道家庭傳統點心，外皮炸得酥脆，內餡軟糯，配甜醬，非常特別。<span class="fi-price"> ¥110–165</span>')]),
     C([CH('不接受預約，現場取整理券（11:00〜）','cw'),CH('每人約 ¥3,000–4,500','cc'),CH('80 分鐘用餐時限','ct')]),
-  ],'https://maps.app.goo.gl/sdCEoKyYu1QU8K4w9','迴轉壽司 Toriton 東京晴空塔・晴空街道店'),
+  ],null,'Toriton 晴空塔店'),
   I('13:00','淺草寺','sight',[TG('景點','sight')],'詳情',[
     D('雷門大紅燈籠打卡 → <b>仲見世通</b>（250 公尺商店街，約 100 間老店）→ 本殿參拜 → 抽籤（おみくじ）。人形燒（¥150/個）、雷おこし（¥800/袋）必買，還有人力車、手拭、和紙工藝品。下午人潮較多，但仲見世通即使人多也很熱鬧，氣氛絕佳。停留約 60–90 分鐘。'),
     T([TR('🚶 晴空塔 → 淺草寺 步行約 15 分，或 🚃 都營浅草線 押上→浅草（2分）','¥180')]),
     C([CH('免費入場','cc'),CH('仲見世通 250m 全平坦','co2'),CH('💡 人形燒、雷おこし 是最佳伴手禮','ct')]),
   ],'https://maps.app.goo.gl/bn9zZcNX4NoYA3kx6'),
-  I('15:00','秋葉原飯店 取行李','hotel',[TG('住宿','hotel')],'備注',[
+  I('15:00','秋葉原飯店 取行李','transport',[TG('交通','transport')],'備注',[
     D('返回飯店取回大行李（包含宅急便的大行李箱）。確認護照、電子機票（CI 109）、購物收據（退稅用）。Suica 可在 JR 服務台退卡（餘額＋¥500 押金），或保留下次使用。'),
     T([TR('🚃 東京Metro 銀座線 浅草→上野，換 JR 山手線→秋葉原（約 20 分）','¥220')]),
-  ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7'),
-  I('16:00','前往成田機場','transport',[TG('✈ 航班','flight')],'2 個方案',[
-    D('確認行李、護照、電子機票一切就緒後，從秋葉原出發前往成田機場。'),
-    F('方案 A：N\'EX（已含在來回套票，免費）',[FI('Narita Express 回程','🚃 JR 総武線 秋葉原→新宿（22分・¥220）<br>🚆 N\'EX 新宿 約 16:30 → 成田第2航廈 約 17:57<br>💰 <span class="fi-price">已含在 ¥4,070 來回套票，免費</span><br>⚠️ 秋葉原無 N\'EX 停靠，需先搭至新宿轉乘')]),
-    F('方案 B：Skyliner（從秋葉原更順路）',[FI('京成 Skyliner','🚃 JR 山手線 秋葉原→日暮里（10分・¥170）<br>🚅 Skyliner 日暮里 → 成田機場第2航廈（36分）<br>💰 <span class="fi-price">¥2,570/人（單程）</span><br>✅ 無需繞到新宿，省時 30 分鐘，附大件行李箱也方便')]),
-    N('<strong>⚠️ 提醒：</strong>黃金週最後一天機場人潮多，建議 <strong>16:00 出發</strong>，<b>17:30 前抵達成田第2航廈</b>，預留充裕時間辦理報到、退稅及出境。'),
+  ],null,'秋葉原飯店 取行李'),
+  I('16:00','前往成田機場','transport',[TG('✈ 航班','flight')],'交通詳情',[
+    D('確認行李、護照、電子機票（CI 109）一切就緒後，從秋葉原搭 Skyliner 前往成田機場。Skyliner 全車指定席，建議提前在京成官網或日暮里站售票窗口購票。'),
+    T([TR('🚃 JR 山手線 秋葉原→日暮里（約 10 分）','¥170'),TR('🚅 <b>京成 Skyliner</b> 日暮里→成田機場第 2 航廈（最短 36 分，時速 160km）'),TR('💰 <span style="color:var(--gold);font-weight:600">Skyliner 合計 ¥2,750/人</span>（JR ¥170 + Skyliner ¥2,580）')]),
+    N('<strong>⚠️ 提醒：</strong>黃金週最後一天機場人潮多，建議 <strong>16:00 出發</strong>，<b>17:30 前抵達成田第2航廈</b>，預留充裕時間辦理報到、退稅及出境。CI 109 搭乘第2航廈。'),
+    C([CH('Skyliner 日暮里→成田 最短 36 分','ct'),CH('合計 ¥2,750/人','cc'),CH('⚠️ 全車指定席，建議提前購票','cw')]),
   ],null,'成田國際機場'),
   I('20:00','成田機場 返程','transport',[TG('✈ 航班','flight')],'詳情',[
     D('CI 109，20:00 成田第2航廈起飛 → 22:45 抵達桃園機場第2航廈。飛行約 3 小時 45 分，平安返家！'),
@@ -810,16 +829,17 @@ const mapDays = ref([
   {title:'4/30 抵達東京',places:[
     {type:'prev', label:'✈️',name:'成田國際機場',        lat:35.77017,lng:140.38432,q:'Narita+International+Airport'},
     {type:'sight',label:'1', name:'新宿御苑',           lat:35.68533,lng:139.71017,q:'Shinjuku+Gyoen+National+Garden'},
-    {type:'sight',label:'2', name:'AFURI 新宿',        lat:35.68924,lng:139.69919,q:'AFURI+Shinjuku'},
+    {type:'food', label:'3', name:'Shabushabu Niimura', lat:35.69454,lng:139.70199,q:'しゃぶしゃぶ+ステーキ+にいむら+新宿本店'},
     {type:'hotel',label:'🏨',name:'WPÜ HOTEL 新宿',     lat:35.69411,lng:139.69829,q:'WPU+HOTEL+Shinjuku'},
   ]},
   {title:'5/1 富士山',places:[
     {type:'prev', label:'🚄',name:'新宿',                    lat:35.6896, lng:139.70057,q:'Shinjuku+Station'},
+    {type:'transport',label:'🚗',name:'河口湖站・取車',       lat:35.49772,lng:138.77287,q:'Toyota+Rent+a+Car+Kawaguchiko'},
     {type:'sight',label:'1', name:'河口湖站',                lat:35.49836,lng:138.76856,q:'Kawaguchiko+Station'},
     {type:'sight',label:'2', name:'大石公園',                lat:35.52311,lng:138.74590,q:'Oishi+Park+Kawaguchiko'},
     {type:'sight',label:'3', name:'河口湖自然生活館',        lat:35.52287,lng:138.74547,q:'Kawaguchiko+Natural+Living+Center'},
-    {type:'sight',label:'4', name:'みずの風 MIZUNOKAZE',    lat:35.52374,lng:138.74474,q:'Mizunokaze+Kawaguchiko'},
-    {type:'sight',label:'5', name:'ほうとう不動',            lat:35.52106,lng:138.75342,q:'Houtou+Fudou+Kawaguchiko'},
+    {type:'sight',label:'4', name:'みずの風 MIZUNOKAZE',    lat:35.52374,lng:138.74474,q:'みずの風+河口湖'},
+    {type:'sight',label:'5', name:'ほうとう不動',            lat:35.52106,lng:138.75342,q:'ほうとう不動+河口湖'},
     {type:'sight',label:'6', name:'御殿場 PREMIUM OUTLETS',  lat:35.30727,lng:138.96564,q:'Gotemba+Premium+Outlets'},
     {type:'sight',label:'7', name:'御殿場PREMIUM OUTLETS店', lat:35.3059, lng:138.96164,q:'Shake+Shack+Gotemba+Premium+Outlets'},
     {type:'hotel',label:'🏨',name:'edit x seven 富士御殿場',lat:35.29753,lng:138.94944,q:'edit+x+seven+Fuji+Gotemba'},
@@ -829,20 +849,24 @@ const mapDays = ref([
     {type:'sight',label:'2', name:'平野之濱',         lat:35.42487,lng:138.88500,q:'Hirano+no+Hama+Yamanakako'},
     {type:'sight',label:'3', name:'新倉山淺間公園',   lat:35.50151,lng:138.80216,q:'Arakurayama+Sengen+Park'},
     {type:'sight',label:'4', name:'富士吉田懷舊商店街',lat:35.49318,lng:138.80376,q:'Fujiyoshida+Honcho+Dori'},
-    {type:'sight',label:'5', name:'Kosaku Kawaguchiko (houtou)',lat:35.49574,lng:138.75686,q:'Kosaku+Kawaguchiko+Houtou'},
+    {type:'transport',label:'🚗',name:'前往河口湖站・還車',   lat:35.49772,lng:138.77287,q:'Toyota+Rent+a+Car+Kawaguchiko'},
+    {type:'sight',label:'5', name:'Kosaku Kawaguchiko',    lat:35.49574,lng:138.75686,q:'甲州ほうとう小作+河口湖店'},
     {type:'hotel',label:'🏨',name:'秋葉原觀光酒店&咖啡',lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
   ]},
   {title:'5/3 秋葉原・明治神宮・澀谷',places:[
+    {type:'food', label:'0', name:'AFURI 原宿店',              lat:35.67300,lng:139.70380,q:'AFURI+原宿店'},
     {type:'sight',label:'1', name:'秋葉原電氣街',              lat:35.69971,lng:139.77137,q:'Akihabara+Electric+Town'},
     {type:'sight',label:'2', name:'明治神宮',                  lat:35.67663,lng:139.69934,q:'Meiji+Jingu+Shrine+Tokyo'},
     {type:'sight',label:'3', name:'Shibuya Sky',               lat:35.65962,lng:139.70051,q:'Shibuya+Sky+Observation+Deck'},
-    {type:'sight',label:'4', name:'大衆酒場 また会いにゆきます 澀谷店',lat:35.65892,lng:139.70194,q:'Mataainiyukimasu+Shibuya'},
+    {type:'food', label:'4', name:'Mata Ai ni Yukimasu 澀谷店',lat:35.661058,lng:139.705318,q:'大衆酒場+また会いにゆきます+渋谷店'},
     {type:'hotel',label:'🏨',name:'秋葉原觀光酒店&咖啡（連住）',lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
   ]},
   {title:'5/4 晴空塔・淺草',places:[
     {type:'sight',label:'1', name:'東京晴空塔',         lat:35.71006,lng:139.81070,q:'Tokyo+Skytree'},
-    {type:'sight',label:'2', name:'迴轉壽司 Toriton 東京晴空塔・晴空街道店',lat:35.71005,lng:139.81292,q:'Toriton+Sushi+Tokyo+Skytree+Solamachi'},
+    {type:'shop', label:'S', name:'SOLAMACHI 伴手禮',     lat:35.71023,lng:139.81157,q:'Tokyo+Solamachi+Shopping'},
+    {type:'sight',label:'2', name:'Toriton 晴空塔店',lat:35.71005,lng:139.81292,q:'Toriton+Sushi+Tokyo+Skytree+Solamachi'},
     {type:'sight',label:'3', name:'淺草寺',             lat:35.71128,lng:139.79662,q:'Sensoji+Temple+Asakusa'},
+    {type:'transport',label:'🧳',name:'秋葉原飯店 取行李',  lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
     {type:'hotel',label:'✈️',name:'成田國際機場（返程）',lat:35.77017,lng:140.38432,q:'Narita+International+Airport'},
   ]},
 ])
