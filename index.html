@@ -155,6 +155,7 @@ input,select{background:#fff !important;color:#2c3848 !important;-webkit-text-fi
 .wc-lo{font-size:10.5px;color:var(--sky-dark);font-weight:400;}
 .wc-sep{font-size:9px;color:var(--gray-400);margin:0 1px;}
 .wc-hi{font-size:11.5px;font-weight:700;color:var(--sky-dark);}
+.wc-pop{font-size:9.5px;color:#3a8fc9;font-weight:600;margin-top:1px;line-height:1;letter-spacing:.2px;}
 .hotel-info{margin:0 1rem .8rem;background:var(--gold-light);border:1px solid #e0c060;border-radius:10px;padding:.6rem .9rem;display:flex;align-items:flex-start;gap:.6rem;}
 .hi-icon{font-size:1.4rem;line-height:1;flex-shrink:0;margin-top:.1rem;}
 .hi-body{flex:1;}
@@ -345,6 +346,7 @@ input,select{background:#fff !important;color:#2c3848 !important;-webkit-text-fi
       <div class="weather-card">
         <div class="wc-icon">{{cur.weather.icon}}</div>
         <div class="wc-range"><span class="wc-lo">{{cur.weather.lo}}</span><span class="wc-sep">/</span><span class="wc-hi">{{cur.weather.hi}}</span></div>
+        <div class="wc-pop" v-if="cur.weather.pop">☂ {{cur.weather.pop}}</div>
       </div>
     </div>
     <div class="hotel-info">
@@ -564,7 +566,7 @@ function TG(text,type){return{text,type}}
 const days = reactive([
 // ────────── DAY 1: 4/30 ──────────
 {date:'4/30',shortCity:'新宿',title:'4/30（四）抵達東京・新宿',summary:'成田機場・新宿御苑・壽喜燒・逛街採購',extra:null,
- weather:{icon:'🌤',lo:'13°',hi:'23°'},
+ weather:{icon:'☁️',lo:'12°',hi:'17°',pop:'40%'},
  hotel:{name:'WPÜ HOTEL',note:'新宿西口站 步行 2 分・新宿站 步行 6 分'},
  items:[
   I('13:15','抵達成田機場・前往新宿','transport',[TG('✈ 航班','flight')],'入境資訊',[
@@ -611,7 +613,7 @@ const days = reactive([
 
 // ────────── DAY 2: 5/1 ──────────
 {date:'5/1',shortCity:'河口湖',title:'5/1（五）富士山・御殿場',summary:'大石公園・河口湖・蕎麥麵・Outlets・漢堡',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
- weather:{icon:'🌤',lo:'7°',hi:'20°'},
+ weather:{icon:'🌦️',lo:'7°',hi:'13°',pop:'60%'},
  hotel:{name:'edit x seven 富士御殿場',note:'御殿場 Premium Outlets 車程 5 分・免費停車'},
  items:[
   I('08:00','退房・前往新宿站','transport',[TG('交通','transport')],'交通詳情',[
@@ -666,7 +668,7 @@ const days = reactive([
 
 // ────────── DAY 3: 5/2 ──────────
 {date:'5/2',shortCity:'山中湖',title:'5/2（六）山中湖・富士吉田',summary:'長池親水公園・平野之濱・新倉山淺間公園・本町通・餺飥',extra:'🚄 富士回遊 17:41 河口湖→19:40 新宿',
- weather:{icon:'⛅',lo:'7°',hi:'20°'},
+ weather:{icon:'☀️',lo:'9°',hi:'19°',pop:'10%'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'秋葉原站 步行 3 分・JR 秋葉原站 步行 5 分'},
  items:[
   I('07:30','退房・出發','transport',[TG('交通','transport')],'出發備注',[
@@ -732,7 +734,7 @@ const days = reactive([
 
 // ────────── DAY 4: 5/3 ──────────
 {date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・明治神宮・澀谷',summary:'購物・拉麵・明治神宮・Shibuya Sky・居酒屋',extra:null,
- weather:{icon:'⛅',lo:'14°',hi:'20°'},
+ weather:{icon:'🌤',lo:'15°',hi:'25°',pop:'30%'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'連住第 2 晚'},
  items:[
   I('09:30','秋葉原 電器街 + UNIQLO 購物','shop',[TG('購物','shop')],'推薦店家',[
@@ -773,7 +775,7 @@ const days = reactive([
 
 // ────────── DAY 5: 5/4 ──────────
 {date:'5/4',shortCity:'返台',title:'5/4（一）晴空塔・淺草・返台',summary:'晴空塔・迴轉壽司・淺草寺雷門・成田機場返程',extra:null,
- weather:{icon:'🌧',lo:'15°',hi:'21°'},
+ weather:{icon:'⛅',lo:'15°',hi:'23°',pop:'40%'},
  hotel:{icon:'✈️',label:'航班',name:'CI 109 NRT 20:00 起飛',note:'建議 18:00 前抵達成田第2航廈'},
  items:[
   I('08:30','早餐・秋葉原周邊','food',[TG('餐飲','food')],'選擇',[
