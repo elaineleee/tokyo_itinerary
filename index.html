@@ -155,7 +155,7 @@ input,select{background:#fff !important;color:#2c3848 !important;-webkit-text-fi
 .wc-lo{font-size:10.5px;color:var(--sky-dark);font-weight:400;}
 .wc-sep{font-size:9px;color:var(--gray-400);margin:0 1px;}
 .wc-hi{font-size:11.5px;font-weight:700;color:var(--sky-dark);}
-.wc-pop{font-size:9.5px;color:#3a8fc9;font-weight:600;margin-top:1px;line-height:1;letter-spacing:.2px;}
+.wc-rain{font-size:10px;color:var(--gray-400);margin-top:2px;letter-spacing:0.01em;}
 .hotel-info{margin:0 1rem .8rem;background:var(--gold-light);border:1px solid #e0c060;border-radius:10px;padding:.6rem .9rem;display:flex;align-items:flex-start;gap:.6rem;}
 .hi-icon{font-size:1.4rem;line-height:1;flex-shrink:0;margin-top:.1rem;}
 .hi-body{flex:1;}
@@ -346,7 +346,7 @@ input,select{background:#fff !important;color:#2c3848 !important;-webkit-text-fi
       <div class="weather-card">
         <div class="wc-icon">{{cur.weather.icon}}</div>
         <div class="wc-range"><span class="wc-lo">{{cur.weather.lo}}</span><span class="wc-sep">/</span><span class="wc-hi">{{cur.weather.hi}}</span></div>
-        <div class="wc-pop" v-if="cur.weather.pop">☂ {{cur.weather.pop}}</div>
+        <div class="wc-rain" v-if="cur.weather.rain">☂ {{cur.weather.rain}}</div>
       </div>
     </div>
     <div class="hotel-info">
@@ -566,7 +566,7 @@ function TG(text,type){return{text,type}}
 const days = reactive([
 // ────────── DAY 1: 4/30 ──────────
 {date:'4/30',shortCity:'新宿',title:'4/30（四）抵達東京・新宿',summary:'成田機場・新宿御苑・壽喜燒・逛街採購',extra:null,
- weather:{icon:'☁️',lo:'12°',hi:'17°',pop:'40%'},
+ weather:{icon:'🌧',lo:'13°',hi:'18°',rain:'70%'},
  hotel:{name:'WPÜ HOTEL',note:'新宿西口站 步行 2 分・新宿站 步行 6 分'},
  items:[
   I('13:15','抵達成田機場・前往新宿','transport',[TG('✈ 航班','flight')],'入境資訊',[
@@ -613,7 +613,7 @@ const days = reactive([
 
 // ────────── DAY 2: 5/1 ──────────
 {date:'5/1',shortCity:'河口湖',title:'5/1（五）富士山・御殿場',summary:'大石公園・河口湖・蕎麥麵・Outlets・漢堡',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
- weather:{icon:'🌦️',lo:'7°',hi:'13°',pop:'60%'},
+ weather:{icon:'🌦',lo:'8°',hi:'15°',rain:'60%'},
  hotel:{name:'edit x seven 富士御殿場',note:'御殿場 Premium Outlets 車程 5 分・免費停車'},
  items:[
   I('08:00','退房・前往新宿站','transport',[TG('交通','transport')],'交通詳情',[
@@ -668,7 +668,7 @@ const days = reactive([
 
 // ────────── DAY 3: 5/2 ──────────
 {date:'5/2',shortCity:'山中湖',title:'5/2（六）山中湖・富士吉田',summary:'長池親水公園・平野之濱・新倉山淺間公園・本町通・餺飥',extra:'🚄 富士回遊 17:41 河口湖→19:40 新宿',
- weather:{icon:'☀️',lo:'9°',hi:'19°',pop:'10%'},
+ weather:{icon:'⛅',lo:'8°',hi:'20°',rain:'20%'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'秋葉原站 步行 3 分・JR 秋葉原站 步行 5 分'},
  items:[
   I('07:30','退房・出發','transport',[TG('交通','transport')],'出發備注',[
@@ -733,14 +733,14 @@ const days = reactive([
 ]},
 
 // ────────── DAY 4: 5/3 ──────────
-{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・明治神宮・澀谷',summary:'購物・拉麵・明治神宮・Shibuya Sky・居酒屋',extra:null,
- weather:{icon:'🌤',lo:'15°',hi:'25°',pop:'30%'},
+{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・明治神宮・麻布台',summary:'購物・拉麵・明治神宮・teamLab・麻布台之丘・東京車站',extra:null,
+ weather:{icon:'🌤',lo:'14°',hi:'23°',rain:'30%'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'連住第 2 晚'},
  items:[
   I('09:30','秋葉原 電器街 + UNIQLO 購物','shop',[TG('購物','shop')],'推薦店家',[
     D('黃金週早上逛秋葉原效率最高——開門人潮尚未湧入，退稅通道也不必排太久。主攻電器、相機、玩具、扭蛋，以及 UNIQLO 秋葉原店選購服飾。'),
     F('必逛店家',[FI('Yodobashi Akiba（ヨドバシ秋葉原）','地上 9 層超大電器城，電器、相機、電玩、玩具，退稅需單店 ¥5,000 以上，出示護照。10:00 開門。<span class="fi-price">退稅 10%</span>'),FI('UNIQLO 秋葉原','輕機能服飾，日本限定款，價格比台灣便宜。建議比較 UNIQLO 全尺寸再購買。<span class="fi-price"> ¥800–5,000</span>'),FI('扭蛋機超市（ガチャポン会館）','全日本最大扭蛋機集中地，寶可夢、吉卜力、一番賞，每台 ¥300–500。')]),
-    T([TR('📍 秋葉原電気街：秋葉原站東口步行 2 分鐘'),{html:'📍 UNIQLO 秋葉原：ヨドバシ Akiba 旁，步行 1 分鐘',style:'color:var(--gray-400)'}]),
+    T([TR('📍 秋葉原電気街：秋葉原站東口步行 2 分鐘'),{html:'📍 UNIQLO 秋葉原：Yodobashi Akiba 旁，步行 1 分鐘',style:'color:var(--gray-400)'}]),
     C([CH('💡 10:00–11:30 人少效率最高','ct'),CH('退稅需單店 ¥5,000 以上','cf')]),
   ],'https://maps.app.goo.gl/DfdUP8kCWLk5CC3Y9','秋葉原電氣街'),
   I('11:30','戰利品放回飯店','transport',[TG('交通','transport')],'備注',[
@@ -753,29 +753,39 @@ const days = reactive([
     C([CH('原宿旗艦店，環境寬敞','co2'),CH('素食選項完整','ct')]),
   ],null,'AFURI 原宿店'),
   I('13:30','明治神宮','sight',[TG('景點','sight')],'詳情',[
-    D('穿越百年原生森林大參道（約 800m 步行至本殿）。5 月初森林最蒼翠，陽光穿透樹葉灑落大道，氛圍神聖寧靜。本殿祈願、許願繪馬，參拜後可在本殿旁的明治神宮御苑漫步（¥500）。停留約 90 分鐘，15:30 前後出發前往澀谷。'),
+    D('穿越百年原生森林大參道（約 800m 步行至本殿）。5 月初森林最蒼翠，陽光穿透樹葉灑落大道，氛圍神聖寧靜。本殿祈願、許願繪馬，參拜後可在本殿旁的明治神宮御苑漫步（¥500）。停留約 90 分鐘，15:30 前後出發前往麻布台。'),
     T([TR('🚶 AFURI 原宿店 → 往南步行約 8 分 → 明治神宮 北參道口入園'),{html:'從餐廳往南走至神宮前十字路口，向右轉即可看到入口',style:'color:var(--gray-400)'}]),
     N('<strong>⚠️ 關門時間：</strong>5 月明治神宮 18:10 閉門，南參道口建議 17:50 前通過。'),
     C([CH('免費入場','cc'),CH('💡 大參道 800m，原生森林，5 月最綠','ct')]),
   ],'https://maps.app.goo.gl/DpzHGByGZTz3YPk37','明治神宮'),
-  I('16:00','Shibuya Sky 夜景','sight',[TG('景點','sight')],'詳情',[
-    D('<b>Shibuya Sky</b> 位於澀谷 Scramble Square 屋上 SKY STAGE（地上 229m），日本最大級戶外 360° 展望空間。<b>SKY EDGE</b> 角落玻璃圍欄最低，可直接俯瞰澀谷十字路口；<b>GEO COMPASS</b> 是最高點，全景拍攝最佳位置。入場時段 16:00–16:19，日落前後光線轉換最美。'),
-    T([TR('🚶 明治神宮表參道 → 澀谷 步行約 15 分，或 🚃 JR 山手線 原宿→澀谷（2分）','¥150')]),
-    C([CH('✅ 已購票・入場 16:00–16:19','co2'),CH('票價 ¥3,400/人 × 5張','cc'),CH('💡 戶外 360° 觀景台，無玻璃阻擋','ct')]),
-  ],'https://maps.app.goo.gl/b5kLg9F8psfDJ3Gd9','Shibuya Sky'),
-  I('19:30','晚餐・Mata Ai ni Yukimasu 澀谷店（居酒屋）','food',[TG('餐飲','food')],'詳情',[
-    D('<b>大衆酒場 また会いにゆきます 渋谷店</b>（Mata Ai ni Yukimasu）是澀谷站附近的人氣居酒屋，鐵板燒・天婦羅・串燒多樣料理，氣氛熱鬧適合聚餐，距澀谷站步行約 5 分鐘。已完成網路預約，入座後出示訂位番號即可。'),
-    T([TR('📍 澀谷站步行約 5 分')]),
-    C([CH('✅ 已訂位・19:30・5名','co2'),CH('訂位番號 46NRVQFHFL','ct'),CH('居酒屋・鐵板燒・天婦羅','cf')]),
-  ],null,'Mata Ai ni Yukimasu 澀谷店'),
+  I('16:00','teamLab Borderless 數位藝術美術館','sight',[TG('景點','sight')],'詳情',[
+    D('<b>teamLab Borderless</b> 是全球最受矚目的沉浸式數位藝術美術館，以「無邊界」概念設計——作品之間沒有牆壁或明確區隔，觀者在流動的光影與聲音之間穿梭探索。2024 年重新開幕於麻布台之丘，規模比原版六本木更大，是東京最熱門的藝文體驗之一。'),
+    T([TR('🚃 JR 山手線 原宿→惠比壽（4 分），換東京 Metro 日比谷線→神谷町（9 分），步行 5 分','¥220'),TR('📍 麻布台之丘 Hills Tower A B1・港區虎之門 5-9-1')]),
+    C([CH('✅ 已購票・入場 16:00','co2'),CH('⚠️ 禁止攜帶飲食入場','cw'),CH('建議穿著舒適，展館面積大','ct')]),
+  ],'https://maps.app.goo.gl/teamLabBorderless','teamLab Borderless'),
+  I('18:30','麻布台之丘 夕陽','sight',[TG('景點','sight')],'詳情',[
+    D('<b>麻布台之丘（Azabudai Hills）</b>是 2023 年底開幕的東京最新複合開發區，由森大廈主導，地標為高度 330m 的 Mori JP Tower（東京第一高樓）。頂層設有展望台，麻布台之丘廣場附近可欣賞城市夕陽景色，餐廳與商店一應俱全。'),
+    T([TR('🚶 teamLab Borderless 步行約 5 分（同在麻布台之丘）')]),
+    C([CH('免費入場廣場區','cc'),CH('東京最新地標，2023 年底開幕','co2')]),
+  ],'https://maps.app.goo.gl/AzabudaiHills','麻布台之丘'),
+  I('19:00','晚餐・Shogun Burger（和牛漢堡）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>Shogun Burger</b>（焼肉大将軍）是創業 35 年的燒肉老店以燒肉技術做的和牛漢堡專門店。採超粗挽黑毛和牛鐵板壓製（smash 工法），肉汁豐富，食べログ漢堡百名店。麻布台之丘 Tower Plaza 1F，11:00–22:30（L.O. 21:30），平均 ¥1,500–3,000。'),
+    T([TR('🚶 麻布台之丘廣場內，步行約 2 分')]),
+    C([CH('精緻漢堡，份量足','co2'),CH('⚠️ 黃金週建議提前查詢等候時間','cw')]),
+  ],'https://maps.app.goo.gl/ShogunBurger','Shogun Burger'),
+  I('20:30','東京車站 夜景','sight',[TG('景點','sight')],'詳情',[
+    D('<b>東京車站丸之內站舍</b>是日本重要文化財，紅磚外牆歷史建築於夜間燈光映照下更顯壯觀。從丸之內廣場正面拍攝，是東京最經典的夜景之一。拍完照後即可搭車返回秋葉原。'),
+    T([TR('🚃 東京 Metro 日比谷線 神谷町→日比谷（5 分），步行至東京站丸之內口（10 分）'),{html:'或 🚕 計程車 麻布台→東京站（約 15–20 分，¥1,500–2,000）',style:'color:var(--gray-400)'}]),
+    C([CH('免費参觀（戶外）','cc'),CH('💡 丸之內廣場正面角度最佳','ct')]),
+  ],'https://maps.app.goo.gl/TokyoStation','東京車站夜景'),
   I('21:30','返回秋葉原飯店','transport',[TG('交通','transport')],'交通詳情',[
-    T([TR('🚃 JR 山手線 澀谷→秋葉原（約 20 分）','¥220')]),
+    T([TR('🚃 JR 京葉線／山手線 東京站→秋葉原（約 3 分）','¥160')]),
   ],'https://maps.app.goo.gl/ps73UAfTzH1gFmfj7','秋葉原觀光酒店&咖啡（連住）'),
 ]},
 
 // ────────── DAY 5: 5/4 ──────────
 {date:'5/4',shortCity:'返台',title:'5/4（一）晴空塔・淺草・返台',summary:'晴空塔・迴轉壽司・淺草寺雷門・成田機場返程',extra:null,
- weather:{icon:'⛅',lo:'15°',hi:'23°',pop:'40%'},
+ weather:{icon:'🌧',lo:'15°',hi:'20°',rain:'70%'},
  hotel:{icon:'✈️',label:'航班',name:'CI 109 NRT 20:00 起飛',note:'建議 18:00 前抵達成田第2航廈'},
  items:[
   I('08:30','早餐・秋葉原周邊','food',[TG('餐飲','food')],'選擇',[
@@ -855,12 +865,14 @@ const mapDays = ref([
     {type:'sight',label:'5', name:'Kosaku Kawaguchiko',    lat:35.49574,lng:138.75686,q:'甲州ほうとう小作+河口湖店'},
     {type:'hotel',label:'🏨',name:'秋葉原觀光酒店&咖啡',lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
   ]},
-  {title:'5/3 秋葉原・明治神宮・澀谷',places:[
-    {type:'food', label:'0', name:'AFURI 原宿店',              lat:35.67300,lng:139.70380,q:'AFURI+原宿店'},
+  {title:'5/3 秋葉原・明治神宮・麻布台',places:[
     {type:'sight',label:'1', name:'秋葉原電氣街',              lat:35.69971,lng:139.77137,q:'Akihabara+Electric+Town'},
-    {type:'sight',label:'2', name:'明治神宮',                  lat:35.67663,lng:139.69934,q:'Meiji+Jingu+Shrine+Tokyo'},
-    {type:'sight',label:'3', name:'Shibuya Sky',               lat:35.65962,lng:139.70051,q:'Shibuya+Sky+Observation+Deck'},
-    {type:'food', label:'4', name:'Mata Ai ni Yukimasu 澀谷店',lat:35.661058,lng:139.705318,q:'大衆酒場+また会いにゆきます+渋谷店'},
+    {type:'food', label:'2', name:'AFURI 原宿店',              lat:35.67300,lng:139.70380,q:'AFURI+原宿店'},
+    {type:'sight',label:'3', name:'明治神宮',                  lat:35.67663,lng:139.69934,q:'Meiji+Jingu+Shrine+Tokyo'},
+    {type:'sight',label:'4', name:'teamLab Borderless',        lat:35.65793,lng:139.74350,q:'teamLab+Borderless+Azabudai'},
+    {type:'sight',label:'5', name:'麻布台之丘',                lat:35.65750,lng:139.74460,q:'Azabudai+Hills+Tokyo'},
+    {type:'food', label:'6', name:'Shogun Burger',             lat:35.65780,lng:139.74420,q:'Shogun+Burger+Azabudai'},
+    {type:'sight',label:'7', name:'東京車站夜景',              lat:35.68124,lng:139.76712,q:'Tokyo+Station+Marunouchi'},
     {type:'hotel',label:'🏨',name:'秋葉原觀光酒店&咖啡（連住）',lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
   ]},
   {title:'5/4 晴空塔・淺草',places:[
