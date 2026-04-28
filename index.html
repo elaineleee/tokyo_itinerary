@@ -733,7 +733,7 @@ const days = reactive([
 ]},
 
 // ────────── DAY 4: 5/3 ──────────
-{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・明治神宮・麻布台',summary:'購物・拉麵・明治神宮・teamLab・麻布台之丘・東京車站',extra:null,
+{date:'5/3',shortCity:'東京',title:'5/3（日）秋葉原・明治神宮・麻布台',summary:'購物・拉麵・明治神宮・teamLab・麻布台展望台・東京車站',extra:null,
  weather:{icon:'🌤',lo:'14°',hi:'23°',rain:'30%'},
  hotel:{name:'The Tourist Hotel & Cafe Akihabara',note:'連住第 2 晚'},
  items:[
@@ -763,17 +763,17 @@ const days = reactive([
     T([TR('🚃 JR 山手線 原宿→惠比壽（4 分），換東京 Metro 日比谷線→神谷町（9 分），步行 5 分','¥220'),TR('📍 麻布台之丘 Hills Tower A B1・港區虎之門 5-9-1')]),
     C([CH('✅ 已購票・入場 16:00','co2'),CH('⚠️ 禁止攜帶飲食入場','cw'),CH('建議穿著舒適，展館面積大','ct')]),
   ],'https://maps.app.goo.gl/teamLabBorderless','teamLab Borderless'),
-  I('18:30','麻布台之丘 夕陽','sight',[TG('景點','sight')],'詳情',[
-    D('<b>麻布台之丘（Azabudai Hills）</b>是 2023 年底開幕的東京最新複合開發區，由森大廈主導，地標為高度 330m 的 Mori JP Tower（東京第一高樓）。頂層設有展望台，麻布台之丘廣場附近可欣賞城市夕陽景色，餐廳與商店一應俱全。'),
-    T([TR('🚶 teamLab Borderless 步行約 5 分（同在麻布台之丘）')]),
-    C([CH('免費入場廣場區','cc'),CH('東京最新地標，2023 年底開幕','co2')]),
-  ],'https://maps.app.goo.gl/AzabudaiHills','麻布台之丘'),
-  I('19:00','晚餐・Shogun Burger（和牛漢堡）','food',[TG('餐飲','food')],'詳情',[
+  I('17:15','晚餐・Shogun Burger（和牛漢堡）','food',[TG('餐飲','food')],'詳情',[
     D('<b>Shogun Burger</b>（焼肉大将軍）是創業 35 年的燒肉老店以燒肉技術做的和牛漢堡專門店。採超粗挽黑毛和牛鐵板壓製（smash 工法），肉汁豐富，食べログ漢堡百名店。麻布台之丘 Tower Plaza 1F，11:00–22:30（L.O. 21:30），平均 ¥1,500–3,000。'),
-    T([TR('🚶 麻布台之丘廣場內，步行約 2 分')]),
+    T([TR('🚶 teamLab Borderless 步行約 2 分（同在麻布台之丘 Tower Plaza 1F）')]),
     C([CH('精緻漢堡，份量足','co2'),CH('⚠️ 黃金週建議提前查詢等候時間','cw')]),
   ],'https://maps.app.goo.gl/ShogunBurger','Shogun Burger'),
-  I('20:30','東京車站 夜景','sight',[TG('景點','sight')],'詳情',[
+  I('18:30','麻布台之丘展望台 夕陽','sight',[TG('景點','sight')],'詳情',[
+    D('<b>麻布台之丘（Azabudai Hills）</b>是 2023 年底開幕的東京最新複合開發區，地標為高度 330m 的 Mori JP Tower（東京第一高樓）。麻布台之丘廣場可欣賞城市夕陽景色，餐後散步最佳。'),
+    T([TR('🚶 Shogun Burger 餐後步行約 5 分至廣場')]),
+    C([CH('免費入場廣場區','cc'),CH('東京最新地標，2023 年底開幕','co2')]),
+  ],'https://maps.app.goo.gl/AzabudaiHills','麻布台之丘'),
+  I('20:00','東京車站 夜景','sight',[TG('景點','sight')],'詳情',[
     D('<b>東京車站丸之內站舍</b>是日本重要文化財，紅磚外牆歷史建築於夜間燈光映照下更顯壯觀。從丸之內廣場正面拍攝，是東京最經典的夜景之一。拍完照後即可搭車返回秋葉原。'),
     T([TR('🚃 東京 Metro 日比谷線 神谷町→日比谷（5 分），步行至東京站丸之內口（10 分）'),{html:'或 🚕 計程車 麻布台→東京站（約 15–20 分，¥1,500–2,000）',style:'color:var(--gray-400)'}]),
     C([CH('免費参觀（戶外）','cc'),CH('💡 丸之內廣場正面角度最佳','ct')]),
@@ -870,7 +870,7 @@ const mapDays = ref([
     {type:'food', label:'2', name:'AFURI 原宿店',              lat:35.67300,lng:139.70380,q:'AFURI+原宿店'},
     {type:'sight',label:'3', name:'明治神宮',                  lat:35.67663,lng:139.69934,q:'Meiji+Jingu+Shrine+Tokyo'},
     {type:'sight',label:'4', name:'teamLab Borderless',        lat:35.65793,lng:139.74350,q:'teamLab+Borderless+Azabudai'},
-    {type:'sight',label:'5', name:'麻布台之丘',                lat:35.65750,lng:139.74460,q:'Azabudai+Hills+Tokyo'},
+    {type:'sight',label:'5', name:'麻布台之丘展望台',                lat:35.65750,lng:139.74460,q:'Azabudai+Hills+Tokyo'},
     {type:'food', label:'6', name:'Shogun Burger',             lat:35.65780,lng:139.74420,q:'Shogun+Burger+Azabudai'},
     {type:'sight',label:'7', name:'東京車站夜景',              lat:35.68124,lng:139.76712,q:'Tokyo+Station+Marunouchi'},
     {type:'hotel',label:'🏨',name:'秋葉原觀光酒店&咖啡（連住）',lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
