@@ -186,6 +186,12 @@ input,select{background:#fff !important;color:#2c3848 !important;-webkit-text-fi
 .tag-shop{background:var(--green-light);color:var(--green);}
 .tag-flight{background:var(--gray-100);color:var(--gray-600);}
 .expand-btn{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--sky);background:none;border:none;cursor:pointer;padding:0;margin-top:.4rem;font-family:inherit;}
+.rain-toggle-bar{margin:0 1rem .6rem;display:flex;gap:0;border-radius:10px;overflow:hidden;border:1.5px solid var(--border);background:var(--gray-100);}
+.rain-toggle-btn{flex:1;padding:.55rem .5rem;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:all .18s;letter-spacing:.2px;}
+.rain-toggle-btn.rt-sunny{background:transparent;color:var(--gray-400);}
+.rain-toggle-btn.rt-sunny.active{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(13,27,46,.12);}
+.rain-toggle-btn.rt-rain{background:transparent;color:var(--gray-400);}
+.rain-toggle-btn.rt-rain.active{background:#5ba8d8;color:#0d1b2e;box-shadow:0 1px 4px rgba(13,27,46,.15);}
 .expand-icon{transition:transform .2s;display:inline-block;font-size:10px;}
 .expand-btn.open .expand-icon{transform:rotate(180deg);}
 .tl-desc{font-size:12px;color:var(--gray-600);line-height:1.55;}
@@ -357,13 +363,17 @@ input,select{background:#fff !important;color:#2c3848 !important;-webkit-text-fi
         <span class="hi-note">{{cur.hotel.note}}</span>
       </div>
     </div>
+    <div v-if="cur.rainItems" class="rain-toggle-bar">
+      <button class="rain-toggle-btn rt-sunny" :class="{active:!rainMode}" @click="rainMode=false">☀️ 晴天行程</button>
+      <button class="rain-toggle-btn rt-rain" :class="{active:rainMode}" @click="rainMode=true">☂ 雨備行程</button>
+    </div>
     <div class="ea-bar">
       <span class="ea-label">詳細說明</span>
       <button class="ea-btn" @click="expandAllItems(true)">全展開 ▾</button>
       <button class="ea-btn" @click="expandAllItems(false)">全收合 ▴</button>
     </div>
     <div class="timeline">
-      <div class="tl-item" v-for="item in cur.items" :key="item.id">
+      <div class="tl-item" v-for="item in (cur.rainItems && rainMode ? cur.rainItems : cur.items)" :key="item.id">
         <div class="tl-left"><div class="tl-dot" :class="'dot-'+item.dot"></div></div>
         <div class="tl-card">
           <div class="tl-time-inline">{{item.time}}</div>
@@ -532,6 +542,7 @@ setup(){
 const tab = ref('schedule')
 const sel = ref(0)
 const mapSel = ref(0)
+const rainMode = ref(false)
 
 // ═══════════ FLIGHTS ═══════════
 const flights = ref([
@@ -615,6 +626,62 @@ const days = reactive([
 {date:'5/1',shortCity:'河口湖',title:'5/1（五）富士山・御殿場',summary:'大石公園・河口湖・蕎麥麵・Outlets・漢堡',extra:'🚄 富士回遊 08:30 新宿→10:26 河口湖',
  weather:{icon:'🌧',lo:'6°',hi:'15°',rain:'90%'},
  hotel:{name:'edit x seven 富士御殿場',note:'御殿場 Premium Outlets 車程 5 分・免費停車'},
+ rainItems:[
+  I('08:00','退房・前往新宿站','transport',[TG('交通','transport')],'交通詳情',[
+    D('飯店退房後出發。<b>🧳 行李宅配（強烈建議）：</b>在飯店 Front 辦理 <b>ヤマト宅急便</b>，將大行李寄送至秋葉原 <b>The Tourist Hotel & Cafe Akihabara</b>，隔日或後天可取，費用約 ¥2,000–2,500 / 件。宅配辦理截止通常 10:00–11:00，請退房後立即辦理。'),
+  ],'https://maps.app.goo.gl/HcuekJrahSZnerjM6','新宿'),
+  I('08:30','搭乘富士回遊 7 號 新宿 → 河口湖','transport',[TG('交通','transport')],'交通詳情',[
+    D('車廂從東京市區漸入山梨縣田園風光，接近河口湖時富士山巨大出現在右側（A 席），震撼無比。全程 1 小時 56 分，可在車上吃早餐。'),
+    T([TR('🚆 <b>富士回遊 7 號</b> 新宿 08:30 → 河口湖 10:26（1h56m）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥4,200/人</span>（指定席）')]),
+    N('<strong>🎫 取票提醒：</strong>需提前在<b>新宿站</b> JR 售票窗口或指定席券賣機取票，當天直接上車無法補票，全車指定席。'),
+  ],null,false),
+  I('10:30','河口湖站・取車','transport',[TG('交通','transport')],'交通詳情',[
+    D('步行 5 分鐘至 <b>Toyota Rent a Car 河口湖站前</b>辦理取車。準備：<b>台灣駕照正本＋日文譯本＋護照</b>。'),
+    C([CH('租車 ¥15,000–20,000/2天（含保險）','cc'),CH('⚠️ 需監理所核發日文譯本，國際駕照不適用','cw')]),
+  ],null,'河口湖站・取車'),
+  I('11:00','富士山布丁 / 吐司 / 餅乾','shop',[TG('購物','shop')],'詳情',[
+    D('河口湖站步行圈內兩家富士山主題伴手禮名店，雨天逛街順路採買，不需開車也能輕鬆完成。'),
+    F('🛍 採購目標',[
+      FI('Fujisan Pudding（ふじさんプリン）','富士山造型布丁，以山梨縣牛奶製作，口感綿密濃郁，外盒可愛，最佳伴手禮之一。河口湖站前步行 2 分。<span class="fi-price"> ¥500–700/個</span>',[{text:'必買',cls:'badge-top'}]),
+      FI('Fujiyama Cookie（富士山クッキー）','富士山形狀奶油餅乾，口味多種（原味・抹茶・巧克力・焦糖），大罐裝適合分送同事朋友。河口湖站周邊可購得。<span class="fi-price"> ¥800–1,500/盒</span>'),
+    ]),
+    T([TR('🚶 河口湖站周邊步行圈，兩店相距約 5–10 分鐘'),TR('📍 Fujisan Pudding：河口湖站前步行 2 分')]),
+    C([CH('布丁限量，早到確保有貨','cw'),CH('💡 布丁請冷藏，同日帶回飯店冰箱','co2')]),
+  ],'https://maps.google.com/?q=35.49886,138.76523','Fujisan Pudding'),
+  I('12:00','午餐・Kosaku Kawaguchiko（餺飥）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>甲州ほうとう小作</b>（Kosaku Kawaguchiko）是山梨縣老字號餺飥名店，古民家風格店舖，雨天在店內吃一碗熱湯餺飥特別暖心。招牌<b>かぼちゃほうとう（¥1,400）</b>以大塊軟糯南瓜加自家製味噌慢煮，麵條 Q 彈，湯頭偏甜。河口湖站附近，停車場寬敞。停留約 60–75 分鐘。'),
+    T([TR('🚗 河口湖周邊 → Kosaku 河口湖店（約 5–10 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥1,400–1,700/人</span>')]),
+    F('推薦品項',[
+      FI('かぼちゃほうとう（南瓜餺飥）','招牌，大塊軟糯南瓜＋自家製味噌，麵條 Q 彈，最經典的選擇。<span class="fi-price"> ¥1,400</span>'),
+      FI('きのこほうとう（菇類餺飥）','多種野菇鮮味，湯頭更有深度，素食友善（可詢問是否有動物性食材）。<span class="fi-price"> ¥1,500</span>',[{text:'素食可詢問',cls:'badge-veg'}])
+    ]),
+    C([CH('💡 老字號古民家風，雨天暖胃最適合','ct')]),
+  ],'https://maps.app.goo.gl/xAE3LJQM4XXbpzqr9','Kosaku Kawaguchiko'),
+  I('13:00','超市・Ogino 河口湖店','shop',[TG('購物','shop')],'詳情',[
+    D('<b>Ogino（オギノ）</b>是山梨縣在地超市連鎖，山梨縣產葡萄酒、信玄餅、甲州地酒一應俱全，比觀光區商店便宜許多。雨天最後一站，順路補貨零食飲料，也可採購伴手禮食品。'),
+    T([TR('🚗 Kosaku → Ogino 河口湖店（約 5–10 分）'),TR('🕐 平日・假日 9:00–21:00')]),
+    C([CH('山梨縣在地超市，比觀光商店划算','co2'),CH('💡 甲州葡萄酒・信玄餅・水果零食可在此採買','ct')]),
+  ],'https://maps.google.com/?q=35.50174,138.7575','Ogino 河口湖店'),
+  I('15:00','前往御殿場・edit x seven 飯店 Check-in','hotel',[TG('住宿','hotel')],'備註',[
+    D('下午出發前往御殿場。抵達後辦理 Check-in，把行李放入房間再輕裝逛 Outlets。住宿提供<b>免費自助停車</b>（露天停車場）。'),
+    T([TR('🚗 河口湖周邊 → edit x seven 富士御殿場（約 55–65 分）')]),
+    C([CH('🅿️ 免費自助停車（露天）','co2'),CH('⚠️ Check-in 最晚 20:00','cw')]),
+  ],'https://maps.app.goo.gl/YQfA3S7wP48kJpCp6','edit x seven 富士御殿場'),
+  I('16:00','御殿場 Premium Outlets','shop',[TG('購物','shop')],'詳情',[
+    D('放完行李輕裝出發。日本最大 Premium Outlets，共<b>約 290 家品牌</b>，背後就是富士山，拍照超美。黃金週直奔最想購買的品牌，退稅需各店滿 ¥5,000，出示護照。'),
+    T([TR('🚗 飯店 → 御殿場 Premium Outlets（約 5 分）或步行 25 分')]),
+    C([CH('退稅需單店 ¥5,000 以上，出示護照','ct'),CH('5 月關門 20:00','cf')]),
+  ],'https://maps.app.goo.gl/ZM883cTE63susJ1EA','御殿場 PREMIUM OUTLETS'),
+  I('18:00','晚餐・Shake Shack 御殿場店（漢堡）','food',[TG('餐飲','food')],'詳情',[
+    D('<b>Shake Shack 御殿場店</b>是全日本唯一的 Outlets 據點，招牌 ShackBurger 肉質紮實多汁。御殿場限定甜點 <b>フジサンクリート</b>（富士山造型冰淇淋，柚子味噌焦糖＋黃豆粉）是必嚐限定。'),
+    F('推薦品項',[FI('ShackBurger','Angus 牛肉漢堡，番茄、生菜、ShackSauce，經典美味。<span class="fi-price"> ¥1,100–1,300</span>'),FI('フジサンクリート（御殿場限定）','富士山造型霜淇淋，柚子味噌焦糖＋黃豆粉，必嚐限定品項。<span class="fi-price"> ¥700–800</span>',[{text:'御殿場限定',cls:'badge-top'}])]),
+    C([CH('⚠️ 店内 L.O. 18:45，務必 18:00 前入座','cw'),CH('フジサンクリート御殿場限定必嚐','cf')]),
+  ],'https://maps.app.goo.gl/ZM883cTE63susJ1EA','御殿場PREMIUM OUTLETS店'),
+  I('20:00','返回御殿場飯店','transport',[TG('交通','transport')],'備註',[
+    D('購物結束，步行或開車 5 分鐘返回飯店休息，整理行李、準備明天出發。'),
+    T([TR('🚗 御殿場 Outlets → 飯店（約 5 分）或步行')]),
+  ],'https://maps.app.goo.gl/YQfA3S7wP48kJpCp6','edit x seven 富士御殿場'),
+ ],
  items:[
   I('08:00','退房・前往新宿站','transport',[TG('交通','transport')],'交通詳情',[
     D('飯店退房後出發。<b>🧳 行李宅配（強烈建議）：</b>在飯店 Front 辦理 <b>ヤマト宅急便</b>，將大行李寄送至秋葉原 <b>The Tourist Hotel & Cafe Akihabara</b>，隔日或後天可取，費用約 ¥2,000–2,500 / 件。宅配辦理截止通常 10:00–11:00，請退房後立即辦理。'),
@@ -664,7 +731,7 @@ const days = reactive([
     D('購物結束，步行或開車 5 分鐘返回飯店休息，整理行李、準備明天出發。'),
     T([TR('🚗 御殿場 Outlets → 飯店（約 5 分）或步行')]),
   ],'https://maps.app.goo.gl/YQfA3S7wP48kJpCp6','edit x seven 富士御殿場'),
-]},
+ ]},
 
 // ────────── DAY 3: 5/2 ──────────
 {date:'5/2',shortCity:'山中湖',title:'5/2（六）山中湖・富士吉田',summary:'長池親水公園・平野之濱・新倉山淺間公園・本町通・餺飥',extra:'🚄 富士回遊 17:41 河口湖→19:40 新宿',
@@ -700,12 +767,11 @@ const days = reactive([
     T([TR('🚗 新倉山淺間公園 → 本町通（步行 10 分 或 開車 3 分）')]),
     C([CH('免費','cc'),CH('💡 街道盡頭正對富士山，構圖絕美','ct'),CH('⚠️ 請在人行道拍攝','cw')]),
   ],null,'富士吉田懷舊商店街'),
-  I('14:00','午餐・Kosaku Kawaguchiko（餺飥）','food',[TG('餐飲','food')],'詳情',[
-    D('<b>甲州ほうとう小作</b>（Kosaku Kawaguchiko）是山梨縣老字號餺飥名店，古民家風格店舖，環境舒適典雅。招牌<b>かぼちゃほうとう（¥1,400）</b>以大塊軟糯南瓜加自家製味噌慢煮，麵條 Q 彈，湯頭偏甜，暖胃暖心。河口湖站附近，停車場寬敞，自駕方便。停留約 60–75 分鐘。'),
-    T([TR('🚗 本町通 → Kosaku 河口湖店（約 10–15 分）'),TR('💰 <span style="color:var(--gold);font-weight:600">¥1,400–1,700/人</span>')]),
-    F('推薦品項',[FI('かぼちゃほうとう（南瓜餺飥）','招牌，大塊軟糯南瓜＋自家製味噌，麵條 Q 彈，最經典的選擇。<span class="fi-price"> ¥1,400</span>'),FI('きのこほうとう（菇類餺飥）','多種野菇鮮味，湯頭更有深度，素食友善（可詢問是否有動物性食材）。<span class="fi-price"> ¥1,500</span>',[{text:'素食可詢問',cls:'badge-veg'}])]),
-    C([CH('💡 老字號古民家風，河口湖站附近','ct'),CH('可素，點餐時詢問確認','co2')]),
-  ],'https://maps.app.goo.gl/xAE3LJQM4XXbpzqr9','Kosaku Kawaguchiko'),
+  I('14:00','午餐・下吉田附近','food',[TG('餐飲','food')],'選擇',[
+    D('富士吉田本町通結束後，就近在下吉田附近找午餐。此區有多間在地食堂與小店，可依當下心情選擇，步行或開車 5 分鐘以內即可解決。'),
+    T([TR('🚗 富士吉田本町通周邊（下吉田一帶）')]),
+    C([CH('💡 可依現場人潮臨機選擇','ct'),CH('避開觀光客集中的河口湖站區','co2')]),
+  ],null,false),
   I('15:30','前往河口湖站・還車','transport',[TG('交通','transport')],'還車注意事項',[
     D('從 Kosaku 開車約 5 分鐘至 Toyota Rent a Car 河口湖站前。確認車內無遺留物品，交還鑰匙並確認費用明細。還車手續約 15–20 分鐘，16:00 前可完成。'),
     T([TR('🚗 Kosaku 河口湖店 → Toyota Rent a Car 河口湖站前（約 5 分）')]),
@@ -833,7 +899,8 @@ const cur = computed(()=>days[sel.value])
 
 function expandAllItems(open){
   if(!cur.value)return
-  cur.value.items.forEach(item=>{item.expanded=open})
+  const list = (cur.value.rainItems && rainMode.value) ? cur.value.rainItems : cur.value.items
+  list.forEach(item=>{item.expanded=open})
 }
 
 // ═══════════ MAP DATA (with Google Maps Embed API q= search query) ═══════════
@@ -855,6 +922,13 @@ const mapDays = ref([
     {type:'sight',label:'6', name:'御殿場 PREMIUM OUTLETS',  lat:35.30727,lng:138.96564,q:'Gotemba+Premium+Outlets'},
     {type:'sight',label:'7', name:'御殿場PREMIUM OUTLETS店', lat:35.3059, lng:138.96164,q:'Shake+Shack+Gotemba+Premium+Outlets'},
     {type:'hotel',label:'🏨',name:'edit x seven 富士御殿場',lat:35.29753,lng:138.94944,q:'edit+x+seven+Fuji+Gotemba'},
+  ],rainPlaces:[
+    {type:'sight',label:'1', name:'Fujisan Pudding',         lat:35.49886,lng:138.76523,q:'ふじさんプリン+河口湖'},
+    {type:'food', label:'2', name:'Kosaku Kawaguchiko',      lat:35.49574,lng:138.75686,q:'甲州ほうとう小作+河口湖店'},
+    {type:'shop', label:'3', name:'Ogino 河口湖店',          lat:35.50174,lng:138.75750,q:'オギノ+河口湖店'},
+    {type:'sight',label:'6', name:'御殿場 PREMIUM OUTLETS',  lat:35.30727,lng:138.96564,q:'Gotemba+Premium+Outlets'},
+    {type:'food', label:'7', name:'御殿場PREMIUM OUTLETS店', lat:35.3059, lng:138.96164,q:'Shake+Shack+Gotemba+Premium+Outlets'},
+    {type:'hotel',label:'🏨',name:'edit x seven 富士御殿場',lat:35.29753,lng:138.94944,q:'edit+x+seven+Fuji+Gotemba'},
   ]},
   {title:'5/2 山中湖・富士吉田',places:[
     {type:'sight',label:'1', name:'長池親水公園',     lat:35.43217,lng:138.86967,q:'Nagaike+Shinsui+Park+Yamanakako'},
@@ -862,7 +936,7 @@ const mapDays = ref([
     {type:'sight',label:'3', name:'新倉山淺間公園',   lat:35.50151,lng:138.80216,q:'Arakurayama+Sengen+Park'},
     {type:'sight',label:'4', name:'富士吉田懷舊商店街',lat:35.49318,lng:138.80376,q:'Fujiyoshida+Honcho+Dori'},
     {type:'transport',label:'🚗',name:'前往河口湖站・還車',   lat:35.49772,lng:138.77287,q:'Toyota+Rent+a+Car+Kawaguchiko'},
-    {type:'sight',label:'5', name:'Kosaku Kawaguchiko',    lat:35.49574,lng:138.75686,q:'甲州ほうとう小作+河口湖店'},
+    {type:'food', label:'4', name:'午餐・下吉田附近',        lat:35.49400,lng:138.80300,q:'Fujiyoshida+restaurants'},
     {type:'hotel',label:'🏨',name:'秋葉原觀光酒店&咖啡',lat:35.70082,lng:139.77708,q:'The+Tourist+Hotel+Cafe+Akihabara'},
   ]},
   {title:'5/3 秋葉原・明治神宮・麻布台',places:[
@@ -893,25 +967,24 @@ const GMKEY = 'AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8'
 const mapIframeSrc = computed(()=>{
   const d = mapDays.value[mapSel.value]
   if(!d) return ''
-  const sights = d.places.filter(p => p.type === 'sight')
+  const activePlaces = (d.rainPlaces && rainMode.value) ? d.rainPlaces : d.places
+  const sights = activePlaces.filter(p => p.type === 'sight' || p.type === 'food' || p.type === 'shop')
 
-  // ── Active place: show full place card (navigate / reviews / street view) ──
-  const active = d.places.find(p => p.name === mapActiveName.value)
+  // ── Active place: show full place card ──
+  const active = activePlaces.find(p => p.name === mapActiveName.value)
   if(active){
     return `https://www.google.com/maps/embed/v1/place?key=${GMKEY}&q=${active.q}&zoom=16&language=zh-TW`
   }
 
-  // ── Default overview: directions mode shows all markers on the map ──
-  if(!sights.length) return ''
-  if(sights.length === 1){
-    // Single sight — use place mode so marker appears
-    return `https://www.google.com/maps/embed/v1/place?key=${GMKEY}&q=${sights[0].q}&zoom=14&language=zh-TW`
+  // ── Default overview ──
+  const routeSights = activePlaces.filter(p => p.type === 'sight')
+  if(!routeSights.length) return ''
+  if(routeSights.length === 1){
+    return `https://www.google.com/maps/embed/v1/place?key=${GMKEY}&q=${routeSights[0].q}&zoom=14&language=zh-TW`
   }
-  // Multiple sights — directions mode: origin → (waypoints) → destination
-  // This renders each stop as a labelled map marker (A, B, C…)
-  const origin      = `${sights[0].lat},${sights[0].lng}`
-  const destination = `${sights[sights.length-1].lat},${sights[sights.length-1].lng}`
-  const mid         = sights.slice(1, -1)
+  const origin      = `${routeSights[0].lat},${routeSights[0].lng}`
+  const destination = `${routeSights[routeSights.length-1].lat},${routeSights[routeSights.length-1].lng}`
+  const mid         = routeSights.slice(1, -1)
   const waypointsParam = mid.length
     ? `&waypoints=${mid.map(p=>`${p.lat},${p.lng}`).join('|')}`
     : ''
@@ -922,7 +995,8 @@ const mapIframeSrc = computed(()=>{
 const gmapRouteUrl = computed(()=>{
   const d = mapDays.value[mapSel.value]
   if(!d) return 'https://maps.google.com'
-  const sights = d.places.filter(p => p.type === 'sight')
+  const activePlaces = (d.rainPlaces && rainMode.value) ? d.rainPlaces : d.places
+  const sights = activePlaces.filter(p => p.type === 'sight')
   if(!sights.length) return 'https://maps.google.com'
   if(sights.length === 1) return `https://www.google.com/maps/search/?api=1&query=${sights[0].lat},${sights[0].lng}`
   const stops = sights.map(p => `${p.lat},${p.lng}`).join('/')
@@ -932,7 +1006,8 @@ const gmapRouteUrl = computed(()=>{
 const mapPlaceButtons = computed(()=>{
   const d = mapDays.value[mapSel.value]
   if(!d) return []
-  return d.places.map(p => ({
+  const activePlaces = (d.rainPlaces && rainMode.value) ? d.rainPlaces : d.places
+  return activePlaces.map(p => ({
     name:  p.name,
     label: (p.type==='sight' ? p.label+'. ' : p.label+' ') + p.name,
     cls:   p.type==='prev' ? 'is-prev' : p.type==='hotel' ? 'is-hotel' : '',
@@ -971,10 +1046,12 @@ function findMapPlace(item){
   if(item.mapKey === false) return null
   const key = item.mapKey || item.place
   if(!key) return null
-  // 1) 精確配對（若有提供 mapKey）
+  // 1) 精確配對（若有提供 mapKey）— 同時搜尋 places 和 rainPlaces
   if(item.mapKey){
     for(let di=0; di<mapDays.value.length; di++){
-      const p = mapDays.value[di].places.find(pp => pp.name === item.mapKey)
+      const d = mapDays.value[di]
+      const allPlaces = [...(d.places||[]), ...(d.rainPlaces||[])]
+      const p = allPlaces.find(pp => pp.name === item.mapKey)
       if(p) return {dayIndex:di, place:p}
     }
   }
@@ -982,7 +1059,9 @@ function findMapPlace(item){
   const nk = normalizeName(key)
   if(!nk) return null
   for(let di=0; di<mapDays.value.length; di++){
-    for(const p of mapDays.value[di].places){
+    const d = mapDays.value[di]
+    const allPlaces = [...(d.places||[]), ...(d.rainPlaces||[])]
+    for(const p of allPlaces){
       const np = normalizeName(p.name)
       if(!np) continue
       if(nk.includes(np) || np.includes(nk)){
@@ -1026,7 +1105,7 @@ function calcDisplay(){const v=parseFloat(cc);if(isNaN(v)){calcScreen.value='錯
 function calcNum(n){if(cfresh){cc='';cfresh=false}if(n==='.'&&cc.includes('.'))return;if(cc==='0'&&n!=='.')cc='';cc+=n;calcDisplay()}
 function calcFn(fn){const v=parseFloat(cc);if(fn==='clear'){cc='0';calcExpr.value='';cop=null;cfresh=false;calcDisplay();return}if(fn==='back'){cc=cc.slice(0,-1)||'0';calcDisplay();return}if(fn==='%'){cc=String(Math.round(v/100*100)/100);calcDisplay();return}if(fn==='='){if(cop&&!cfresh){let res=v;if(cop==='÷')res=cprev/v;else if(cop==='×')res=cprev*v;else if(cop==='−')res=cprev-v;else res=cprev+v;res=Math.round(res*100)/100;calcExpr.value=cprev+' '+cop+' '+v+' =';cc=String(res);cop=null;cfresh=true;calcDisplay()}return}cprev=v;cop=fn;calcExpr.value=v+' '+fn;cfresh=true;calcDisplay()}
 
-return{tab,sel,cur,flights,hotels,days,mapDays,mapSel,mapTitle,mapCount,mapIframeSrc,gmapRouteUrl,mapPlaceButtons,mapActiveName,expandAllItems,switchToMap,switchMapDay,focusPlace,mapFocus,mapFocusIframeSrc,clearMapFocus,goToMapPlace,itemMapTarget,showPwaBanner,showPwaHelp,rateVal,rateAmt,rateFrom,rateResult,rateSub,calcExpr,calcScreen,calcNum,calcFn}
+return{tab,sel,cur,flights,hotels,days,rainMode,mapDays,mapSel,mapTitle,mapCount,mapIframeSrc,gmapRouteUrl,mapPlaceButtons,mapActiveName,expandAllItems,switchToMap,switchMapDay,focusPlace,mapFocus,mapFocusIframeSrc,clearMapFocus,goToMapPlace,itemMapTarget,showPwaBanner,showPwaHelp,rateVal,rateAmt,rateFrom,rateResult,rateSub,calcExpr,calcScreen,calcNum,calcFn}
 }
 }).mount('#app')
 </script>
